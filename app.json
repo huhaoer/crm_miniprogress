@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/home/home",
+    "pages/totalMoney/totalMoney",
+    "pages/myItem/myItem"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#ffffff",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

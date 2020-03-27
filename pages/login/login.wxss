@@ -1,0 +1,64 @@
+.container {
+  /* background:rgb(247, 167, 39); */
+  background-color: #263238;
+}
+.login_header {
+  width: 100%;
+  text-align: center;
+}
+.login_text {
+  font-size: 40rpx;
+  text-align: center;
+  font-weight: 700;
+  color: #fff;
+}
+
+.login_area {
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 120rpx;
+  border-radius: 10rpx;
+  background-color: #fff;
+}
+.login_user,.login_pwd {
+  padding: 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.login_user .icon,.login_pwd .icon {
+  color: #1989fa;
+}
+.login_user > input,.login_pwd > input {
+  border-bottom: 1rpx solid #ccc;
+  margin-left: 40rpx;
+  height: 100rpx;
+}
+.divider {
+  color: #000;
+  font-weight: bold;
+}
+
+.login_btn {
+  width: 85%;
+  margin: 0 auto;
+  margin-top: 80rpx;
+}
+.login_btn .btn {
+  width: 100%;
+}
+.login_info {
+  width: 85%;
+  margin: 0 auto;
+}
+.login_info .show_warn {
+  color: #fff;
+  font-size: 20rpx;
+}
+.login_info .copyright{
+  margin-top: 20rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 20rpx;
+}

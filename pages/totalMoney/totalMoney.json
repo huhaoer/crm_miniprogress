@@ -1,0 +1,17 @@
+{
+  "usingComponents": {
+    "van-collapse": "@vant/weapp/collapse",
+    "van-collapse-item": "@vant/weapp/collapse-item",
+    "van-tab": "@vant/weapp/tab",
+    "van-tabs": "@vant/weapp/tabs",
+    "van-icon": "@vant/weapp/icon",
+    "van-circle": "@vant/weapp/circle",
+    "van-tag": "@vant/weapp/tag"
+  },
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#000000",
+  "navigationBarBackgroundColor": "#263238",
+  "navigationBarTitleText": "项目详情",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh":false
+}

@@ -1,0 +1,147 @@
+<view class="container">
+    <van-tabs active="{{ active }}" bind:change="onChangeTab" duration="0.5" animated="{{true}}" sticky="{{true}}" swipeable="{{true}}" tab-active-class="active_cls">
+        <!-- 第一部分 项目总金额 -->
+        <van-tab title="项目总金额" name="total">
+
+            <!-- 显示项目总金额 -->
+            <view class="total_show">
+                <van-icon name="gold-coin-o" color="#263238" size="40rpx" />
+                <view>总金额:{{"10W"}}</view>
+            </view>
+
+            <!-- 显示具体项目 -->
+            <view class="total_wrap">
+                <view class="every_item">
+                    <!-- 上部分信息 -->
+                    <view class="every_top">
+                        <view class="circle">
+                            <!-- 进度条 -->
+                            <van-circle value="{{ 30 }}"  stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE"  clockwise="{{false}}" />
+                            <!-- 项目信息 -->
+                            <view class="top_info">
+                                <view>四川项目</view>
+                                <view>四川住建局</view>
+                            </view>
+                        </view>
+
+                        <!-- 标签 -->
+                        <van-tag type="primary" custom-class="tag_class">标签</van-tag>
+                    </view>
+                    <!-- 中间主体信息 -->
+                    <view class="every_main">
+                        <!-- 一行信息 -->
+                        <view class="main_row">
+                            <view class="">
+                                项目名称:{{"xxxx"}}
+                            </view>
+                            <view class="">
+                                项目金额:{{"xxxx"}}
+                            </view>
+                        </view>
+                        <view class="main_row">
+                            <view class="">
+                                项目名称:{{"xxx"}}
+                            </view>
+                            <view class="">
+                                项目金额:{{"xxxx"}}
+                            </view>
+                        </view>
+                        <view class="main_row">
+                            <view class="">
+                                项目名称:{{"xxxx"}}
+                            </view>
+                            <view class="">
+                                项目金额:{{"xxxx"}}
+                            </view>
+                        </view>
+                    </view>
+                    <!-- 底部合同信息 -->
+                    <view class="every_bot">
+
+                    </view>
+                </view>
+
+                111
+            </view>
+
+        </van-tab>
+        <!-- 第二部分 暂未回款 -->
+        <van-tab title="暂未回款" name="willPay">
+            暂未回款
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+        </van-tab>
+        <!-- 第三部分 待回款 -->
+        <van-tab title="待回款" name="waitPay">
+            待回款
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+            <view>1</view>
+        </van-tab>
+        <!-- 第四部分 我的项目 -->
+        <van-tab title="我的项目" name="project">我的项目</van-tab>
+        <!-- 第五部分 我的合同 -->
+        <van-tab title="我的合同" name="contract">我的合同</van-tab>
+    </van-tabs>
+</view>

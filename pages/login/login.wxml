@@ -1,0 +1,43 @@
+<!-- 登录页面 -->
+<view class="container">
+  <!-- 头部介绍 -->
+  <view class="login_header">
+    <text class="login_text">
+      鹏业CRM
+    </text>
+  </view>
+
+  <!-- 表单信息 -->
+  <view class="login_area">
+    <view class="login_user">
+      <van-icon name="friends-o" size="50rpx" custom-class="icon" />
+      <input type="number" placeholder="请输入手机号" maxlength="11" bindblur="accountBlur" />
+    </view>
+    <van-divider custom-style="divider" />
+    <view class="login_pwd">
+      <van-icon name="closed-eye" size="50rpx" custom-class="icon" />
+      <input type="text" password placeholder="请输入密码" bindblur="passwordBlue" />
+    </view>
+  </view>
+
+  <!-- 登录按钮 -->
+  <view class="login_btn">
+    <van-button 
+      type="info"  
+      hairline 
+      size="large"
+      custom-class="btn"
+      bindtap="handleToHome"
+      >登录</van-button>
+  </view>
+
+  <!-- 底部声明 -->
+  <view class="login_info">
+    <text class="show_warn">
+      此系统仅供鹏业软件股份有限公司内部员工使用,如有需求,请联系工作人员了解详情
+    </text>
+    <view class="copyright">
+      <text>Copyright © pengesoft Co., Ltd.</text>
+    </view>
+  </view>
+</view>

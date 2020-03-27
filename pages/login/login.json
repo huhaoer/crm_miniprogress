@@ -1,0 +1,13 @@
+{
+  "usingComponents": {
+    "van-icon": "@vant/weapp/icon",
+    "van-divider": "@vant/weapp/divider",
+    "van-button": "@vant/weapp/button"
+  },
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#000000",
+  "navigationBarBackgroundColor": "#263238",
+  "navigationBarTitleText": "登录",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh":false
+}

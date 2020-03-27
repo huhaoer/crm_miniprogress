@@ -1,0 +1,18 @@
+{
+  "usingComponents": {
+    "van-notice-bar": "@vant/weapp/notice-bar",
+    "van-grid": "@vant/weapp/grid/",
+    "van-grid-item": "@vant/weapp/grid-item",
+    "van-progress": "@vant/weapp/progress",
+    "van-divider": "@vant/weapp/divider",
+    "van-circle": "@vant/weapp/circle",
+    "van-tag": "@vant/weapp/tag",
+    "van-icon": "@vant/weapp/icon"
+  },
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#000000",
+  "navigationBarBackgroundColor": "#263238",
+  "navigationBarTitleText": "首页",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh":false
+}

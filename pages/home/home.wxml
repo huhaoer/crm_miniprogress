@@ -1,0 +1,136 @@
+<!-- 首页 -->
+<view class="container">
+
+  <!-- 顶部提示信息 -->
+  <!-- <van-notice-bar text="我是提醒消息我是提醒消息我是提醒消息我是提醒消息我是提醒消息我是提醒消息我是提醒消息" mode="closeable" speed="20" left-icon="bullhorn-o" color="#ed6a0c" backgroundColor="#fffbe8" bind:click="handleNoticeClick" /> -->
+
+  <!-- header头部信息 -->
+  <van-grid column-num="5" border="{{ false }}" square custom-class="bg_change" clickable>
+    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney" link-type="navigateTo">
+      <view class="total_money_num">22W</view>
+      <text class="total_money">项目总额</text>
+    </van-grid-item>
+    <van-grid-item use-slot content-class="bg_change_item">
+      <view class="noback_money_num">22W</view>
+      <text class="noback_money">暂未回款</text>
+    </van-grid-item>
+    <van-grid-item use-slot content-class="bg_change_item">
+      <view class="wait_money_num">22W</view>
+      <text class="wait_money">待回款</text>
+    </van-grid-item>
+    <van-grid-item use-slot content-class="bg_change_item">
+      <view class="my_project_num">
+        <text class="big_count">10</text>
+        <text class="mini_count">+{{2}}</text>
+      </view>
+      <text class="my_project">我的项目</text>
+    </van-grid-item>
+    <van-grid-item use-slot content-class="bg_change_item">
+      <view class="my_contract_num">
+        <text class="big_count">10</text>
+        <text class="mini_count">+{{2}}</text>
+      </view>
+      <text class="my_contract">我的合同</text>
+    </van-grid-item>
+    <!-- <van-grid-item use-slot content-class="bg_change_item"></van-grid-item>
+    <van-grid-item use-slot content-class="bg_change_item"></van-grid-item>
+    <van-grid-item use-slot content-class="bg_change_item"></van-grid-item> -->
+  </van-grid>
+
+  <!-- 展示近期拜访 -->
+  <view class="recent_visit">
+    <view class="recent_title">近期拜访</view>
+    <!-- 拜访记录 -->
+    <block wx:for="{{3}}">
+      <view class="recent_item">
+        <view class="item_top">
+          <view class="left_wrap">
+            <view class="name">四川维修资金项目</view>
+            <view class="danwei">四川建设厅</view>
+          </view>
+          <view class="time">2012.12 10.30</view>
+        </view>
+        <view class="item_bot">
+          <view class="left_wrap">
+            <view class="connect">联系人:李厅长</view>
+            <view class="phone">13000001111</view>
+          </view>
+          <view class="xs">销售:张德胜</view>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 展示近期项目 -->
+  <block wx:for="{{3}}">
+    <view class="recent_project">
+    <view class="project_head">
+      <view class="head_wrap">
+        <!-- 进度条 -->
+        <van-circle value="{{ 30 }}"  stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE"  clockwise="{{false}}" />
+        <!-- 项目名 -->
+        <view class="project_mid">
+          <view class="name">四川维修资金项目</view>
+          <view class="home">山东建设厅</view>
+        </view>
+      </view>
+      <!-- 标签 -->
+      <van-tag type="primary" custom-class="tag_class">标签</van-tag>
+    </view>
+    <view class="project_main">
+      <!-- 状态 -->
+      <view class="pro_status">
+        <text class="front">项目状态:</text>
+        <text class="back">执行中</text>
+      </view>
+      <!-- 收款待收款 -->
+      <view class="pro_money">
+        <view class="show">
+          <text class="front">合同已收款:</text>
+          <text class="back">80万</text>
+        </view>
+        <view class="daishou">
+          <text class="front">合同待收款:</text>
+          <text class="back">20万</text>
+        </view>
+      </view>
+      <!-- 下一阶段 -->
+      <view class="pro_next">
+        <text class="front">下一阶段:</text>
+        <text class="back">潍坊市合同 5月17号验收,支付尾款</text>
+      </view>
+      <!-- 合同 -->
+      <view class="pro_contract">
+        <view class="first">
+          <text class="front">合同:</text>
+          <text class="back">菏泽市合同 代收款10W</text>
+        </view>
+        <view class="first">
+          <text class="front not_show" style="opacity:0">合同:</text>
+          <text class="back">青岛市合同 代收款10W</text>
+        </view>
+        <view class="first">
+          <text class="front not_show" style="opacity:0">合同:</text>
+          <text class="back">成都市合同 代收款10W</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  </block>
+
+  <!-- 返回顶部 -->
+  <view class="back_top" catch:tap="handleTop" hidden="{{!showScroll}}">
+    <van-icon 
+      name="upgrade" 
+      color="#1989fa"
+      size="80rpx"
+      custom-class=""
+  />
+  </view>
+
+  <!-- 底部额外信息 -->
+  <view class="footer">
+    footer
+  </view>
+
+</view>

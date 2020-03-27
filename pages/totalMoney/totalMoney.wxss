@@ -1,0 +1,62 @@
+.container .active_cls {
+    color: #ee0a24;
+}
+/* 第一部分 项目总金额 */
+.total_show {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20rpx 0;
+    box-sizing: border-box;
+    color: #263238;
+}
+/* 具体每一个项目 */
+.total_wrap {
+    width: 100%;
+    background-color: cadetblue;
+}
+.total_wrap .every_item {
+    width: 100%;
+    background-color: #fff;
+    padding: 0 20rpx;
+    box-sizing: border-box;
+    border-bottom: 1rpx solid #878787;
+}
+/* 顶部信息 */
+.total_wrap .every_item .every_top{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.total_wrap .every_item .circle{
+    display: flex;
+}
+.total_wrap .every_item .circle .top_info{
+    margin-left: 40rpx;
+}
+.total_wrap  .top_info view:nth-of-type(1){
+    color: rgb(26, 20, 20);
+    font-size: 28rpx;
+}
+.total_wrap  .top_info view:nth-of-type(2){
+    color: #9C9C9C;
+    font-size: 24rpx;
+    margin-top: 15rpx;
+}
+/* 中间信息 */
+.total_wrap .every_main {
+    width: 100%;
+    margin-top: 15rpx;
+}
+.total_wrap .every_main .main_row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.total_wrap .every_main .main_row view{
+    flex: 1;
+    font-size: 26rpx;
+    /* color: #9C9C9C; */
+    color: #000;
+}
+
