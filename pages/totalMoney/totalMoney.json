@@ -6,7 +6,11 @@
     "van-tabs": "@vant/weapp/tabs",
     "van-icon": "@vant/weapp/icon",
     "van-circle": "@vant/weapp/circle",
-    "van-tag": "@vant/weapp/tag"
+    "van-tag": "@vant/weapp/tag",
+    "van-cell": "@vant/weapp/cell",
+    "van-cell-group": "@vant/weapp/cell-group/",
+    "van-overlay": "@vant/weapp/overlay",
+    "van-loading": "@vant/weapp/loading"
   },
   "backgroundTextStyle": "dark",
   "backgroundColor": "#000000",

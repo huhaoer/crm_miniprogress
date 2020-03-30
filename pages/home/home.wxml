@@ -6,35 +6,32 @@
 
   <!-- header头部信息 -->
   <van-grid column-num="5" border="{{ false }}" square custom-class="bg_change" clickable>
-    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney" link-type="navigateTo">
+    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=total" link-type="navigateTo">
       <view class="total_money_num">22W</view>
       <text class="total_money">项目总额</text>
     </van-grid-item>
-    <van-grid-item use-slot content-class="bg_change_item">
+    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=willpay" link-type="navigateTo">
       <view class="noback_money_num">22W</view>
       <text class="noback_money">暂未回款</text>
     </van-grid-item>
-    <van-grid-item use-slot content-class="bg_change_item">
+    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=waitpay" link-type="navigateTo">
       <view class="wait_money_num">22W</view>
       <text class="wait_money">待回款</text>
     </van-grid-item>
-    <van-grid-item use-slot content-class="bg_change_item">
+    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="my_project_num">
         <text class="big_count">10</text>
         <text class="mini_count">+{{2}}</text>
       </view>
       <text class="my_project">我的项目</text>
     </van-grid-item>
-    <van-grid-item use-slot content-class="bg_change_item">
+    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=contract" link-type="navigateTo">
       <view class="my_contract_num">
         <text class="big_count">10</text>
         <text class="mini_count">+{{2}}</text>
       </view>
       <text class="my_contract">我的合同</text>
     </van-grid-item>
-    <!-- <van-grid-item use-slot content-class="bg_change_item"></van-grid-item>
-    <van-grid-item use-slot content-class="bg_change_item"></van-grid-item>
-    <van-grid-item use-slot content-class="bg_change_item"></van-grid-item> -->
   </van-grid>
 
   <!-- 展示近期拜访 -->

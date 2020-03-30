@@ -13,10 +13,10 @@
       <van-icon name="friends-o" size="50rpx" custom-class="icon" />
       <input type="number" placeholder="请输入手机号" maxlength="11" bindblur="accountBlur" />
     </view>
-    <van-divider custom-style="divider" />
+    <!-- <van-divider custom-style="divider" /> -->
     <view class="login_pwd">
       <van-icon name="closed-eye" size="50rpx" custom-class="icon" />
-      <input type="text" password placeholder="请输入密码" bindblur="passwordBlue" />
+      <input type="text" password placeholder="请输入密码" bindblur="passwordBlur" />
     </view>
   </view>
 

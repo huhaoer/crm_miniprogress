@@ -1,0 +1,8 @@
+.back_top {
+    position: fixed;
+    right: 20rpx;
+    bottom: 50rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

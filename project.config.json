@@ -24,7 +24,7 @@
 		"nodeModules": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.0",
+	"libVersion": "2.10.3",
 	"appid": "wx3186c10ca59e1b79",
 	"projectname": "crm_project",
 	"debugOptions": {

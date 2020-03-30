@@ -1,62 +1,144 @@
 .container .active_cls {
-    color: #ee0a24;
+  width: 100%;
+  height: 100%;
+  color: #ee0a24;
+}
+/* 遮罩层 */
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: transparent;
+}
+
+.wrapper .block {
+  width: 120px;
+  height: 120px;
+  background-color: #fff;
 }
 /* 第一部分 项目总金额 */
 .total_show {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 20rpx 0;
-    box-sizing: border-box;
-    color: #263238;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20rpx 0;
+  box-sizing: border-box;
+  color: #263238;
 }
 /* 具体每一个项目 */
 .total_wrap {
-    width: 100%;
-    background-color: cadetblue;
+  width: 100%;
+  background-color: rgb(219, 236, 236);
+  overflow: hidden;
 }
 .total_wrap .every_item {
-    width: 100%;
-    background-color: #fff;
-    padding: 0 20rpx;
-    box-sizing: border-box;
-    border-bottom: 1rpx solid #878787;
+  width: 100%;
+  background-color: #fff;
+  padding: 15rpx 20rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #f0e9e9;
+  margin-top: 20rpx;
 }
 /* 顶部信息 */
-.total_wrap .every_item .every_top{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+.total_wrap .every_item .every_top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
-.total_wrap .every_item .circle{
-    display: flex;
+.total_wrap .every_item .circle {
+  display: flex;
 }
-.total_wrap .every_item .circle .top_info{
-    margin-left: 40rpx;
+.total_wrap .every_item .circle .top_info {
+  margin-left: 40rpx;
 }
-.total_wrap  .top_info view:nth-of-type(1){
-    color: rgb(26, 20, 20);
-    font-size: 28rpx;
+.total_wrap .every_item .circle .top_showmoney {
+  color: #ee0a24;
+  font-size: 24rpx;
 }
-.total_wrap  .top_info view:nth-of-type(2){
-    color: #9C9C9C;
-    font-size: 24rpx;
-    margin-top: 15rpx;
+.total_wrap .top_info view:nth-of-type(1) {
+  color: rgb(26, 20, 20);
+  font-size: 28rpx;
+}
+.total_wrap .top_info view:nth-of-type(2) {
+  color: #9c9c9c;
+  font-size: 24rpx;
+  margin-top: 15rpx;
 }
 /* 中间信息 */
 .total_wrap .every_main {
-    width: 100%;
-    margin-top: 15rpx;
+  width: 100%;
+  margin-top: 15rpx;
 }
-.total_wrap .every_main .main_row{
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+.total_wrap .every_main .main_row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
-.total_wrap .every_main .main_row view{
-    flex: 1;
-    font-size: 26rpx;
-    /* color: #9C9C9C; */
-    color: #000;
+.total_wrap .every_main .main_row view {
+  flex: 1;
+  font-size: 26rpx;
+  /* color: #9C9C9C; */
+  color: #000;
+}
+/* 底部信息 */
+.total_wrap .every_bot {
+  width: 100%;
+  margin-top: 15rpx;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* 每一行清空padding */
+.van-cell {
+  padding: 0 !important;
 }
 
+/* 我的项目详情 */
+.my_project {
+  background-color: rgb(219, 236, 236);
+  overflow: hidden;
+}
+
+.my_project .every_project {
+  background-color: #fff;
+  border-bottom: 1rpx solid #e5e5e5;
+  margin-top: 20rpx;
+  border-radius: 8rpx;
+}
+.my_project .one_rowinfo {
+  padding: 10rpx 15rpx 15rpx 15rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.my_project .one_rowinfo .left_name {
+  color: #080808;
+  flex: 0 1 auto;
+  font-size: 28rpx;
+}
+.my_project .one_rowinfo .right_desc {
+  color: #878787;
+  flex: 1;
+  font-size: 24rpx;
+  padding-left: 18rpx;
+}
+.my_project .one_rowinfo .two_rowinfo_1 {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.my_project .one_rowinfo .two_rowinfo_2 {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+/* 返回顶部 */
+.back_top {
+  position: fixed;
+  right: 20rpx;
+  bottom: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

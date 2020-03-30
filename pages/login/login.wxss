@@ -21,19 +21,22 @@
   background-color: #fff;
 }
 .login_user,.login_pwd {
-  padding: 40rpx;
+  padding: 60rpx 40rpx;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+.login_user {
+  border-bottom: 1rpx solid rgb(190, 186, 186);
+}
 .login_user .icon,.login_pwd .icon {
   color: #1989fa;
 }
 .login_user > input,.login_pwd > input {
-  border-bottom: 1rpx solid #ccc;
   margin-left: 40rpx;
-  height: 100rpx;
+  padding: 5rpx 10rpx;
+  border-bottom: 1rpx solid rgb(163, 158, 158);
 }
 .divider {
   color: #000;

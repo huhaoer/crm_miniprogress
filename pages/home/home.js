@@ -8,18 +8,7 @@ Page({
     js_code: "", //JS_CODE
     showScroll: false //是否显示回到顶部按钮
   },
-  /**
-   * 点击提醒信息栏的事件
-   * @param {*} options
-   */
-  handleNoticeClick(e) {
-    console.log(e);
-  },
 
-  // 获取手机号
-  getPhoneNumber(e) {
-    console.log(e);
-  },
 
   // 返回顶部
   handleTop() {
@@ -42,72 +31,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    // wx.login({
-    //   timeout:10000,
-    //   success: (result)=>{
-    //     console.log(result)
-    //   },
-    //   fail: ()=>{},
-    //   complete: ()=>{}
-    // });
-    // wx.getSetting({
-    //   success: (result)=>{
-    //     console.log(result)
-    //   },
-    //   fail: ()=>{},
-    //   complete: ()=>{}
-    // });
-    // wx.getSetting({
-    //   success(res) {
-    //     console.log(res,'结果')
-    //     if (!res.authSetting['scope.record']) {
-    //       wx.authorize({
-    //         scope: 'scope.userInfo',
-    //         success () {
-    //           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-    //           // wx.startRecord()
-    //           console.log("授权登录")
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
-    // const that = this;
-    // wx.login({
-    //   timeout:10000,
-    //   success: (result)=>{
-    //     console.log(result.code)
-    //     let CODE = result.code;
-    //     wx.setStorage({
-    //       key: 'code',
-    //       data: CODE,
-    //       success: (result)=>{
-    //         console.log("缓存设置成功")
-    //       },
-    //       fail: ()=>{},
-    //       complete: ()=>{}
-    //     });
-    //     // 获取openid
-    //     wx.getStorage({
-    //       key: 'code',
-    //       success: (result)=>{
-    //         console.log(result,'缓存')
-    //         let storageCode = result.data;//缓存
-    //         wx.request({
-    //           url: `https://api.weixin.qq.com/sns/jscode2session?appid=${AppID}&secret=${AppSecret}&js_code=${storageCode}&grant_type=authorization_code`,
-    //           data: {},
-    //           header: {'content-type':'application/json'},
-    //           method: 'GET',
-    //           dataType: 'json',
-    //           responseType: 'text',
-    //           success: (result)=>{
-    //             console.log(result,'aaaaa')
-    //           }
-    //         });
-    //       }
-    //     });
-    //   }
-    // });
+ 
   },
 
   /**
@@ -127,11 +51,9 @@ Page({
     //   fail: ()=>{},
     //   complete: ()=>{}
     // });
-    wx.hideHomeButton({
-      success: (result) => {
-        console.log(result,'隐藏结果')
-      }
-    })
+    if (wx.canIUse('hideHomeButton')) {
+      wx.hideHomeButton()
+    }
   },
 
   /**

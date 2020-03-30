@@ -23,7 +23,7 @@ Page({
 
     // 密码错误
     if (
-      !(this.data.user_account === "huhao" && this.data.user_pwd === "123456")
+      !(this.data.user_account === "123456" && this.data.user_pwd === "123456")
     ) {
       // 隐藏loading
       wx.hideLoading();
