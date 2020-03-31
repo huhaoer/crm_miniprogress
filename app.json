@@ -3,14 +3,17 @@
     "pages/login/login",
     "pages/home/home",
     "pages/totalMoney/totalMoney",
-    "pages/myItem/myItem"
+    "pages/itemDetail/itemDetail",
+    "pages/contractDetail/contractDetail",
+    "pages/visitList/visitList"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "backgroundColor": "#ffffff",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false
   },
   "sitemapLocation": "sitemap.json"
 }

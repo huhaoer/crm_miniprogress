@@ -10,11 +10,11 @@
       <view class="total_money_num">22W</view>
       <text class="total_money">项目总额</text>
     </van-grid-item>
-    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=willpay" link-type="navigateTo">
+    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=willPay" link-type="navigateTo">
       <view class="noback_money_num">22W</view>
       <text class="noback_money">暂未回款</text>
     </van-grid-item>
-    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=waitpay" link-type="navigateTo">
+    <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=waitPay" link-type="navigateTo">
       <view class="wait_money_num">22W</view>
       <text class="wait_money">待回款</text>
     </van-grid-item>
@@ -38,8 +38,8 @@
   <view class="recent_visit">
     <view class="recent_title">近期拜访</view>
     <!-- 拜访记录 -->
-    <block wx:for="{{3}}">
-      <view class="recent_item">
+    <block wx:for="{{3}}" wx:key="index">
+      <view class="recent_item" bind:tap="handleToList">
         <view class="item_top">
           <view class="left_wrap">
             <view class="name">四川维修资金项目</view>
@@ -59,7 +59,7 @@
   </view>
 
   <!-- 展示近期项目 -->
-  <block wx:for="{{3}}">
+  <block wx:for="{{3}}" wx:key="index">
     <view class="recent_project">
     <view class="project_head">
       <view class="head_wrap">

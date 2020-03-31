@@ -1,0 +1,9 @@
+{
+  "usingComponents": {},
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#000000",
+  "navigationBarBackgroundColor": "#263238",
+  "navigationBarTitleText": "拜访列表",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh":false
+}

@@ -1,5 +1,6 @@
 {
 	"description": "项目配置文件",
+	"cloudfunctionRoot": "cloudfunctions/",
 	"packOptions": {
 		"ignore": []
 	},
@@ -33,6 +34,7 @@
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -75,6 +77,13 @@
 					"id": -1,
 					"name": "total",
 					"pathName": "pages/totalMoney/totalMoney",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "visitList",
+					"pathName": "pages/visitList/visitList",
 					"scene": null
 				}
 			]

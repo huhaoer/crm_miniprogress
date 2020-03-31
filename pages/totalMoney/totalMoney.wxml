@@ -1,6 +1,6 @@
 <view class="container">
     <!-- 加载样式 -->
-    <van-overlay show="{{ true }}"  z-index="9999">
+    <van-overlay show="{{ isLoading }}"  z-index="9999">
         <view class="wrapper">
             <van-loading color="#fff" type="spinner" size="40rpx" vertical text-size="24rpx">加载中...</van-loading>
         </view>

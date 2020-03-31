@@ -9,22 +9,15 @@ Page({
   },
   // 点击按钮跳登录转到首页
   handleToHome() {
-    // 禁用状态
-    // return
 
     // 判断用户信息的登录信息
     wx.showLoading({
       title: "登录中",
-      mask: true,
-      success: result => {
-        console.log(result);
-      }
+      mask: true
     });
 
     // 密码错误
-    if (
-      !(this.data.user_account === "123456" && this.data.user_pwd === "123456")
-    ) {
+    if ((this.data.user_account !== "123456") && (this.data.user_pwd !== "123456")) {
       // 隐藏loading
       wx.hideLoading();
       //弹框提醒
@@ -55,7 +48,7 @@ Page({
   },
 
   // 用户密码失焦事件
-  passwordBlue(e) {
+  passwordBlur(e) {
     let pwd = e.detail.value;
     this.setData({
       user_pwd: pwd

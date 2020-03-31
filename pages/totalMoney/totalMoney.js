@@ -6,7 +6,7 @@ Page({
   data: {
     activeNames: "", //手风琴页面默认显示的一条,数组形式
     active: "total", //tab页默认显示项目总金额页面
-    isLoading: true,//是否在加载中
+    isLoading: false //是否在加载中
   },
   // 折叠面板方法
   onChangeColl(event) {
@@ -24,11 +24,16 @@ Page({
       scrollTop: 0
     });
 
-    // 加载数据
+    // 改变时先切换到加载状态
+    this.setData({
+      isLoading: true
+    });
+
+    // 模拟数据请求
     setTimeout(() => {
       this.setData({
         isLoading: false
-      })
+      });
     }, 2000);
   },
 
@@ -45,15 +50,29 @@ Page({
           "当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。"
       });
     }
+
+    // 调用云函数
+    wx.cloud
+      .callFunction({
+        name: "getDatas", //云函数的名字
+      })
+      .then(res => {
+        console.log(res, "云函数数据");
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const name = options.name || 'total';//获取跳转页面传递的tab页name名 默认为total
+    const name = options.name || "total"; //获取跳转页面传递的tab页name名 默认为total
+    console.log(name);
     this.setData({
-      active: name
-    })
+      active: name,
+      isLoading: true
+    });
   },
 
   /**
@@ -65,16 +84,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    // const _url = "http://192.168.3.2:8080/chooseInfo/getChooseByteacherId";
-    // wx.request({
-    //   url: _url,
-    //   data: {
-    //     teacherId: "123456"
-    //   },
-    //   success(res) {
-    //     console.log(res, "结果=======");
-    //   }
-    // });
+
+    // 加载数据
+    setTimeout(() => {
+      this.setData({
+        isLoading: false
+      });
+    }, 2000);
   },
 
   /**
