@@ -5,7 +5,10 @@
     "pages/totalMoney/totalMoney",
     "pages/itemDetail/itemDetail",
     "pages/contractDetail/contractDetail",
-    "pages/visitList/visitList"
+    "pages/visitDetail/visitDetail",
+    "pages/addItem/addItem",
+    "pages/addVisit/addVisit",
+    "pages/addVisitRecord/addVisitRecord"
   ],
   "window": {
     "backgroundTextStyle": "light",

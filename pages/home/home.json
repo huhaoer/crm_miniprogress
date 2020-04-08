@@ -9,10 +9,10 @@
     "van-tag": "@vant/weapp/tag",
     "van-icon": "@vant/weapp/icon"
   },
-  "backgroundTextStyle": "dark",
   "backgroundColor": "#000000",
   "navigationBarBackgroundColor": "#263238",
   "navigationBarTitleText": "首页",
   "navigationBarTextStyle": "white",
-  "enablePullDownRefresh":false
+  "enablePullDownRefresh":true,
+  "backgroundTextStyle": "light"
 }

@@ -75,15 +75,24 @@
     font-size: 35rpx;
     padding: 0 10rpx;
     box-sizing: border-box;
-    /* border-bottom: 1rpx solid #CFCFCF; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
+/* 暂无数据 */
+.no_data {
+    text-align: center;
+    color: #B5B5B5;
+    font-size: 26rpx;
+    padding: 10rpx 0;
+}
+
 /* 拜访项目 */
 .recent_item {
     margin-top: 25rpx;
     border-bottom: 1rpx solid rgba(207, 207 ,207,1);
     padding: 5rpx 20rpx;
     box-sizing: border-box;
-    border: 1rpx solid red;
 }
 .recent_item .item_top {
     display: flex;

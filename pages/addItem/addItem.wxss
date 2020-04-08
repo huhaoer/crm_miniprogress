@@ -1,0 +1,7 @@
+.container {
+}
+.wrapper {
+    padding: 40rpx 0;
+    background-color: rgb(241, 233, 233);
+    /* margin-top: 30rpx; */
+}

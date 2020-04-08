@@ -1,0 +1,62 @@
+<view class="container">
+
+    <!-- 拜访表单填写 -->
+    <view class="wrapper">
+        <van-cell-group>
+            <!-- 项目名 -->
+            <van-cell title="项目分类：" is-link bind:click="showChooseProject" value="{{nowProjectValue}}" />
+            <van-action-sheet 
+                show="{{ project_item_show }}" 
+                actions="{{ projectList }}" 
+                bind:close="quitNowProject" 
+                bind:select="selectNowProject" 
+                overlay="{{true}}"
+                close-on-click-action="{{true}}"
+                close-on-click-overlay="{{false}}"
+                title="选择项目分类"
+            />
+            <!-- 计划内容 -->
+            <van-field 
+                value="{{nowPlanContent}}"  
+                clearable 
+                label="计划内容：" 
+                border="{{ true }}" 
+                error-message="{{nowPlanContentErr}}" 
+                bind:input="planContentInput"
+            />
+
+            <!-- 计划备注 -->
+            <van-field 
+                value="{{nowPlanRemark}}" 
+                clearable 
+                label="计划备注：" 
+                border="{{ true }}" 
+                error-message="{{nowPlanRemarkErr}}" 
+                bind:input="planRemarkInput"
+            />
+
+            <!-- 计划时间 -->
+            <van-cell title="计划拜访时间：" is-link bind:click="showChooseTime" value="{{nowPlanTime}}" />
+            <van-datetime-picker
+                type="date"
+                bind:confirm="confirmChooseTime"
+                bind:cancel="cancelChooseTime"
+                min-date="{{ minDate }}"
+                formatter="{{ formatter }}"
+                wx:if="{{ time_show }}"
+            />
+            
+            <!-- 实际内容 -->
+            <van-field value="暂无" disabled  clearable label="实际内容：" border="{{ true }}" />
+
+            <!-- 实际时间 -->
+            <van-field value="暂无" disabled clearable label="实际时间：" border="{{ true }}" />
+            
+        </van-cell-group>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view>
+        <van-button type="info" block square bind:click="handleSubmit">提交</van-button>
+    </view>
+</view>

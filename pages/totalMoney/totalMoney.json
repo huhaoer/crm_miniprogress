@@ -10,12 +10,13 @@
     "van-cell": "@vant/weapp/cell",
     "van-cell-group": "@vant/weapp/cell-group/",
     "van-overlay": "@vant/weapp/overlay",
-    "van-loading": "@vant/weapp/loading"
+    "van-loading": "@vant/weapp/loading",
+    "van-button": "@vant/weapp/button"
   },
   "backgroundTextStyle": "dark",
   "backgroundColor": "#000000",
   "navigationBarBackgroundColor": "#263238",
-  "navigationBarTitleText": "项目详情",
+  "navigationBarTitleText": "总览",
   "navigationBarTextStyle": "white",
   "enablePullDownRefresh":false
 }

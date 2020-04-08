@@ -1,4 +1,4 @@
-// pages/login/login.js
+const cloudFunc = require("../../api/index");
 Page({
   /**
    * 页面的初始数据
@@ -9,46 +9,58 @@ Page({
   },
   // 点击按钮跳登录转到首页
   handleToHome() {
-
-    // 判断用户信息的登录信息
-    wx.showLoading({
-      title: "登录中",
-      mask: true
-    });
-
-    // 密码错误
-    if ((this.data.user_account !== "123456") && (this.data.user_pwd !== "123456")) {
-      // 隐藏loading
-      wx.hideLoading();
-      //弹框提醒
-      wx.showToast({
-        title: "密码错误",
-        icon: 'none',
-        duration: 1500,
-        mask: true
-      });
-    } else {
-      // 隐藏loading
-      wx.hideLoading();
-      //跳转页面
-      wx.redirectTo({
-        url: "/pages/home/home",
-        success: result => {
-          console.log(result, "跳转结果");
+    const that = this;
+    console.log(that.data.user_account,that.data.user_pwd)
+    cloudFunc("login", {
+      UserName: that.data.user_account,
+      Password: that.data.user_pwd
+    })
+      .then(res => {
+        console.log(res, "登录结果");
+        let result = JSON.parse(res.result);
+        console.log(result, "JSON转换的result");
+        console.log(result.token, "result.token");
+        // 密码错误
+        if (result.message === "登录失败,账户或密码错误") {
+          wx.showToast({
+            title: "密码错误",
+            icon: "none",
+            duration: 1000,
+            mask: true
+          });
+          return;
+        } else {
+          //保存token
+          wx.setStorageSync("token", result.token);
+          // 保存用户
+          wx.setStorageSync("user", JSON.stringify(result.user));
+          // 跳转到首页
+          wx.redirectTo({
+            url: "/pages/home/home"
+          });
         }
+      })
+      .catch(err => {
+        console.log(err, "登录失败");
+        wx.showToast({
+          title: "登录失败",
+          icon: "none",
+          duration: 1000,
+          mask: true
+        });
       });
-    }
+    // 密码错误
   },
-  // 用户输入失焦事件
-  accountBlur(e) {
+  // 用户输入输入事件
+  accountInput(e) {
     let val = e.detail.value; //用户名
     this.setData({
       user_account: val
     });
   },
 
-  // 用户密码失焦事件
-  passwordBlur(e) {
+  // 用户密码输入事件
+  passwordInput(e) {
     let pwd = e.detail.value;
     this.setData({
       user_pwd: pwd
@@ -58,26 +70,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-    // var that = this
-    // 　　// 查看是否授权
-    // 　　wx.getSetting({
-    // 　　　　success(res) {
-    //   console.log(res)
-    // 　　　　　　if (res.authSetting['scope.userInfo']) {
-    // 　　　　　　　　// 已经授权，可以直接调用 getUserInfo 获取头像昵称
-    // 　　　　　　　　wx.getUserInfo({
-    // 　　　　　　　　　　success: function (res) {
-    //   console.log(res)
-    // 　　　　　　　　　　　　that.setData({
-    // 　　　　　　　　　　　　　　info: res.userInfo
-    // 　　　　　　　　　　　　})
-    // 　　　　　　　　　　}
-    // 　　　　　　　　})
-    // 　　　　　　}
-    // 　　　　}
-    // 　　})
-  },
+  onLoad: function(options) {},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -98,19 +91,4 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {}
 });

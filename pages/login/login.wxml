@@ -11,12 +11,12 @@
   <view class="login_area">
     <view class="login_user">
       <van-icon name="friends-o" size="50rpx" custom-class="icon" />
-      <input type="number" placeholder="请输入手机号" maxlength="11" bindblur="accountBlur" />
+      <input type="number" placeholder="请输入手机号" maxlength="11" bindinput="accountInput" />
     </view>
     <!-- <van-divider custom-style="divider" /> -->
     <view class="login_pwd">
       <van-icon name="closed-eye" size="50rpx" custom-class="icon" />
-      <input type="text" password placeholder="请输入密码" bindblur="passwordBlur" />
+      <input type="text" password placeholder="请输入密码" bindinput="passwordInput"/>
     </view>
   </view>
 

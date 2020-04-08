@@ -1,0 +1,95 @@
+.container {
+    /* background-color: brown; */
+}
+/* 拜访头 */
+.visit_header {
+    background-color: #fff;
+    padding: 15rpx 5rpx;
+    box-sizing: border-box;
+    /* border: 1rpx solid blue; */
+}
+.visit_header .visit_time{
+    display: flex;
+    align-items: center;
+    color: rgb(94, 91, 88);
+    font-size: 28rpx;
+}
+.visit_header .visit_time:nth-of-type(2){
+    margin-top: 20rpx;
+}
+.visit_header .visit_time > view{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 0 10rpx;
+}
+/* 展示所有拜访计划 */
+.show_all_plan {
+    /* border: 1rpx solid red; */
+    box-sizing: border-box;
+    padding: 20rpx 10rpx 0rpx 10rpx;
+}
+.show_all_record {
+    margin-top: 10rpx;
+    box-sizing: border-box;
+    padding: 20rpx 10rpx 0rpx 10rpx;
+}
+.all_plan_title,.all_record_title {
+    /* border: 1rpx solid green; */
+    padding: 20rpx 10rpx 0rpx 10rpx;
+    box-sizing: border-box;
+    color: rgb(19, 4, 4);
+    font-size: 26rpx;
+    font-weight: 500;
+}
+.all_plan_one,.all_record_one {
+    padding: 10rpx 10rpx;
+    box-sizing: border-box;
+    /* border-top: 1rpx solid #dfd3d3; */
+    border: 1rpx solid #dfd3d3;
+    display: flex;
+    margin-top: 15rpx;
+}
+.all_record_one:last-of-type{
+    margin-bottom: 20rpx;
+}
+.all_plan_one .row_one,
+.all_record_one .row_one
+{   
+    color: #413d3d;
+    flex: 1;
+    font-size: 24rpx;
+    display: flex;
+    flex-direction: column;
+}
+.all_plan_one .row_one .active {
+    color: rgb(214, 79, 106);
+    display: flex;
+}
+.active .show_tips {
+    margin-left: 20rpx;
+}
+.all_plan_one .row_two,
+.all_record_one .row_two
+{
+    display: flex;
+    align-items: center;
+}
+/* 展示所有记录 */
+
+/* 拜访按钮 */
+.visit_btn {
+    margin-top:30rpx;
+    padding: 0 10rpx;
+}
+/* 每一条拜访记录 */
+.every_visit {
+    background-color: #fff;
+    box-sizing: border-box;
+}
+.every_visit .visit_top_blank{
+    height: 20rpx;
+}
+.every_visit .visit_bottom_blank{
+    height: 20rpx;
+}

@@ -1,14 +1,18 @@
-// pages/totalMoney/totalMoney.js
+const cloudFunc  = require('../../api/index')
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     activeNames: "", //手风琴页面默认显示的一条,数组形式
-    active: "total", //tab页默认显示项目总金额页面
-    isLoading: false //是否在加载中
+    active: "", //tab页面显示的选项页面 根据传递的name值判断显示哪一个页面
+    totalNameData: [],//项目总金额列表数据
+    willPayNameData: [],//暂未回款金额列表数据
+    waitPayNameData: [],//待回款金额列表数据
+    projectNameData: [],//我的项目列表数据
+    contractNameData: [],//我的合同列表数据
   },
-  // 折叠面板方法
+  // 1.折叠面板方法
   onChangeColl(event) {
     console.log(event);
     this.setData({
@@ -16,7 +20,7 @@ Page({
     });
   },
 
-  // tab切换方法
+  // 2.tab切换方法
   onChangeTab(event) {
     console.log(event);
     // 切换tab页时 先返回顶部
@@ -24,20 +28,16 @@ Page({
       scrollTop: 0
     });
 
-    // 改变时先切换到加载状态
+    // 改变时先切换到加载状态和修改当前激活的name
     this.setData({
-      isLoading: true
+      active: event.detail.name
     });
 
-    // 模拟数据请求
-    setTimeout(() => {
-      this.setData({
-        isLoading: false
-      });
-    }, 2000);
+    console.log(this.data.active,'当前选择的tab')
+    this.getCheckedTab(this.data.active);// 调用switch case方法  获取当前改变的tab选项的数据
   },
 
-  // 返回顶部
+  // 3.返回顶部
   handleTop() {
     if (wx.pageScrollTo) {
       wx.pageScrollTo({
@@ -50,19 +50,82 @@ Page({
           "当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。"
       });
     }
+  },
+  // 4.点击跳转到项目详情
+  handleToItemdetail() {
+    wx.navigateTo({
+      url: '/pages/itemDetail/itemDetail'
+    });
+  },
 
-    // 调用云函数
-    wx.cloud
-      .callFunction({
-        name: "getDatas", //云函数的名字
-      })
+  // 5.点击添加项目按钮
+  addItem() {
+    wx.navigateTo({
+      url: '/pages/addItem/addItem'
+    });
+  },
+
+  // 6.switch case选择当前tab选项获取数据
+  getCheckedTab(tabName) {
+    // 数据请求
+    switch (tabName) {
+      case 'total':
+        // 请求total数据
+        break;
+      case 'hasPay':
+        // 请求willPay数据
+        break;
+      case 'noPay':
+        // 请求waitPay数据
+        break;
+      case 'project':
+        // 请求project数据
+        this.getOwnProjectList();
+        break;
+      case 'contract':
+        // 请求contract数据
+        break;
+      default:
+        break;
+    }
+  },
+
+  // 生命周期函数  ==  获取我的项目
+  getOwnProjectList() {
+    const that = this;
+    const Token = wx.getStorageSync('token');
+    const UserId = JSON.parse(wx.getStorageSync('user')).userId;//缓存中读取用户id
+    const Option = 0;//Option为0获取全部数据
+    cloudFunc('getOwnProjectList',{
+      Token,
+      UserId,
+      Option
+    })
       .then(res => {
-        console.log(res, "云函数数据");
+        let result = JSON.parse(res.result);//转换为JSON
+        console.log(result,'转换后的结果')
+        result.forEach(item => {
+          item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".");//处理时间
+        });
+        that.setData({
+          projectNameData: result,//设置返回渲染的数据
+        })
       })
       .catch(err => {
-        console.log(err);
-      });
+        console.log(err,'错误')
+        wx.showToast({
+          title: '请求错误',
+          icon: 'none',
+          duration: 1500,
+          mask: true,
+        });
+      })
   },
+
+  // 生命周期函数  ==  获取我的合同
+  // 生命周期函数  ==  获取项目总额
+  // 生命周期函数  ==  获取已收款
+  // 生命周期函数  ==  获取未收款
   /**
    * 生命周期函数--监听页面加载
    */
@@ -71,8 +134,9 @@ Page({
     console.log(name);
     this.setData({
       active: name,
-      isLoading: true
     });
+
+    this.getCheckedTab(this.data.active);//传入初始化加载的那个tab页面的name值，请求数据
   },
 
   /**
@@ -85,12 +149,6 @@ Page({
    */
   onShow: function() {
 
-    // 加载数据
-    setTimeout(() => {
-      this.setData({
-        isLoading: false
-      });
-    }, 2000);
   },
 
   /**

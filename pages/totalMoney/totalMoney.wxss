@@ -26,6 +26,32 @@
   box-sizing: border-box;
   color: #263238;
 }
+/* 我的项目第一行 */
+.total_show_project,.total_show_contract {
+  width: 100%;
+  display: flex;
+}
+.total_show_project .total_show_left,
+.total_show_contract .total_show_left
+{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.total_show_project .total_show_right,
+.total_show_contract .total_show_right {
+  flex: 1;
+}
+.total_show_right .change_size,
+.total_show_contract .change_size
+ {
+  font-size: 26rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 /* 具体每一个项目 */
 .total_wrap {
   width: 100%;
@@ -102,35 +128,41 @@
 .my_project .every_project {
   background-color: #fff;
   border-bottom: 1rpx solid #e5e5e5;
+  border-radius: 15rpx;
   margin-top: 20rpx;
-  border-radius: 8rpx;
+  display: flex;
 }
-.my_project .one_rowinfo {
+.my_project .one_rowinfo,
+.my_project .two_rowinfo
+{
   padding: 10rpx 15rpx 15rpx 15rpx;
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 50%;
+}
+.my_project .one_rowinfo .sure_one,
+.my_project .two_rowinfo .sure_one
+{
+  display: flex;
   align-items: center;
 }
-.my_project .one_rowinfo .left_name {
+.my_project .one_rowinfo .left_name,
+.my_project .two_rowinfo .left_name
+{
   color: #080808;
   flex: 0 1 auto;
-  font-size: 28rpx;
+  font-size: 26rpx;
+  width: 125rpx;
 }
-.my_project .one_rowinfo .right_desc {
+.my_project .one_rowinfo .right_desc,
+.my_project .two_rowinfo .right_desc
+{
   color: #878787;
   flex: 1;
   font-size: 24rpx;
-  padding-left: 18rpx;
-}
-.my_project .one_rowinfo .two_rowinfo_1 {
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-.my_project .one_rowinfo .two_rowinfo_2 {
-  display: flex;
-  flex: 1;
-  align-items: center;
+  padding-left: 8rpx;
 }
 
 /* 返回顶部 */

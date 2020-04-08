@@ -1,0 +1,15 @@
+{
+  "usingComponents": {
+    "van-cell": "@vant/weapp/cell",
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-icon": "@vant/weapp/icon",
+    "van-button": "@vant/weapp/button",
+    "van-swipe-cell": "@vant/weapp/swipe-cell"
+  },
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#000000",
+  "navigationBarBackgroundColor": "#263238",
+  "navigationBarTitleText": "拜访详情",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh":false
+}

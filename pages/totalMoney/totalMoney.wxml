@@ -1,11 +1,13 @@
 <view class="container">
     <!-- 加载样式 -->
-    <van-overlay show="{{ isLoading }}"  z-index="9999">
+    <!-- <van-overlay show="{{ isLoading }}" z-index="9999">
         <view class="wrapper">
-            <van-loading color="#fff" type="spinner" size="40rpx" vertical text-size="24rpx">加载中...</van-loading>
+            <van-loading color="#fff" type="spinner" size="40rpx" vertical text-size="24rpx">
+                加载中...
+            </van-loading>
         </view>
-    </van-overlay>
-    <van-tabs active="{{ active }}" bind:change="onChangeTab" z-index="{{999}}" lazy-render="{{false}}" duration="0.3" animated="{{true}}" sticky="{{true}}" swipeable="{{true}}" tab-active-class="active_cls" line-height="4rpx">
+    </van-overlay> -->
+    <van-tabs active="{{ active }}" bind:change="onChangeTab" z-index="{{999}}" lazy-render="{{true}}" duration="0.3" animated="{{true}}" sticky="{{true}}" swipeable="{{true}}" tab-active-class="active_cls" line-height="4rpx">
         <!-- 第一部分 项目总金额 -->
         <van-tab title="项目总金额" name="total">
             <!-- 显示项目总金额 -->
@@ -67,12 +69,13 @@
                 </block>
             </view>
         </van-tab>
-        <!-- 第二部分 暂未回款 -->
-        <van-tab title="暂未回款" name="willPay">
-            <!-- 显示项目暂未回款金额 -->
+
+        <!-- 第二部分 已收款 -->
+        <van-tab title="已收款" name="hasPay">
+            <!-- 显示项目已收款金额 -->
             <view class="total_show">
                 <van-icon name="gold-coin-o" color="#263238" size="40rpx" />
-                <view>暂未回款金额:{{"20W"}}</view>
+                <view>已收款金额:{{"20W"}}</view>
             </view>
             <!-- 显示具体项目 -->
             <view class="total_wrap">
@@ -128,12 +131,13 @@
                 </block>
             </view>
         </van-tab>
-        <!-- 第三部分 待回款 -->
-        <van-tab title="待回款" name="waitPay">
-            <!-- 显示项目暂未回款金额 -->
+
+        <!-- 第三部分 未收款 -->
+        <van-tab title="未收款" name="noPay">
+            <!-- 显示项目未收款金额 -->
             <view class="total_show">
                 <van-icon name="gold-coin-o" color="#263238" size="40rpx" />
-                <view>待回款金额:{{"20W"}}</view>
+                <view>未收款金额:{{"20W"}}</view>
             </view>
             <!-- 显示具体项目 -->
             <view class="total_wrap">
@@ -189,64 +193,81 @@
                 </block>
             </view>
         </van-tab>
+
         <!-- 第四部分 我的项目 -->
         <van-tab title="我的项目" name="project">
             <!-- 显示项目总数 -->
-            <view class="total_show">
-                <van-icon name="balance-list-o" color="#263238" size="40rpx" />
-                <view>项目总数:{{"15"}}</view>
+            <view class="total_show total_show_project">
+                <view class="total_show_left">
+                    <van-icon name="balance-list-o" color="#263238" size="40rpx" />
+                    <view>项目总数:{{projectNameData.length}}</view>
+                </view>
+                <view class="total_show_right">
+                    <view class="change_size" bind:tap="addItem">
+                        <van-icon name="add-o" color="#878787" size="50rpx" />
+                        添加项目
+                    </view>
+                </view>
             </view>
             <!-- 显示我的项目详情 -->
             <view class="my_project">
                 <!-- block便利生成每一个项目 -->
-                <block wx:for="{{5}}" wx:key="index">
-                    <view class="every_project">
+                <block wx:for="{{ projectNameData }}" wx:key="ProjectDescribe">
+                    <view class="every_project" bind:tap="handleToItemdetail">
                         <view class="one_rowinfo">
-                            <view class="left_name">项目名称:</view>
-                            <view class="right_desc">xxx项目xxx项目xxx项目xxx项目</view>
-                        </view>
-                        <view class="one_rowinfo">
-                            <view class="two_rowinfo_1">
-                                <view class="left_name">项目时间:</view>
-                                <view class="right_desc">2020.1.1</view>
+                            <view class="sure_one">
+                                <view class="left_name">项目名称:</view>
+                                <view class="right_desc">{{ item.ProjectName }}</view>
                             </view>
-                            <view class="two_rowinfo_2">
+
+                            <view class="sure_one">
                                 <view class="left_name">项目金额:</view>
                                 <view class="right_desc">2,000,000</view>
                             </view>
-                        </view>
-                        <view class="one_rowinfo">
-                            <view class="two_rowinfo_1">
-                                <view class="left_name">xxx:</view>
-                                <view class="right_desc">xxx</view>
+                            <view class="sure_one">
+                                <view class="left_name">项目等级:</view>
+                                <view class="right_desc">P{{ item.ProjectPLevel }}</view>
                             </view>
-                            <view class="two_rowinfo_2">
-                                <view class="left_name">xxx:</view>
-                                <view class="right_desc">xxx</view>
+                            <view class="sure_one">
+                                <view class="left_name">项目备注:</view>
+                                <view class="right_desc">{{ item.ProjectRemark }}</view>
                             </view>
                         </view>
-                        <view class="one_rowinfo">
-                            <view class="two_rowinfo_1">
-                                <view class="left_name">xxx:</view>
-                                <view class="right_desc">xxx</view>
+                        <view class="two_rowinfo">
+                            <view class="sure_one">
+                                <view class="left_name">项目时间:</view>
+                                <view class="right_desc">{{ item.ProjectCreateTime }}</view>
                             </view>
-                            <view class="two_rowinfo_2">
-                                <view class="left_name">xxx:</view>
-                                <view class="right_desc">xxx</view>
+                            <view class="sure_one">
+                                <view class="left_name">项目类型:</view>
+                                <view class="right_desc">{{ item.ProjectType }}</view>
+                            </view>
+                            <view class="sure_one">
+                                <view class="left_name">项目状态:</view>
+                                <view class="right_desc">{{ item.ProjectStatus }}</view>
                             </view>
                         </view>
                     </view>
                 </block>
             </view>
         </van-tab>
+
         <!-- 第五部分 我的合同 -->
         <van-tab title="我的合同" name="contract">
             <!-- 显示合同总数 -->
-            <view class="total_show">
-                <van-icon name="balance-list-o" color="#263238" size="40rpx" />
-                <view>合同总数:{{"7"}}</view>
+            <view class="total_show total_show_contract">
+                <view class="total_show_left">
+                    <van-icon name="balance-list-o" color="#263238" size="40rpx" />
+                    <view>合同总数:{{"7"}}</view>
+                </view>
+                <view class="total_show_right">
+                    <view class="change_size">
+                        <van-icon name="add-o" color="#878787" size="50rpx" />
+                        添加合同
+                    </view>
+                </view>
             </view>
-                        <!-- 显示我的项目详情 -->
+            <!-- 显示我的项目详情 -->
             <view class="my_project">
                 <!-- block便利生成每一个项目 -->
                 <block wx:for="{{5}}" wx:key="index">
