@@ -1,4 +1,6 @@
-const cloudFunc  = require('../../api/index')
+const cloudFunc  = require('../../api/index');
+const regeneratorRuntime  = require('../../utils/runtime');//ES7 环境
+import { getToken,getUserId } from "../../utils/storage";
 Page({
   /**
    * 页面的初始数据
@@ -11,6 +13,9 @@ Page({
     waitPayNameData: [],//待回款金额列表数据
     projectNameData: [],//我的项目列表数据
     contractNameData: [],//我的合同列表数据
+
+    disableStyle: 'background:#CFCFCF;color:#696969',// 禁用样式
+    normalStyle: '',// 禁用样式
   },
   // 1.折叠面板方法
   onChangeColl(event) {
@@ -89,37 +94,103 @@ Page({
         break;
     }
   },
-
-  // 生命周期函数  ==  获取我的项目
-  getOwnProjectList() {
+  // 7.点击项目添加进收藏 主页显示
+  async addCollect(item) {
     const that = this;
-    const Token = wx.getStorageSync('token');
-    const UserId = JSON.parse(wx.getStorageSync('user')).userId;//缓存中读取用户id
-    const Option = 0;//Option为0获取全部数据
-    cloudFunc('getOwnProjectList',{
-      Token,
-      UserId,
-      Option
-    })
-      .then(res => {
-        let result = JSON.parse(res.result);//转换为JSON
-        console.log(result,'转换后的结果')
-        result.forEach(item => {
-          item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".");//处理时间
-        });
-        that.setData({
-          projectNameData: result,//设置返回渲染的数据
+    const Token = getToken();
+    const UserId = getUserId();//缓存中读取用户id
+    console.log(item,'收藏了')
+    const ProjectCode = item.currentTarget.dataset.item.ProjectCode;//点击按钮时 传递的项目id
+    const AttentionId = item.currentTarget.dataset.item.AttentionId;//点击按钮时 传递的收藏项目AttentionId
+    const isCollected = item.currentTarget.dataset.item.AttentionId !== 0;//不为0就是已经收藏    判断是否收藏
+    console.log(ProjectCode,isCollected)
+    // 已经收藏了 ****
+    if(isCollected) {
+      try {
+        let res = await cloudFunc('deleteAttention',{
+          Token,
+          AttentionId
         })
-      })
-      .catch(err => {
-        console.log(err,'错误')
+        if(res.result === "1") {//取消收藏成功
+          this.getOwnProjectList();
+          wx.showToast({
+            title: '取消收藏',
+            icon: 'none',
+            duration: 1000,
+            mask: true,
+          });
+        }
+        console.log(res,'取消收藏')
+      } catch (error) {
+        console.log(error,'错误')
         wx.showToast({
           title: '请求错误',
           icon: 'none',
           duration: 1500,
           mask: true,
         });
+      }
+    }else {//没有收藏
+      try {
+        let res = await cloudFunc('addAttentionProject',{
+          Token,
+          UserId,
+          ProjectCode
+        })
+        console.log(res,'原始结果')
+        if(res.result.toString().length > 0) {//添加完成返回的不是对象
+          this.getOwnProjectList();
+          wx.showToast({
+            title: '收藏成功',
+            icon: 'none',
+            duration: 1500,
+            mask: true,
+          });
+        }
+      } catch (error) {
+        console.log(error,'错误')
+        wx.showToast({
+          title: '请求错误',
+          icon: 'none',
+          duration: 1500,
+          mask: true,
+        });
+      }
+    }
+    
+  },
+  // 生命周期函数  ==  获取我的项目
+  async getOwnProjectList() {
+    try {
+      const that = this;
+      const Token = getToken();
+      const UserId = getUserId();//缓存中读取用户id
+      const Option = 0;//Option为0获取全部项目列表信息  加上attention
+      let res = await cloudFunc('getOwnProjectList',{
+        Token,
+        UserId,
+        Option
       })
+      console.log(res,'转换前的结果','xxxxxxxxxxxxxxx')
+      let result = JSON.parse(res.result);//转换为JSON
+      console.log(result,'转换后的结果','xxxxxxxxxxxxxxxxx')
+      const newRes = result.filter(item => item.ProjectCode);//处理过滤有项目id的数据
+      console.log(newRes,'...')
+      newRes.forEach(item => item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,"."))
+      // .forEach(item => item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,"."))
+      console.log(newRes,'...？？？')
+      that.setData({
+        projectNameData: newRes,//设置返回渲染的数据
+      })
+    } catch (error) {
+      console.log(error,'错误')
+      wx.showToast({
+        title: '请求错误',
+        icon: 'none',
+        duration: 1500,
+        mask: true,
+      });
+    }
   },
 
   // 生命周期函数  ==  获取我的合同

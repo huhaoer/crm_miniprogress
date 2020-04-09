@@ -12,7 +12,7 @@ exports.main = async (event, context) => {
   const skipNum = event.skipNum;
   const Option = event.Option;
 
-  const URL = 'http://2b35mw.natappfree.cc/CustomerMgeSvr.assx/getCustomerList'
+  const URL = 'http://jn6h3r.natappfree.cc/CustomerMgeSvr.assx/getCustomerList'
   let options = {
     uri: URL,
     qs: {

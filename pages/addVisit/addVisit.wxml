@@ -9,7 +9,7 @@
                 show="{{ project_item_show }}" 
                 actions="{{ projectList }}" 
                 bind:close="quitNowProject" 
-                bind:select="selectNowProject" 
+                bind:select="selectNowProject"
                 overlay="{{true}}"
                 close-on-click-action="{{true}}"
                 close-on-click-overlay="{{false}}"

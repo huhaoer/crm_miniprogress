@@ -7,28 +7,34 @@
   <!-- header头部信息 -->
   <van-grid column-num="5" border="{{ false }}" square custom-class="bg_change" clickable>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=total" link-type="navigateTo">
-      <view class="total_money_num">2020.0212W</view>
+      <view class="total_money_num">
+          <text class="big_count">{{ show_header.projectTotal }}</text>
+      </view>
       <text class="total_money">项目总额</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=haslPay" link-type="navigateTo">
-      <view class="noback_money_num">2020.0212W</view>
+      <view class="noback_money_num">
+          <text class="big_count">{{ show_header.alreadyReceivable }}</text>
+      </view>
       <text class="noback_money">已收款</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=noPay" link-type="navigateTo">
-      <view class="wait_money_num">2020.0212W</view>
+      <view class="wait_money_num">
+          <text class="big_count">{{ show_header.waitReceivable }}</text>
+      </view>
       <text class="wait_money">未收款</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="my_project_num">
-        <text class="big_count">20</text>
-        <text class="mini_count">+{{2}}</text>
+        <text class="big_count">{{ show_header.projectNumber }}</text>
+        <!-- <text class="mini_count">+{{2}}</text> -->
       </view>
       <text class="my_project">我的项目</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=contract" link-type="navigateTo">
       <view class="my_contract_num">
-        <text class="big_count">20</text>
-        <text class="mini_count">+{{2}}</text>
+        <text class="big_count">{{ show_header.contractTotal }}</text>
+        <!-- <text class="mini_count">+{{2}}</text> -->
       </view>
       <text class="my_contract">我的合同</text>
     </van-grid-item>

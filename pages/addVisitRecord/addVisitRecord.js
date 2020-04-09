@@ -1,6 +1,7 @@
 import parseTime from '../../utils/parseTime'
 const cloudFunc  = require('../../api/index')
 const regeneratorRuntime  = require('../../utils/runtime')
+import { getToken } from "../../utils/storage";
 let proid = '';
 Page({
   data: {
@@ -118,12 +119,13 @@ Page({
     const that = this;
     //获取结果
     try {
+      const Token = getToken();//获取缓存
       let res = await cloudFunc('addVisit',{
         proid,//项目id
         remark_mes: that.data.remark_mes,//备注信息
         content_mes:that.data.content_mes,//内容信息
         picker_value:that.data.picker_value,//选择时间
-        Token: '123',
+        Token,
         VisitPlanTime: '',
         VisitPlanContent: '',
       })
@@ -155,7 +157,7 @@ Page({
   // 获取完成拜访计划数据接口
   async getCompletePlan() {
     const that = this;
-    const Token = wx.getStorageSync("token");//获取token
+    const Token = getToken();//获取token
     try {
       let res = await cloudFunc('updateVisit',{
         Token,

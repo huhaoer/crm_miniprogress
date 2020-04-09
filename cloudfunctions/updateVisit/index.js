@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
   const VisitFactContent = event.VisitFactContent;
   const VisitRemark = event.VisitRemark;
 
-  const URL = 'http://2b35mw.natappfree.cc/ProjectMgeSvr.assx/updateVisit'
+  const URL = 'http://jn6h3r.natappfree.cc/ProjectMgeSvr.assx/updateVisit'
   let options = {
     uri: URL,
     qs: {

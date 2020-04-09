@@ -123,6 +123,7 @@
 .my_project {
   background-color: rgb(219, 236, 236);
   overflow: hidden;
+  padding-bottom: 15rpx;
 }
 
 .my_project .every_project {
@@ -130,12 +131,40 @@
   border-bottom: 1rpx solid #e5e5e5;
   border-radius: 15rpx;
   margin-top: 20rpx;
+}
+.my_project .every_project .project_wrapper{
+  background-color: #fff;
+  border-radius: 15rpx;
+  margin-top: 20rpx;
   display: flex;
+  padding-top: 10rpx;
+}
+.every_project .solo_tips {
+  display: flex;
+  padding: 0rpx 15rpx 10rpx 15rpx;
+  box-sizing: border-box;
+}
+.every_project .add_collect {
+  margin-bottom: 10rpx;
+  padding: 0 15rpx;
+  box-sizing: border-box;
+}
+.every_project .solo_tips .left_name{
+  color: #080808;
+  flex: 0 1 auto;
+  font-size: 24rpx;
+  width: 125rpx;
+}
+.every_project .solo_tips .right_desc{
+  color: #878787;
+  flex: 1;
+  font-size: 24rpx;
+  padding-left: 8rpx;
 }
 .my_project .one_rowinfo,
 .my_project .two_rowinfo
 {
-  padding: 10rpx 15rpx 15rpx 15rpx;
+  padding: 0rpx 15rpx;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -153,7 +182,7 @@
 {
   color: #080808;
   flex: 0 1 auto;
-  font-size: 26rpx;
+  font-size: 24rpx;
   width: 125rpx;
 }
 .my_project .one_rowinfo .right_desc,

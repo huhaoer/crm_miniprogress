@@ -1,6 +1,7 @@
 import parseTime from '../../utils/parseTime';
 const cloudFunc  = require('../../api/index');
 const regeneratorRuntime  = require('../../utils/runtime');
+import { getToken,getUserId } from "../../utils/storage";
 Page({
 
   /**
@@ -151,7 +152,7 @@ Page({
   // 10.请求接口  创建一个拜访计划
   async addVisit() {
     const that = this;
-    const Token = wx.getStorageSync('token');
+    const Token = getToken();
     //获取结果
     try {
       let res = await cloudFunc('addVisit',{
@@ -187,8 +188,8 @@ Page({
   },
   // 11.查询该销售的所有项目列表  用于选择
   async getOwnProjectList() {
-    const Token = wx.getStorageSync('token');
-    const UserId = JSON.parse(wx.getStorageSync('user')).userId;//缓存中读取用户id
+    const Token = getToken();
+    const UserId = getUserId();//缓存中读取用户id
     const Option = 1;//Option为0获取全部数据
     try {
       let res = await cloudFunc('getOwnProjectList',{

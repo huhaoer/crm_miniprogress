@@ -1,4 +1,3 @@
-//app.js
 App({
   onLaunch: function () {
     // 云函数判断

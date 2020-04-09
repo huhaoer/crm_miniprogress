@@ -1,4 +1,4 @@
-// pages/addItem/addItem.js
+
 Page({
 
   /**

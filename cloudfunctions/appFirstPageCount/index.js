@@ -6,16 +6,14 @@ const rp = require('request-promise');//request-promise包
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const ProjectCode = event.ProjectCode;
-  const Option = event.Option;
   const Token = event.Token;
-  const URL = 'http://jn6h3r.natappfree.cc/ProjectMgeSvr.assx/getProjectDetail'
+  const UserId = event.UserId;
+  const URL = 'http://jn6h3r.natappfree.cc/ProjectMgeSvr.assx/appFirstPageCount'
   let options = {
     uri: URL,
     qs: {
-      ProjectCode,
-      Option,
-      Token
+      Token,
+      UserId
     },
     // json: true 
   };
