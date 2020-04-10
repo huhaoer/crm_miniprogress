@@ -69,7 +69,6 @@
     margin: 0 auto;
     background-color: #fff;
     margin-top: 25rpx;
-    /* overflow: hidden; */
     box-shadow: 1rpx 1rpx 1rpx 1rpx rgba(180, 170, 170, 0.904);
 }
 .recent_visit .recent_title {
@@ -147,7 +146,7 @@
 .recent_item .item_bot .xs {
     color: 	#B5B5B5;
     font-size: 26rpx;
-    margin-left: 160rpx;
+    text-align: right;
 }
 
 /* 项目 */
@@ -184,10 +183,72 @@
 /* 项目主体 */
 .project_main {
     width: 100%;
+    padding: 0rpx 20rpx 10rpx 20rpx;
+    box-sizing: border-box;
     border-bottom: 1rpx solid #E8E8E8;
 }
-/* 状态 */
-.project_main .pro_status{
+.show_project_detail {
+    display: flex;
+    margin: 5rpx 0;
+}
+.show_project_detail .front_show{
+    width: 50%;
+    display: flex;
+}
+.front_show .pro_first{
+    color: #000;
+    font-size: 26rpx;
+    width: 130rpx;
+}
+.front_show .pro_second{
+    color: #9C9C9C;
+    font-size: 26rpx;
+    flex: 1;
+}
+.show_project_detail .back_show{
+    width: 50%;
+    display: flex;
+}
+.back_show .pro_first{
+    width: 130rpx;
+    color: #000;
+    font-size: 26rpx;
+}
+.back_show .pro_second{
+    color: #9C9C9C;
+    font-size: 26rpx;
+    flex: 1;
+}
+/* 项目底部 */
+.project_footer {
+    width: 100%;
+    padding: 0rpx 20rpx 0rpx 20rpx;
+    box-sizing: border-box;
+}
+.project_footer .constract_show {
+    padding: 10rpx 0;
+    box-sizing: border-box;
+}
+.constract_show {
+    display: flex;
+    flex-direction: column;
+}
+.constract_show .con_name,
+.constract_show .con_price
+{
+    display: flex;
+}
+.con_con,.pri_pri {
+    color: #000;
+}
+.con_content,.pri_content {
+    margin-left: 10rpx;
+}
+/* 每一行清空padding */
+.van-cell {
+    padding: 0 !important;
+  }
+/* .project_main .pro_status{
     display: flex;
     height: 50rpx;
     width: 100%;
@@ -207,9 +268,9 @@
     color: #9C9C9C;
     font-size: 26rpx;
     margin-left: 25rpx;
-}
+} */
 /* 收款 */
-.project_main .pro_money {
+/* .project_main .pro_money {
     display: flex;
     justify-content: space-between;
     height: 50rpx;
@@ -235,9 +296,9 @@
     color: #9C9C9C;
     font-size: 26rpx;
     margin-left: 25rpx;
-}
+} */
 /* 待收 */
-.project_main .pro_money .daishou{
+/* .project_main .pro_money .daishou{
     display: flex;
     height: 50rpx;
     width: 100%;
@@ -246,10 +307,10 @@
 }
 .project_main .pro_money .daishou text{
     line-height: 0;
-}
+} */
 
 /* 下一阶段 */
-.project_main .pro_next{
+/* .project_main .pro_next{
     display: flex;
     height: 50rpx;
     width: 100%;
@@ -269,9 +330,9 @@
     color: #9C9C9C;
     font-size: 26rpx;
     margin-left: 20rpx;
-}
+} */
 /* 合同 */
-.project_main .pro_contract .first{
+/* .project_main .pro_contract .first{
     display: flex;
     height: 50rpx;
     width: 100%;
@@ -294,7 +355,7 @@
     color: #9C9C9C;
     font-size: 26rpx;
     margin-left: 20rpx;
-}
+} */
 /* 回到顶部 */
 .back_top {
     position: fixed;

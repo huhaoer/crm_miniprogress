@@ -34,19 +34,28 @@ Page({
     this.setData({
       project_item_show: true
     })
-    let res = await this.getOwnProjectList();
-    console.log(res,'项目列表')
-    const list = JSON.parse(res.result);
-    const pList = list.map(item => {
-      return {
-        name: item.projectName,
-        code: item.projectCode
-      } 
-    })
-    console.log(pList)
-    this.setData({
-      projectList: pList
-    })
+    try {
+      let res = await this.getOwnProjectList();
+      console.log(res,'项目列表')
+      const list = JSON.parse(res.result);
+      const pList = list.map(item => {
+        return {
+          name: item.ProjectName,
+          code: item.ProjectCode
+        } 
+      })
+      this.setData({
+        projectList: pList
+      })
+    } catch (error) {
+      console.log(error)
+      wx.showToast({
+        title: '查询失败',
+        icon: 'none',
+        duration: 1000,
+        mask: true
+      });
+    } 
   },
   //2.选择某个具体的项目值
   selectNowProject(item) {

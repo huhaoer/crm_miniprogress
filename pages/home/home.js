@@ -3,12 +3,14 @@ const AppSecret = "8f78943af083115f3153f5fa160a6da2";
 const cloudFunc = require("../../api/index");
 const regeneratorRuntime = require("../../utils/runtime"); //ES7 环境
 import { getToken, getUserId } from "../../utils/storage";
+import parseTime from '../../utils/parseTime'
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     showScroll: false, //是否显示回到顶部按钮
+    activeNames: '',//折叠面板显示展开的name值
     show_header: {}, //首页头部数据渲染
     recent_visit: [], //近期拜访的数据列表
     recent_project: [], //近期展示的项目
@@ -54,7 +56,18 @@ Page({
         visitid,
     });
   },
-
+  // 点击切换显示合同的折叠面板  返回的参数是当前点击展开的activeNames
+  onChangeColl(activeNames) {
+    if(activeNames.detail) {
+      this.setData({
+        activeNames:activeNames.detail
+      })
+    }else {
+      this.setData({
+        activeNames:""
+      })
+    }
+  },
   // 点击首页的添加拜访图标进入添加拜访页面
   gotoAddVisit() {
     wx.navigateTo({
@@ -71,7 +84,7 @@ Page({
         Option: 0,
       });
       let result = JSON.parse(res.result); //转换为JSON
-      // console.log(result,'44444444444444')
+      console.log(result,'44444444444444')
       result.forEach((item) => {
         item.VisitPlanTime = ("" + item.VisitPlanTime)
           .split("T")[0]
@@ -92,18 +105,21 @@ Page({
       wx.stopPullDownRefresh(); //下拉刷新成功
     }
   },
-  // 获取项目信息  ===  生命周期
-  async getContractList() {
+  // 获取项目信息(我的收藏)  ===  生命周期
+  async getAttentionList() {
     const that = this;
     try {
-      const token = getToken();
-      let res = await cloudFunc("getContractList", {
-        token,
-        Option: 0,
+      const Token = getToken();
+      const UserId = getUserId();
+      let res = await cloudFunc("getAttentionList", {
+        Token,
+        UserId,
       });
-      // console.log(res,'0000000000000','项目11111')
-      let result = JSON.parse(res.result)._Items; //转换为JSON
-      // console.log(result,'结果++++++++++++++++++++++++ 项目')
+      let result = JSON.parse(res.result); //转换为JSON
+      // 处理项目创建时间
+      result.forEach(item => {
+        item.ProjectCreateTime = item.ProjectCreateTime && parseTime(item.ProjectCreateTime / 1000)
+      })
       that.setData({
         recent_project: result, //将获取的数据赋值渲染
       });
@@ -182,7 +198,7 @@ Page({
     }
     // 调用初始化请求函数  因为在提交计划成功后要返回该页面  onShow重新刷新 自动更新计划
     this.getRecentList(); //获取近期拜访列表
-    this.getContractList(); //获取首页项目情况
+    this.getAttentionList(); //获取首页项目情况(我的收藏)
     this.appFirstPageCount(); //获取首页头部数据信息
   },
 
@@ -214,7 +230,7 @@ Page({
    */
   onPullDownRefresh: function () {
     this.getRecentList(); //获取近期拜访列表
-    this.getContractList(); //获取首页项目情况
+    this.getAttentionList(); //获取首页项目情况
     this.appFirstPageCount(); //获取首页头部数据信息
   },
 });

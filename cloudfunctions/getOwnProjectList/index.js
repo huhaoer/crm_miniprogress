@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
   const UserId = event.UserId;
   const Option = event.Option;
 
-  const URL = 'http://jn6h3r.natappfree.cc/ProjectMgeSvr.assx/getOwnProjectList'
+  const URL = 'http://smgnkj.natappfree.cc/ProjectMgeSvr.assx/getOwnProjectList'
   let options = {
     uri: URL,
     qs: {

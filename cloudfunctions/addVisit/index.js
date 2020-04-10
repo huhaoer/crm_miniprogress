@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
         picker_value:that.data.nowPlanTime,//选择时间
    */
 
-  const URL = 'http://jn6h3r.natappfree.cc/ProjectMgeSvr.assx/addVisit'
+  const URL = 'http://smgnkj.natappfree.cc/ProjectMgeSvr.assx/addVisit'
   let options = {
     uri: URL,
     qs: {

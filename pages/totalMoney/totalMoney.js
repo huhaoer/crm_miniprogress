@@ -8,9 +8,9 @@ Page({
   data: {
     activeNames: "", //手风琴页面默认显示的一条,数组形式
     active: "", //tab页面显示的选项页面 根据传递的name值判断显示哪一个页面
-    totalNameData: [],//项目总金额列表数据
-    willPayNameData: [],//暂未回款金额列表数据
-    waitPayNameData: [],//待回款金额列表数据
+    // totalNameData: [],//项目总金额列表数据
+    // willPayNameData: [],//暂未回款金额列表数据
+    // waitPayNameData: [],//待回款金额列表数据
     projectNameData: [],//我的项目列表数据
     contractNameData: [],//我的合同列表数据
 
@@ -19,7 +19,6 @@ Page({
   },
   // 1.折叠面板方法
   onChangeColl(event) {
-    console.log(event);
     this.setData({
       activeNames: event.detail
     });
@@ -74,15 +73,15 @@ Page({
   getCheckedTab(tabName) {
     // 数据请求
     switch (tabName) {
-      case 'total':
-        // 请求total数据
-        break;
-      case 'hasPay':
-        // 请求willPay数据
-        break;
-      case 'noPay':
-        // 请求waitPay数据
-        break;
+      // case 'total':
+      //   // 请求total数据
+      //   break;
+      // case 'hasPay':
+      //   // 请求willPay数据
+      //   break;
+      // case 'noPay':
+      //   // 请求waitPay数据
+      //   break;
       case 'project':
         // 请求project数据
         this.getOwnProjectList();
@@ -90,13 +89,10 @@ Page({
       case 'contract':
         // 请求contract数据
         break;
-      default:
-        break;
     }
   },
   // 7.点击项目添加进收藏 主页显示
   async addCollect(item) {
-    const that = this;
     const Token = getToken();
     const UserId = getUserId();//缓存中读取用户id
     console.log(item,'收藏了')
@@ -201,13 +197,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    const name = options.name || "total"; //获取跳转页面传递的tab页name名 默认为total
+    const name = options.name || "project"; //获取跳转页面传递的tab页name名 默认为project
     console.log(name);
     this.setData({
       active: name,
     });
-
-    this.getCheckedTab(this.data.active);//传入初始化加载的那个tab页面的name值，请求数据
   },
 
   /**
@@ -219,7 +213,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    this.getCheckedTab(this.data.active);//传入初始化加载的那个tab页面的name值，请求数据
   },
 
   /**

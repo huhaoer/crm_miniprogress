@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   // 通过event传递参数
   const UserName = event.UserName
   const Password = event.Password
-  const URL = 'http://jn6h3r.natappfree.cc/ContractController/login'
+  const URL = 'http://smgnkj.natappfree.cc/ContractController/login'
   let options = {
     uri: URL,
     qs: {

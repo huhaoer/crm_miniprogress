@@ -80,7 +80,7 @@ Page({
         aloneVisit: result.aloneVisit,
       });
     } catch (error) {
-      console.log(err, "错误");
+      console.log(error, "错误");
       wx.showToast({
         title: "请求错误",
         icon: "none",

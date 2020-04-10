@@ -1,0 +1,183 @@
+        <!-- 第一部分 项目总金额 -->
+        <van-tab title="项目总金额" name="total">
+            <!-- 显示项目总金额 -->
+            <view class="total_show">
+                <van-icon name="gold-coin-o" color="#263238" size="40rpx" />
+                <view>总金额:{{"10W"}}</view>
+            </view>
+            <!-- 显示具体项目 -->
+            <view class="total_wrap">
+                <block wx:for="{{5}}" wx:key="index">
+                    <view class="every_item">
+                        <!-- 上部分信息 -->
+                        <view class="every_top">
+                            <view class="circle">
+                                <!-- 进度条 -->
+                                <van-circle value="{{ 30 }}" stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE" clockwise="{{false}}" />
+                                <!-- 项目信息 -->
+                                <view class="top_info">
+                                    <view>四川项目</view>
+                                    <view>四川住建局</view>
+                                </view>
+                                <view class="top_showmoney">(20W)</view>
+                            </view>
+                            <!-- 标签 -->
+                            <van-tag type="primary" custom-class="tag_class">标签</van-tag>
+                        </view>
+                        <!-- 中间主体信息 -->
+                        <view class="every_main">
+                            <!-- 一行信息 -->
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                        </view>
+                        <!-- 底部合同信息 -->
+                        <view class="every_bot">
+                            <van-collapse value="{{ activeNames }}" bind:change="onChangeColl" accordion border="{{false}}">
+                                <van-collapse-item name="total{{index}}">
+                                    <view slot="title">
+                                        合同详情
+                                        <van-icon name="description" />
+                                    </view>
+                                    <!-- 合同展示列表 -->
+                                    <view class="constract_show">1.菏泽市合同 待收款10W</view>
+                                    <view class="constract_show">2.青岛市合同 待收款10W</view>
+                                    <view class="constract_show">3.成都市合同 待收款10W</view>
+                                </van-collapse-item>
+                            </van-collapse>
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </van-tab>
+        <!-- 第二部分 已收款 -->
+        <van-tab title="已收款" name="hasPay">
+            <!-- 显示项目已收款金额 -->
+            <view class="total_show">
+                <van-icon name="gold-coin-o" color="#263238" size="40rpx" />
+                <view>已收款金额:{{"20W"}}</view>
+            </view>
+            <!-- 显示具体项目 -->
+            <view class="total_wrap">
+                <block wx:for="{{4}}" wx:key="index">
+                    <view class="every_item">
+                        <!-- 上部分信息 -->
+                        <view class="every_top">
+                            <view class="circle">
+                                <!-- 进度条 -->
+                                <van-circle value="{{ 30 }}" stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE" clockwise="{{false}}" />
+                                <!-- 项目信息 -->
+                                <view class="top_info">
+                                    <view>四川项目</view>
+                                    <view>四川住建局</view>
+                                </view>
+                                <view class="top_showmoney">(20W)</view>
+                            </view>
+                            <!-- 标签 -->
+                            <van-tag type="primary" custom-class="tag_class">标签</van-tag>
+                        </view>
+                        <!-- 中间主体信息 -->
+                        <view class="every_main">
+                            <!-- 一行信息 -->
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                        </view>
+                        <!-- 底部合同信息 -->
+                        <view class="every_bot">
+                            <van-collapse value="{{ activeNames }}" bind:change="onChangeColl" accordion border="{{false}}">
+                                <van-collapse-item name="willPay{{index}}">
+                                    <view slot="title">
+                                        合同详情
+                                        <van-icon name="description" />
+                                    </view>
+                                    <!-- 合同展示列表 -->
+                                    <view class="constract_show">1.菏泽市合同 待收款10W</view>
+                                    <view class="constract_show">2.青岛市合同 待收款10W</view>
+                                    <view class="constract_show">3.成都市合同 待收款10W</view>
+                                </van-collapse-item>
+                            </van-collapse>
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </van-tab>
+        <!-- 第三部分 未收款 -->
+        <van-tab title="未收款" name="noPay">
+            <!-- 显示项目未收款金额 -->
+            <view class="total_show">
+                <van-icon name="gold-coin-o" color="#263238" size="40rpx" />
+                <view>未收款金额:{{"20W"}}</view>
+            </view>
+            <!-- 显示具体项目 -->
+            <view class="total_wrap">
+                <block wx:for="{{4}}" wx:key="index">
+                    <view class="every_item">
+                        <!-- 上部分信息 -->
+                        <view class="every_top">
+                            <view class="circle">
+                                <!-- 进度条 -->
+                                <van-circle value="{{ 30 }}" stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE" clockwise="{{false}}" />
+                                <!-- 项目信息 -->
+                                <view class="top_info">
+                                    <view>四川项目</view>
+                                    <view>四川住建局</view>
+                                </view>
+                                <view class="top_showmoney">(20W)</view>
+                            </view>
+                            <!-- 标签 -->
+                            <van-tag type="primary" custom-class="tag_class">标签</van-tag>
+                        </view>
+                        <!-- 中间主体信息 -->
+                        <view class="every_main">
+                            <!-- 一行信息 -->
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                            <view class="main_row">
+                                <view class="">项目名称:{{"xxxx"}}</view>
+                                <view class="">项目金额:{{"xxxx"}}</view>
+                            </view>
+                        </view>
+                        <!-- 底部合同信息 -->
+                        <view class="every_bot">
+                            <van-collapse value="{{ activeNames }}" bind:change="onChangeColl" accordion border="{{false}}">
+                                <van-collapse-item name="waitPay{{index}}">
+                                    <view slot="title">
+                                        合同详情
+                                        <van-icon name="description" />
+                                    </view>
+                                    <!-- 合同展示列表 -->
+                                    <view class="constract_show">1.菏泽市合同 待收款10W</view>
+                                    <view class="constract_show">2.青岛市合同 待收款10W</view>
+                                    <view class="constract_show">3.成都市合同 待收款10W</view>
+                                </van-collapse-item>
+                            </van-collapse>
+                        </view>
+                    </view>
+                </block>
+            </view>
+        </van-tab>

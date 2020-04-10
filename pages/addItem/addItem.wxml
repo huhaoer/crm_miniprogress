@@ -4,42 +4,89 @@
     <view class="wrapper">
         <van-cell-group>
             <!-- 项目名 -->
-            <van-field value=""  clearable label="项目名：" border="{{ true }}" />
+            <van-field 
+                value="{{ project_name_val }}"  
+                clearable label="项目名：" 
+                border="{{ true }}" 
+                bind:input="projectNameInp"
+            />
             <!-- 项目描述 -->
-            <van-field value="" label="项目描述："  clearable  border="{{ true }}" error-message="" />
+            <van-field 
+                value="{{ project_desc_val }}" 
+                label="项目描述："  
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="projectDescInp"
+            />
             <!-- 项目分类菜单 -->
-            <van-cell title="项目分类：" is-link bind:click="showKind" value="{{kind_value}}" />
+            <van-cell 
+                title="项目分类：" 
+                is-link 
+                bind:click="showKindMenu" 
+                value="{{ project_kind_val }}" 
+                bind:input="projectKindInp"
+            />
             <van-action-sheet 
-                show="{{ show_kind }}" 
-                actions="{{ [{name: '种类一'},{name: '种类二'},{name: '种类三'},{name: '种类四'}] }}" 
-                bind:close="close_kind" 
-                bind:select="select_kind"
+                show="{{ show_kind_item }}" 
+                actions="{{ project_kind_arr }}" 
+                bind:close="closeKindMenu" 
+                bind:select="selectKindMenu"
                 overlay="{{true}}"
                 close-on-click-overlay="{{false}}"
                 safe-area-inset-bottom="{{false}}"
                 title="选择项目分类"
-                
             />
             <!-- 项目备注 -->
-             <van-field value="" label="项目备注：" autosize clearable  border="{{ true }}" error-message="" />
+             <van-field 
+                value="{{ project_remark_val }}" 
+                label="项目备注：" 
+                autosize 
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="projectRemarkInp"
+             />
             <!-- 客户 -->
-            <van-cell title="客户：" is-link bind:click="showUser" value="{{user_value}}" />
+            <van-cell title="客户：" is-link bind:click="showUserMenu" value="{{ project_customer_val }}" />
             <van-action-sheet 
-                show="{{ show_user }}" 
-                actions="{{ [{name: '用户1'},{name: '用户2'},{name: '用户3'},{name: '用户4'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'},{name: '用户3'}] }}" 
-                bind:close="close_user" 
-                bind:select="select_user" 
+                show="{{ show_user_item }}" 
+                actions="{{ project_customer_arr }}" 
+                bind:close="closeUserMenu" 
+                bind:select="selectUserMenu" 
                 overlay="{{true}}"
                 close-on-click-action="{{true}}"
                 close-on-click-overlay="{{false}}"
                 title="选择客户"
             />
             <!-- 联系人姓名 -->
-            <van-field value="" label="联系人姓名："  clearable  border="{{ true }}" error-message="" />
+            <van-field 
+                value="{{ project_conname_val }}" 
+                label="联系人姓名："  
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="projectConnameInp"
+            />
             <!-- 联系人电话 -->
-            <van-field value="" type="number" label="联系人电话："  clearable  border="{{ true }}" error-message="" />
+            <van-field 
+                value="{{ project_contel_val }}" 
+                type="number" 
+                label="联系人电话："  
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="projectContelInp"
+            />
             <!-- 联系人职务 -->
-            <van-field value="" label="联系人职务：" clearable  border="{{ true }}" error-message="" />
+            <van-field 
+                value="{{ project_conduty_val }}" 
+                label="联系人职务：" 
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="projectCondutyInp"
+            />
         </van-cell-group>
     </view>
 

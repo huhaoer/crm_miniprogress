@@ -7,7 +7,9 @@
     "van-divider": "@vant/weapp/divider",
     "van-circle": "@vant/weapp/circle",
     "van-tag": "@vant/weapp/tag",
-    "van-icon": "@vant/weapp/icon"
+    "van-icon": "@vant/weapp/icon",
+    "van-collapse": "@vant/weapp/collapse",
+    "van-collapse-item": "@vant/weapp/collapse-item"
   },
   "backgroundColor": "#000000",
   "navigationBarBackgroundColor": "#263238",
