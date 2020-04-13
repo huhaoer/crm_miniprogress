@@ -14,7 +14,8 @@ Page({
     projectNameData: [],//我的项目列表数据
     contractNameData: [],//我的合同列表数据
 
-    disableStyle: 'background:#CFCFCF;color:#696969',// 禁用样式
+    disableStyle: 'background:#ddd;color:#bbb',// 禁用样式
+    activeStyle: 'background:#108ee9;color:#fff',
     normalStyle: '',// 禁用样式
   },
   // 1.折叠面板方法
@@ -56,9 +57,11 @@ Page({
     }
   },
   // 4.点击跳转到项目详情
-  handleToItemdetail() {
+  handleToItemdetail(e) {
+    const proid = e.currentTarget.dataset.proid;//获取当前点击的项目id
+    const proname = e.currentTarget.dataset.proname;//获取当前点击的项目名字
     wx.navigateTo({
-      url: '/pages/itemDetail/itemDetail'
+      url: '/pages/itemDetail/itemDetail?proid=' + proid + '&proname=' + proname
     });
   },
 

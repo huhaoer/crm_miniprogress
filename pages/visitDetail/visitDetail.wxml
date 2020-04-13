@@ -52,6 +52,7 @@
                     type="info" 
                     size="mini" 
                     bind:click="gotoAddPlan"
+                    custom-style="background:#fff;color:#108ee9;border-color:#108ee9"
                     data-plancontent="{{item.VisitPlanContent}}"
                     data-planremark="{{item.VisitRemark}}"
                     data-plantime="{{item.VisitPlanTime}}"
@@ -64,24 +65,34 @@
     <!-- 添加拜访按钮 -->
     <view class="visit_btn">
         <!-- 点击跳转到添加拜访记录页面  addVisitRecord -->
-        <van-button block plain hairline type="info" bind:click="gotoAddRecord">+拜访记录</van-button>
+        <van-button 
+            block 
+            plain 
+            hairline 
+            type="info" 
+            bind:click="gotoAddRecord"
+            custom-style="background:#108ee9;color:#fff"
+        >+拜访记录</van-button>
     </view>
 
     <!-- 项目已经拜访记录展示 -->
     <view class="show_all_record">
-         <view class="all_record_title">拜访记录</view>
-        <view class="all_record_one" wx:for="{{ aloneVisit }}" wx:key="index">
-            <view class="row_one">
-                <view>计划内容：{{ (item.VisitPlanContent == null || item.VisitPlanContent == "") ? "暂无" :  item.VisitPlanContent}}</view>
-                <view>计划时间：{{ (item.VisitPlanTime == null || item.VisitPlanTime == "") ? "暂无" : item.VisitPlanTime }}</view>
-                <view>计划备注：{{ (item.VisitRemark == null || item.VisitRemark == "") ? "暂无" : item.VisitRemark }}</view>
-                <view>实际内容：{{ (item.VisitFactContent == null || item.VisitFactContent == "") ? "暂无" : item.VisitFactContent }}</view>
-                <view>实际时间：{{ (item.VisitFactTime == null || tem.VisitFactTime == "") ? "暂无" : item.VisitFactTime }}</view>
+        <view class="all_record_title">拜访记录</view>
+        <block wx:if="{{ aloneVisit.length > 0}}">
+            <view class="all_record_one" wx:for="{{ aloneVisit }}" wx:key="index">
+                <view class="row_one">
+                    <view>计划内容：{{ (item.VisitPlanContent == null || item.VisitPlanContent == "") ? "暂无" :  item.VisitPlanContent}}</view>
+                    <view>计划时间：{{ (item.VisitPlanTime == null || item.VisitPlanTime == "") ? "暂无" : item.VisitPlanTime }}</view>
+                    <view>计划备注：{{ (item.VisitRemark == null || item.VisitRemark == "") ? "暂无" : item.VisitRemark }}</view>
+                    <view>实际内容：{{ (item.VisitFactContent == null || item.VisitFactContent == "") ? "暂无" : item.VisitFactContent }}</view>
+                    <view>实际时间：{{ (item.VisitFactTime == null || tem.VisitFactTime == "") ? "暂无" : item.VisitFactTime }}</view>
+                </view>
+                <view class="row_two">
+                    <icon class="" type="success" size="23" color=""></icon>
+                </view>
             </view>
-            <view class="row_two">
-                <icon class="" type="success" size="23" color=""></icon>
-            </view>
-        </view>
+        </block>
+        <view wx:else class="no_record">暂无记录</view>
     </view>
 
     <!-- 每一条拜访记录 -->

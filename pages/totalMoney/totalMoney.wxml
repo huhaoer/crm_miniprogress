@@ -27,7 +27,7 @@
             <view class="my_project">
                 <!-- block便利生成每一个项目 -->
                 <block wx:for="{{ projectNameData }}" wx:key="index">
-                    <view class="every_project" bind:tap="handleToItemdetail">
+                    <view class="every_project" bind:tap="handleToItemdetail" data-proid="{{ item.ProjectCode }}" data-proname="{{ item.ProjectName }}">
                         <view class="project_wrapper">
                             <view class="one_rowinfo">
                                 <view class="sure_one">
@@ -73,7 +73,7 @@
                                 type="info"
                                 size="small"
                                 disabled="{{ item.AttentionId !== 0 }}"
-                                custom-style="{{ item.AttentionId !== 0 ? disableStyle : '' }}"
+                                custom-style="{{ item.AttentionId !== 0 ? disableStyle : activeStyle }}"
                             ></van-button>
                         </view>
                     </view>

@@ -62,15 +62,15 @@
       >
         <view class="item_top">
           <view class="left_wrap">
-            <view class="name">{{item.ProjectName}}</view>
-            <view class="danwei">{{item.CustName}}</view>
+            <view class="name">项目:{{item.ProjectName}}</view>
+            <view class="danwei">客户:{{item.CustName}}</view>
           </view>
           <view class="time">{{item.VisitPlanTime}}</view>
         </view>
         <view class="item_bot">
           <view class="left_wrap">
             <view class="connect">联系人:{{item.ContactName}}</view>
-            <view class="phone">{{item.ContactTel}}</view>
+            <view class="phone">联系电话:{{item.ContactTel}}</view>
           </view>
           <view class="xs">销售:{{item.UserName}}</view>
         </view>
@@ -139,7 +139,7 @@
     <view class="project_footer">
       <van-collapse value="{{ activeNames }}" bind:change="onChangeColl" accordion border="{{false}}">
           <van-collapse-item name="constract{{index}}">
-              <view slot="title">
+              <view slot="title" style="color: rgba(51, 51, 51, .8)">
                   合同详情
                   <van-icon name="description" />
               </view>

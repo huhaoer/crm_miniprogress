@@ -28,9 +28,15 @@ Page({
     nowPlanRemarkErr: '',//当前计划备注错误检验提醒
     nowPlanTime: '',//当前计划时间填写的值
     time_show: false,//是否展开时间选择
+    proid: '',//通过项目详情页面跳转并传递的proid参数
+    proname: '',//通过项目详情页面跳转并传递的proname参数
   },
   // 1.点击项目分类 展开当前项目选项框
   async showChooseProject() {
+    // 判断如果有proid或者是proname 则禁用选择项目 因为是从项目详情跳转的 项目名字固定
+    if(this.data.proid || this.data.proname) {
+      return
+    }
     this.setData({
       project_item_show: true
     })
@@ -221,7 +227,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    console.log(options,'项目详情页面添加  计划+++++++')
+    const proid = options.proid && options.proid;//传递的项目code
+    const proname = options.proname && options.proname;//传递的项目名字
+    // 如果有proid或者是proname说明是项目详情传递的 此时项目不能自己选是固定的
+    if(proid || proname) {
+      this.setData({
+        proid,
+        proname,//上面两个是给初始化data赋值
+        nowProjectValue: proname,
+        nowProjectCode: proid//下面是给显示的内容赋值
+      })
+    }
   },
 
   /**

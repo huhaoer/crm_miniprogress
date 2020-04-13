@@ -11,7 +11,7 @@
 .visit_header .visit_time{
     display: flex;
     align-items: center;
-    color: rgb(94, 91, 88);
+    color: #333;
     font-size: 28rpx;
 }
 .visit_header .visit_time:nth-of-type(2){
@@ -38,15 +38,19 @@
     /* border: 1rpx solid green; */
     padding: 20rpx 10rpx 0rpx 10rpx;
     box-sizing: border-box;
-    color: rgb(19, 4, 4);
+    color: #333;
     font-size: 26rpx;
     font-weight: 500;
+}
+.no_record {
+    text-align: center;
+    font-size: 22rpx;
+    color: rgba(153, 153, 153, .8);
 }
 .all_plan_one,.all_record_one {
     padding: 10rpx 10rpx;
     box-sizing: border-box;
-    /* border-top: 1rpx solid #dfd3d3; */
-    border: 1rpx solid #dfd3d3;
+    border: 1rpx solid #ddd;
     display: flex;
     margin-top: 15rpx;
 }
@@ -56,7 +60,7 @@
 .all_plan_one .row_one,
 .all_record_one .row_one
 {   
-    color: #413d3d;
+    color: #999;
     flex: 1;
     font-size: 24rpx;
     display: flex;

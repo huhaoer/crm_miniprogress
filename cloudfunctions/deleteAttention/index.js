@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   const Token = event.Token;
   const AttentionId = event.AttentionId;
 
-  const URL = 'http://smgnkj.natappfree.cc/ProjectMgeSvr.assx/deleteAttention'
+  const URL = 'http://qp6yq5.natappfree.cc/ProjectMgeSvr.assx/deleteAttention'
   let options = {
     uri: URL,
     qs: {

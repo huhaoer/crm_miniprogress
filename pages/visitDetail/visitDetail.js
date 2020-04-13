@@ -93,9 +93,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
+    console.log(options,'optionsoptionsoptionsoptionsoptionsoptionsoptionsoptionsoptions');
     proid = options.proid; //通过跳转赋值
-    const translateDetail = JSON.parse(options.detail); //将传递的数据JSON化
+    const translateDetail = options.detail && JSON.parse(options.detail); //将传递的数据JSON化
     const visitid = options.visitid; //获取上一页传递的visitid 提醒的那一条计划
     this.setData({
       topDetail: translateDetail,

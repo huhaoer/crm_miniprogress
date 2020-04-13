@@ -184,7 +184,7 @@ Page({
     this.addProject(sendData)
 
   },
-  // 生命周期函数 - 添加项目
+  // 点击按钮 - 添加项目
   async addProject(data) {
     try {
       const that = this;
@@ -251,17 +251,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.showLoading({
-      title: '提交中',
-      mask: true,
-      success(e) {
-        console.log(e)
-      }
-    })
+    // wx.showLoading({
+    //   title: '提交中',
+    //   mask: true,
+    //   success(e) {
+    //     console.log(e)
+    //   }
+    // })
 
-    setTimeout(() => {
-      wx.hideLoading();
-    }, 2000);
+    // setTimeout(() => {
+    //   wx.hideLoading();
+    // }, 2000);
   },
 
   /**
