@@ -25,9 +25,13 @@
             </view>
             <!-- 显示我的项目详情 -->
             <view class="my_project">
-                <!-- block便利生成每一个项目 -->
+                <!-- block遍历生成每一个项目 -->
                 <block wx:for="{{ projectNameData }}" wx:key="index">
                     <view class="every_project" bind:tap="handleToItemdetail" data-proid="{{ item.ProjectCode }}" data-proname="{{ item.ProjectName }}">
+                        <view class="project_showmoney">
+                            <view class="show_margin">项目总金额：{{ item. ContractTotal }}￥</view>
+                            <view>项目已收金额：{{ item. ReceiveTotal }}￥</view>
+                        </view>
                         <view class="project_wrapper">
                             <view class="one_rowinfo">
                                 <view class="sure_one">
@@ -65,75 +69,76 @@
                             <view class="right_desc">{{ item.ProjectRemark }}</view>
                         </view>
                         <view class="add_collect" catchtap="addCollect" data-item="{{ item }}">
-                            <van-button 
-                                icon="like-o" 
-                                plain
-                                block
-                                hairline
-                                type="info"
-                                size="small"
-                                disabled="{{ item.AttentionId !== 0 }}"
-                                custom-style="{{ item.AttentionId !== 0 ? disableStyle : activeStyle }}"
-                            ></van-button>
+                            <van-button icon="like-o" plain block hairline type="info" size="small" disabled="{{ item.AttentionId !== 0 }}" custom-style="{{ item.AttentionId !== 0 ? disableStyle : activeStyle }}"></van-button>
                         </view>
                     </view>
                 </block>
             </view>
         </van-tab>
+
         <!-- 第五部分 我的合同 -->
         <van-tab title="我的合同" name="contract">
             <!-- 显示合同总数 -->
             <view class="total_show total_show_contract">
                 <view class="total_show_left">
                     <van-icon name="balance-list-o" color="#263238" size="40rpx" />
-                    <view>合同总数:{{"7"}}</view>
+                    <view>合同总数:{{ contractNameData.TotalCount }}</view>
                 </view>
                 <view class="total_show_right">
-                    <view class="change_size">
+                    <view class="change_size"  bind:tap="addContract">
                         <van-icon name="add-o" color="#878787" size="50rpx" />
                         添加合同
                     </view>
                 </view>
             </view>
-            <!-- 显示我的项目详情 -->
-            <view class="my_project">
-                <!-- block便利生成每一个项目 -->
-                <block wx:for="{{5}}" wx:key="index">
-                    <view class="every_project">
-                        <view class="one_rowinfo">
-                            <view class="left_name">合同名称:</view>
-                            <view class="right_desc">xxx项目xxx项目xxx项目xxx项目</view>
+            <!-- 显示我的合同列表详情 -->
+                <view class="my_project">
+                <!-- block遍历生成每一个项目 -->
+                <block wx:for="{{ contractNameData._Items }}" wx:key="index">
+                    <view class="every_project" bind:tap="handleToContractdetail">
+                        <view class="project_showmoney">
+                            <view class="show_margin">合同总金额：{{ item.ContractAmount }}￥</view>
+                            <view>合同已收金额：{{ item.ContractAlreadyRec }}￥</view>
                         </view>
-                        <view class="one_rowinfo">
-                            <view class="two_rowinfo_1">
-                                <view class="left_name">签订时间:</view>
-                                <view class="right_desc">2020.1.1</view>
+                        <view class="project_wrapper">
+                            <view class="one_rowinfo">
+                                <view class="sure_one">
+                                    <view class="left_name">合同名称:</view>
+                                    <view class="right_desc" style="color: #ee0a24;font-weight: bold">
+                                        {{ item.ContractName }}
+                                    </view>
+                                </view>
+                                <view class="sure_one">
+                                    <view class="left_name">合同类型:</view>
+                                    <view class="right_desc">P{{ item.ContractType }}</view>
+                                </view>
+                                <view class="sure_one">
+                                    <view class="left_name">签订时间:</view>
+                                    <view class="right_desc">P{{ item.ContractCreateTime }}</view>
+                                </view>
                             </view>
-                            <view class="two_rowinfo_2">
-                                <view class="left_name">合同金额:</view>
-                                <view class="right_desc">2,000,000</view>
+                            <view class="two_rowinfo">
+                                <view class="sure_one">
+                                    <view class="left_name">所属项目:</view>
+                                    <view class="right_desc">{{ item.ProjectName }}</view>
+                                </view>
+                                <view class="sure_one">
+                                    <view class="left_name">合同状态:</view>
+                                    <view class="right_desc">{{ item.ContractStatus }}</view>
+                                </view>
+                                <view class="sure_one">
+                                    <view class="left_name">到期时间:</view>
+                                    <view class="right_desc">{{ item.ContractEndTime }}</view>
+                                </view>
                             </view>
                         </view>
-                        <view class="one_rowinfo">
-                            <view class="two_rowinfo_1">
-                                <view class="left_name">所属项目:</view>
-                                <view class="right_desc">xxx项目</view>
-                            </view>
-                            <view class="two_rowinfo_2">
-                                <view class="left_name">联系人:</view>
-                                <view class="right_desc">1230000000</view>
-                            </view>
+                        <view class="solo_tips">
+                            <view class="left_name">合同备注:</view>
+                            <view class="right_desc">{{ item.ContractRemark }}</view>
                         </view>
-                        <view class="one_rowinfo">
-                            <view class="two_rowinfo_1">
-                                <view class="left_name">xxx:</view>
-                                <view class="right_desc">xxx</view>
-                            </view>
-                            <view class="two_rowinfo_2">
-                                <view class="left_name">xxx:</view>
-                                <view class="right_desc">xxx</view>
-                            </view>
-                        </view>
+                        <!-- <view class="add_collect" catchtap="addCollect" data-item="{{ item }}">
+                            <van-button icon="like-o" plain block hairline type="info" size="small" disabled="{{ item.AttentionId !== 0 }}" custom-style="{{ item.AttentionId !== 0 ? disableStyle : activeStyle }}"></van-button>
+                        </view> -->
                     </view>
                 </block>
             </view>

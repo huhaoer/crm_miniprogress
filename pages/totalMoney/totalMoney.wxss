@@ -121,21 +121,32 @@
 
 /* 我的项目详情 */
 .my_project {
-  background-color: #f5f5f5;
+  background-color: #fff;
   overflow: hidden;
   padding-bottom: 15rpx;
 }
 
 .my_project .every_project {
-  background-color: #fff;
-  border-bottom: 1rpx solid #e5e5e5;
+  background-color: #f5f5f5;
+  border: .5rpx solid #e5e5e5;
   border-radius: 15rpx;
   margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+.every_project .project_showmoney {
+  margin-top: 20rpx;
+  padding: 10rpx 15rpx;
+  box-sizing: border-box;
+  color: #333;
+  font-weight: bold;
+  font-size: 28rpx;
+  display: flex;
+}
+.project_showmoney .show_margin {
+  margin-right: 60rpx;
 }
 .my_project .every_project .project_wrapper{
-  background-color: #fff;
   border-radius: 15rpx;
-  margin-top: 20rpx;
   display: flex;
   padding-top: 10rpx;
 }
@@ -151,6 +162,7 @@
 }
 .every_project .solo_tips .left_name{
   color: #080808;
+  /* color: #fff; */
   flex: 0 1 auto;
   font-size: 24rpx;
   width: 125rpx;
@@ -174,6 +186,7 @@
 .my_project .one_rowinfo .sure_one,
 .my_project .two_rowinfo .sure_one
 {
+  color: #fff;
   display: flex;
   align-items: center;
 }
@@ -181,6 +194,7 @@
 .my_project .two_rowinfo .left_name
 {
   color: #080808;
+  /* color: #fff; */
   flex: 0 1 auto;
   font-size: 24rpx;
   width: 125rpx;
@@ -189,6 +203,7 @@
 .my_project .two_rowinfo .right_desc
 {
   color: #878787;
+  /* color: #fff; */
   flex: 1;
   font-size: 24rpx;
   padding-left: 8rpx;
@@ -202,4 +217,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* 我的合同详情 */
+.my_contract {
+  background-color: royalblue;
 }

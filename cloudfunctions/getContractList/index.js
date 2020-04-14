@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   // 通过event传递参数
   const token = event.token
   const Option = event.Option
-  const URL = 'http://qp6yq5.natappfree.cc/ContractMgeSvr.assx/getContractList'
+  const URL = 'http://g8x7bk.natappfree.cc/ContractMgeSvr.assx/getContractList'
   let options = {
     uri: URL,
     qs: {

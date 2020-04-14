@@ -1,26 +1,24 @@
 <!-- 首页 -->
 <view class="container">
-
   <!-- 顶部提示信息 -->
   <!-- <van-notice-bar text="我是提醒消息我是提醒消息我是提醒消息我是提醒消息我是提醒消息我是提醒消息我是提醒消息" mode="closeable" speed="20" left-icon="bullhorn-o" color="#ed6a0c" backgroundColor="#fffbe8" bind:click="handleNoticeClick" /> -->
-
   <!-- header头部信息 -->
   <van-grid column-num="5" border="{{ false }}" square custom-class="bg_change" clickable>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="total_money_num">
-          <text class="big_count">{{ show_header.projectTotal }}</text>
+        <text class="big_count">{{ show_header.projectTotal }}</text>
       </view>
       <text class="total_money">项目总额</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="noback_money_num">
-          <text class="big_count">{{ show_header.alreadyReceivable }}</text>
+        <text class="big_count">{{ show_header.alreadyReceivable }}</text>
       </view>
       <text class="noback_money">已收款</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="wait_money_num">
-          <text class="big_count">{{ show_header.waitReceivable }}</text>
+        <text class="big_count">{{ show_header.waitReceivable }}</text>
       </view>
       <text class="wait_money">未收款</text>
     </van-grid-item>
@@ -39,7 +37,6 @@
       <text class="my_contract">我的合同</text>
     </van-grid-item>
   </van-grid>
-
   <!-- 展示近期拜访 -->
   <view class="recent_visit">
     <view class="recent_title">
@@ -48,138 +45,117 @@
       <van-icon name="add-o" color="#878787" size="50rpx" bind:click="gotoAddVisit" />
     </view>
     <!-- 拜访提醒 -->
-    <block wx:if="{{ recent_visit.length > 0 }}" >
-      <view class="recent_item" 
-            wx:for="{{ recent_visit }}" 
-            wx:key="index" 
-            bind:tap="handleToVisit"  
-            data-proid="{{item.ProjectCode}}" 
-            data-proname="{{ item.ProjectName }}" 
-            data-protime="{{ item.VisitPlanTime }}" 
-            data-procontact="{{ item.ContactName }}" 
-            data-protel="{{ item.ContactTel }}" 
-            data-visitid="{{ item.VisitId }}"
-      >
+    <block wx:if="{{ recent_visit.length > 0 }}">
+      <view class="recent_item" wx:for="{{ recent_visit }}" wx:key="index" bind:tap="handleToVisit" data-proid="{{item.ProjectCode}}" data-proname="{{ item.ProjectName }}" data-protime="{{ item.VisitPlanTime }}" data-procontact="{{ item.ContactName }}" data-protel="{{ item.ContactTel }}" data-visitid="{{ item.VisitId }}">
         <view class="item_top">
           <view class="left_wrap">
-            <view class="name">项目:{{item.ProjectName}}</view>
-            <view class="danwei">客户:{{item.CustName}}</view>
+            <view class="name">项目:{{ item.ProjectName }}</view>
+            <view class="danwei">客户:{{ item.CustName }}</view>
           </view>
-          <view class="time">{{item.VisitPlanTime}}</view>
+          <view class="time">{{ item.VisitPlanTime }}</view>
         </view>
         <view class="item_bot">
           <view class="left_wrap">
-            <view class="connect">联系人:{{item.ContactName}}</view>
-            <view class="phone">联系电话:{{item.ContactTel}}</view>
+            <view class="connect">联系人:{{ item.ContactName }}</view>
+            <view class="phone">联系电话:{{ item.ContactTel }}</view>
           </view>
-          <view class="xs">销售:{{item.UserName}}</view>
+          <view class="xs">销售:{{ item.UserName }}</view>
         </view>
       </view>
     </block>
-
-    <view wx:else class="no_data">
-      暂无数据
-    </view>
+    <view wx:else class="no_data">暂无数据</view>
   </view>
 
   <!-- 展示近期项目 -->
-  <block wx:for="{{ recent_project }}" wx:key="AttentionId">
-    <view class="recent_project">
+  <view class="recent_title">
+    <view class="recent_left">我的收藏项目</view>
+  </view>
+  <block wx:if="{{ recent_project.length > 0 }}">
+    <view class="recent_project" wx:for="{{ recent_project }}" wx:key="index">
       <!-- 头部信息 -->
-    <view class="project_head">
-      <view class="head_wrap">
-        <!-- 进度条 -->
-        <van-circle value="{{ item.projectPercentage * 100 }}"  stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE"  clockwise="{{false}}" />
-        <!-- 项目名 -->
-        <view class="project_mid">
-          <view class="name">{{ item.ProjectName }}</view>
-          <view class="home">{{ item.CustName }}</view>
+      <view class="project_head">
+        <view class="head_wrap">
+          <!-- 进度条 -->
+          <van-circle value="{{ item.projectPercentage * 100 }}" stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE" clockwise="{{false}}" />
+          <!-- 项目名 -->
+          <view class="project_mid">
+            <view class="name">{{ item.ProjectName }}</view>
+            <view class="home">{{ item.CustName }}</view>
+          </view>
         </view>
+        <!-- 标签 -->
+        <van-tag type="primary" custom-class="tag_class">p{{ item.ProjectPLevel }}</van-tag>
       </view>
-      <!-- 标签 -->
-      <van-tag type="primary" custom-class="tag_class">p{{ item.ProjectPLevel }}</van-tag>
-    </view>
       <!-- 主体信息 -->
-    <view class="project_main">
-      <!-- 项目状态-创建时间 -->
-      <view class="show_project_detail">
-        <view class="front_show">
+      <view class="project_main">
+        <!-- 项目状态-创建时间 -->
+        <view class="show_project_detail">
+          <view class="front_show">
             <view class="pro_first">项目状态:</view>
             <view class="pro_second">{{ item.ProjectStatus }}</view>
-        </view>
-        <view class="back_show">
-          <view class="pro_first">创建时间:</view>
+          </view>
+          <view class="back_show">
+            <view class="pro_first">创建时间:</view>
             <view class="pro_second">{{ item.ProjectCreateTime }}</view>
+          </view>
         </view>
-      </view>
-      <!-- 联系人-联系电话 -->
-      <view class="show_project_detail">
-        <view class="front_show">
+        <!-- 联系人-联系电话 -->
+        <view class="show_project_detail">
+          <view class="front_show">
             <view class="pro_first">联系人:</view>
             <view class="pro_second">{{ item.ContactName }}</view>
-        </view>
-        <view class="back_show">
-          <view class="pro_first">联系电话:</view>
+          </view>
+          <view class="back_show">
+            <view class="pro_first">联系电话:</view>
             <view class="pro_second">{{ item.ContactTel }}</view>
+          </view>
         </view>
-      </view>
-      <!-- 总金额-已收金额 -->
-      <view class="show_project_detail">
-        <view class="front_show">
+        <!-- 总金额-已收金额 -->
+        <view class="show_project_detail">
+          <view class="front_show">
             <view class="pro_first">已收金额:</view>
             <view class="pro_second">{{ item.receiveTotal }}￥</view>
-        </view>
-        <view class="back_show">
-          <view class="pro_first">未收金额:</view>
+          </view>
+          <view class="back_show">
+            <view class="pro_first">未收金额:</view>
             <view class="pro_second">{{ item.notReceiveTotal }}￥</view>
+          </view>
         </view>
       </view>
-    </view>
-    <!-- 合同信息 -->
-    <view class="project_footer">
-      <van-collapse value="{{ activeNames }}" bind:change="onChangeColl" accordion border="{{false}}">
+      <!-- 合同信息 -->
+      <view class="project_footer">
+        <van-collapse value="{{ activeNames }}" bind:change="onChangeColl" accordion border="{{false}}">
           <van-collapse-item name="constract{{index}}">
-              <view slot="title" style="color: rgba(51, 51, 51, .8)">
-                  合同详情
-                  <van-icon name="description" />
-              </view>
-              <!-- 合同展示列表 -->
-              <block wx:if="{{ item.notFinishContractList.length > 0 }}">
-                <view class="constract_show" wx:for="{{ item.notFinishContractList }}" wx:key="index">
-                  {{ index + 1 }}.
-                  <view class="con_name">
-                    <view class="con_con">合同:</view>
-                    <view class="con_content">{{ item.contractName }}</view>
-                  </view>
-                  <view class="con_price">
-                    <view class="pri_pri">待收款:</view>
-                    <view class="pri_content">{{ item.notReceivable }}￥</view>
-                  </view>
+            <view slot="title" style="color: rgba(51, 51, 51, .8)">
+              合同详情
+              <van-icon name="description" />
+            </view>
+            <!-- 合同展示列表 -->
+            <block wx:if="{{ item.notFinishContractList.length > 0 }}">
+              <view class="constract_show" wx:for="{{ item.notFinishContractList }}" wx:key="index">
+                {{ index + 1 }}.
+                <view class="con_name">
+                  <view class="con_con">合同:</view>
+                  <view class="con_content">{{ item.contractName }}</view>
                 </view>
-              </block>
-              <!-- 暂无合同列表 -->
-              <view wx:else>
-                暂无合同
+                <view class="con_price">
+                  <view class="pri_pri">待收款:</view>
+                  <view class="pri_content">{{ item.notReceivable }}￥</view>
+                </view>
               </view>
+            </block>
+            <!-- 暂无合同列表 -->
+            <view wx:else>暂无合同</view>
           </van-collapse-item>
-      </van-collapse>
+        </van-collapse>
+      </view>
     </view>
-  </view>
   </block>
-
+  <view class="no_data" wx:else>暂无数据</view>
   <!-- 返回顶部 -->
   <view class="back_top" catch:tap="handleTop" hidden="{{!showScroll}}">
-    <van-icon 
-      name="upgrade" 
-      color="#1989fa"
-      size="80rpx"
-      custom-class=""
-  />
+    <van-icon name="upgrade" color="#1989fa" size="80rpx" custom-class="" />
   </view>
-
   <!-- 底部额外信息 -->
-  <view class="footer">
-    ...
-  </view>
-
+  <van-divider contentPosition="center" customStyle="color: #b5b5b5;border-color: #b5b5b5;font-size: 24rpx;">我也是有底线的</van-divider>
 </view>

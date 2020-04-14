@@ -18,7 +18,7 @@ exports.main = async (event, context) => {
   const ContactDuty = event.ContactDuty;//联系人职务
   
 
-  const URL = 'http://qp6yq5.natappfree.cc/ProjectMgeSvr.assx/addProject'//添加项目
+  const URL = 'http://g8x7bk.natappfree.cc/ProjectMgeSvr.assx/addProject'//添加项目
   let options = {
     uri: URL,
     qs: {

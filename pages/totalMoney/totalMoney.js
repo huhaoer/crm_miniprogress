@@ -14,7 +14,7 @@ Page({
     projectNameData: [],//我的项目列表数据
     contractNameData: [],//我的合同列表数据
 
-    disableStyle: 'background:#ddd;color:#bbb',// 禁用样式
+    disableStyle: 'background:#ccc;color:#bbb',// 禁用样式
     activeStyle: 'background:#108ee9;color:#fff',
     normalStyle: '',// 禁用样式
   },
@@ -64,12 +64,22 @@ Page({
       url: '/pages/itemDetail/itemDetail?proid=' + proid + '&proname=' + proname
     });
   },
-
-  // 5.点击添加项目按钮
+  // 5.点击按钮添加项目
   addItem() {
     wx.navigateTo({
       url: '/pages/addItem/addItem'
     });
+  },
+  // 6.点击跳转到合同详情
+  handleToContractdetail(e) {
+    // 点击每一个合同跳转到合同详情
+    wx.navigateTo({
+      url: '/pages/contractDetail/contractDetail'
+    });
+  },
+  // 7.点击按钮添加合同
+  addContract() {
+    console.log("添加合同")
   },
 
   // 6.switch case选择当前tab选项获取数据
@@ -91,6 +101,7 @@ Page({
         break;
       case 'contract':
         // 请求contract数据
+        this.getOwnContractList();
         break;
     }
   },
@@ -110,6 +121,7 @@ Page({
           Token,
           AttentionId
         })
+        console.log(res,'取消收藏======================')
         if(res.result === "1") {//取消收藏成功
           this.getOwnProjectList();
           wx.showToast({
@@ -171,13 +183,15 @@ Page({
         Option
       })
       console.log(res,'转换前的结果','xxxxxxxxxxxxxxx')
-      let result = JSON.parse(res.result);//转换为JSON
-      console.log(result,'转换后的结果','xxxxxxxxxxxxxxxxx')
+      let result = res.result && JSON.parse(res.result);//转换为JSON
+      // console.log(result,'转换后的结果','xxxxxxxxxxxxxxxxx')
       const newRes = result.filter(item => item.ProjectCode);//处理过滤有项目id的数据
-      console.log(newRes,'...')
-      newRes.forEach(item => item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,"."))
-      // .forEach(item => item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,"."))
-      console.log(newRes,'...？？？')
+      // console.log(newRes,'...')
+      newRes.length > 0 && newRes.forEach(item => {
+        item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".")
+        item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".")
+      })
+      // console.log(newRes,'...？？？')
       that.setData({
         projectNameData: newRes,//设置返回渲染的数据
       })
@@ -193,9 +207,49 @@ Page({
   },
 
   // 生命周期函数  ==  获取我的合同
-  // 生命周期函数  ==  获取项目总额
-  // 生命周期函数  ==  获取已收款
-  // 生命周期函数  ==  获取未收款
+  async getOwnContractList() {
+    try {
+      const that = this;
+      const token = getToken();
+      const Option = 0;
+      const skipNum = 0;
+      const sizeNum = 100;//默认为翻页查询100条合同  合同数量不可能为100
+      let res = await cloudFunc('getOwnContractList',{
+        token,
+        Option,
+        skipNum,
+        sizeNum
+      })
+      console.log(res,'show my contract list string','String????????????????')
+      let result = res.result && JSON.parse(res.result);//转换为JSON
+      // 处理时间 
+      result._Items.length > 0 && result._Items.forEach(item => {
+        item.ContractCreateTime = item.ContractCreateTime && item.ContractCreateTime.split('T')[0].replace(/\-/g,".");//处理创建时间
+        item.ContractEndTime = item.ContractEndTime && item.ContractEndTime.split('T')[0].replace(/\-/g,".");//处理创建时间
+        item.ContractAmount = item.ContractAmount && (+item.ContractAmount).toLocaleString();//处理总金额
+        item.ContractAlreadyRec = item.ContractAlreadyRec && (+item.ContractAlreadyRec).toLocaleString();//处理已收金额
+
+        // 处理发票 JSON
+        item.InvoiceList = item.InvoiceList && JSON.parse(item.InvoiceList);
+        // 处理阶段 JSON
+        item.phaseList = item.phaseList && JSON.parse(item.phaseList);
+        // 处理收款 JSON
+        item.ReceivableList = item.ReceivableList && JSON.parse(item.ReceivableList);
+      })
+      console.log(result,'show data with handle')
+      that.setData({
+        contractNameData: result,//设置返回渲染的数据
+      })
+    } catch (error) {
+      console.log(error,'错误')
+      wx.showToast({
+        title: '请求错误',
+        icon: 'none',
+        duration: 1500,
+        mask: true,
+      });
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -208,26 +262,12 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {},
-
-  /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
     this.getCheckedTab(this.data.active);//传入初始化加载的那个tab页面的name值，请求数据
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {},
 
   // 获取滚动条当前位置
   onPageScroll: function(e) {

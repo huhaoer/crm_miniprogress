@@ -6,19 +6,23 @@ const rp = require('request-promise');//request-promise包
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const Token = event.Token;
-  const UserId = event.UserId;
+  // 通过event传递参数
+  const token = event.token;
   const Option = event.Option;
+  const skipNum = event.skipNum;
+  const sizeNum = event.sizeNum;
 
-  const URL = 'http://g8x7bk.natappfree.cc/ProjectMgeSvr.assx/getOwnProjectList'
+  const URL = 'http://g8x7bk.natappfree.cc/ContractMgeSvr.assx/getOwnContractList'
   let options = {
     uri: URL,
     qs: {
-      Token,
-      UserId,
-      Option
+      token,
+      Option,
+      skipNum,
+      sizeNum
     },
     // json: true 
   };
+
   return await rp(options)
 }

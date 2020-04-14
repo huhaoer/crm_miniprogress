@@ -159,27 +159,34 @@
             </view>
         </block>
         <view class="detail_record_no" wx:else>暂无拜访记录</view>
-
-        <!-- 添加拜访记录或拜访计划 -->
-        <view class="detail_add">
-            <view class="add_plan">
-                <van-button 
-                    plain 
-                    block 
-                    hairline 
-                    type="info" 
-                    size="small" 
-                    custom-style="background:#108ee9;color:#fff" 
-                    bind:click="handleAddPlan"
-                >
-                    添加计划
-                </van-button>
-            </view>
-            <view class="add_record">
-                <van-button plain block hairline type="info" size="small" custom-style="background:#108ee9;color:#fff">
-                    添加记录
-                </van-button>
-            </view>
+    </view>
+    <!-- 添加拜访记录或拜访计划 -->
+    <view class="detail_add">
+        <view class="add_plan">
+            <van-button 
+                plain 
+                block 
+                hairline 
+                type="info" 
+                size="small" 
+                custom-style="background:#108ee9;color:#fff" 
+                bind:click="handleAddPlan"
+            >
+                添加计划
+            </van-button>
+        </view>
+        <view class="add_record">
+            <van-button 
+                plain 
+                block 
+                hairline 
+                type="info" 
+                size="small" 
+                custom-style="background:#108ee9;color:#fff"
+                bind:click="handleAddRecoed"
+            >
+                添加记录
+            </van-button>
         </view>
     </view>
 </view>

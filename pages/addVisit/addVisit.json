@@ -10,7 +10,7 @@
   "backgroundTextStyle": "dark",
   "backgroundColor": "#000000",
   "navigationBarBackgroundColor": "#263238",
-  "navigationBarTitleText": "添加拜访",
+  "navigationBarTitleText": "添加拜访计划",
   "navigationBarTextStyle": "white",
   "enablePullDownRefresh":false
 }

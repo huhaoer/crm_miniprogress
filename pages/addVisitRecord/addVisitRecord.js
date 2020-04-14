@@ -193,6 +193,7 @@ Page({
    */
   onLoad: function(options) {
     proid = options.proid;//获取的项目id
+    console.log(proid,'from two ways and show proid')
     const planData = options.planData;//从填写计划页面跳转过来的传递参数
     if(planData) {
       const newData = JSON.parse(planData);//JSON化

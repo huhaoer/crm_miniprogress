@@ -71,7 +71,7 @@
     margin-top: 25rpx;
     box-shadow: 1rpx 1rpx 1rpx 1rpx rgba(180, 170, 170, 0.904);
 }
-.recent_visit .recent_title {
+.recent_title {
     height: 70rpx;
     line-height: 70rpx;
     color: rgba(51,51,51,.8);
@@ -109,13 +109,12 @@
     display: flex;
 }
 .recent_item .item_top .name {
-    color: #B5B5B5;
+    color: rgb(26, 21, 21);
     font-size: 26rpx;
 }
 .recent_item .item_top .danwei {
-    color: #B5B5B5;
+    color: #B5B5B5; 
     font-size: 26rpx;
-    margin-top: 5rpx;
     margin-left: 15rpx;
 }
 .recent_item .item_top .time {
@@ -135,11 +134,11 @@
     display: flex;
 }
 .recent_item .item_bot .connect {
-    color: #B5B5B5;
+    color: rgb(26, 21, 21);
     font-size: 26rpx;
 }
 .recent_item .item_bot .phone {
-    color: #B5B5B5;
+    color: rgb(26, 21, 21);
     font-size: 26rpx;
     margin-left: 30rpx;
 }
@@ -249,114 +248,6 @@
 .van-cell {
     padding: 0 !important;
   }
-/* .project_main .pro_status{
-    display: flex;
-    height: 50rpx;
-    width: 100%;
-    align-items: center;
-    line-height: 100%;
-    padding: 0 25rpx;
-    box-sizing: border-box;
-}
-.project_main .pro_status text{
-    line-height: 0;
-}
-.project_main .pro_status .front{
-    color: #000;
-    font-size: 26rpx;
-}
-.project_main .pro_status .back{
-    color: #9C9C9C;
-    font-size: 26rpx;
-    margin-left: 25rpx;
-} */
-/* 收款 */
-/* .project_main .pro_money {
-    display: flex;
-    justify-content: space-between;
-    height: 50rpx;
-    width: 100%;
-    padding: 0 25rpx;
-    box-sizing: border-box;
-}
-.project_main .pro_money .show{
-    display: flex;
-    height: 50rpx;
-    width: 100%;
-    align-items: center;
-    line-height: 100%;
-}
-.project_main .pro_money .show text{
-    line-height: 0;
-}
-.project_main .pro_money .front{
-    color: #000;
-    font-size: 26rpx;
-}
-.project_main .pro_money .back{
-    color: #9C9C9C;
-    font-size: 26rpx;
-    margin-left: 25rpx;
-} */
-/* 待收 */
-/* .project_main .pro_money .daishou{
-    display: flex;
-    height: 50rpx;
-    width: 100%;
-    align-items: center;
-    line-height: 100%;
-}
-.project_main .pro_money .daishou text{
-    line-height: 0;
-} */
-
-/* 下一阶段 */
-/* .project_main .pro_next{
-    display: flex;
-    height: 50rpx;
-    width: 100%;
-    align-items: center;
-    line-height: 100%;
-    padding: 0 25rpx;
-    box-sizing: border-box;
-}
-.project_main .pro_next text{
-    line-height: 0;
-}
-.project_main .pro_next .front{
-    color: #000;
-    font-size: 26rpx;
-}
-.project_main .pro_next .back{
-    color: #9C9C9C;
-    font-size: 26rpx;
-    margin-left: 20rpx;
-} */
-/* 合同 */
-/* .project_main .pro_contract .first{
-    display: flex;
-    height: 50rpx;
-    width: 100%;
-    align-items: center;
-    line-height: 100%;
-    padding: 0 25rpx;
-    box-sizing: border-box;
-}
-.project_main .pro_contract text{
-    line-height: 0;
-}
-.project_main .pro_contract .front{
-    color: #000;
-    font-size: 26rpx;
-}
-.project_main .pro_contract .front.not_show{
-    opacity: 0;
-}
-.project_main .pro_contract .back{
-    color: #9C9C9C;
-    font-size: 26rpx;
-    margin-left: 20rpx;
-} */
 /* 回到顶部 */
 .back_top {
     position: fixed;
@@ -367,10 +258,10 @@
     align-items: center;
 }
 /* 底部 */
-.footer {
+/* .footer {
     text-align: center;
     background-color: rgba(100, 20, 145, .5);
-}
+} */
 
 
 

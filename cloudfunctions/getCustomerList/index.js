@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
   const UserId = event.UserId;
   const Option = event.Option;
 
-  const URL = 'http://qp6yq5.natappfree.cc/CustomerMgeSvr.assx/getCustomerList'
+  const URL = 'http://g8x7bk.natappfree.cc/CustomerMgeSvr.assx/getCustomerList'
   let options = {
     uri: URL,
     qs: {

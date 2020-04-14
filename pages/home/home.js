@@ -115,10 +115,12 @@ Page({
         Token,
         UserId,
       });
+      console.log(res,'关注结果')
       let result = JSON.parse(res.result); //转换为JSON
       // 处理项目创建时间
       result.forEach(item => {
-        item.ProjectCreateTime = item.ProjectCreateTime && parseTime(item.ProjectCreateTime / 1000)
+        item.ProjectCreateTime = item.ProjectCreateTime && parseTime(item.ProjectCreateTime / 1000);
+        
       })
       that.setData({
         recent_project: result, //将获取的数据赋值渲染

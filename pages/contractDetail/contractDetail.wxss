@@ -1,1 +1,127 @@
-/* pages/contractDetail/contractDetail.wxss */
+.container {
+    background-color: rgba(204, 204, 204, .2);
+}
+/* 项目详情 */
+.detail_header,
+.detail_contract,
+.detail_plan,
+.detail_record
+{
+    width: 100%;
+    padding: 10rpx 15rpx;
+    box-sizing: border-box;
+}
+.detail_header_title,
+.detail_contract_title,
+.detail_plan_title,
+.detail_record_title
+ {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15rpx;
+    font-weight: 600;
+    color: #333;
+    font-size: 26rpx;
+}
+.detail_record_show,
+.detail_plan_show
+ {
+    margin-bottom: 15rpx;
+}
+.detail_header_show,
+.detail_contract_show,
+.detail_plan_show,
+.detail_record_show
+ {
+    width: 100%;
+    border-bottom: 0.5rpx solid #ccc;
+    border-radius: 10rpx;
+    background-color: #f5f5f5;
+    padding: 0 5rpx 15rpx 5rpx;
+    box-sizing: border-box;
+}
+.detail_header_every,
+.detail_contract_every,
+.detail_record_every
+ {
+    display: flex;
+    padding: 5rpx 0;
+    box-sizing: border-box;
+    width: 100%;
+}
+.detail_template
+ {
+    display: flex;
+    width: 50%;
+}
+.detail_template view:nth-of-type(1) {
+    color: rgba(51, 51, 51, 1);
+    font-size: 24rpx;
+    width: 130rpx;
+}
+.detail_template view:nth-of-type(2) {
+    color: rgba(153, 153, 153, 1);
+    font-size: 26rpx;
+    flex: 1;
+}
+
+/* 计划的单独写样式 */
+.detail_plan_every{
+    display: flex;
+}
+.detail_plan_every view:nth-of-type(1) {
+    color: rgba(51, 51, 51, 1);
+    font-size: 24rpx;
+    width: 130rpx;
+}
+.detail_plan_every view:nth-of-type(2) {
+    color: rgba(153, 153, 153, 1);
+    font-size: 26rpx;
+    flex: 1;
+}
+
+
+.detail_header_every view:nth-of-type(2) {
+    color: rgba(153, 153, 153, 1);
+    font-size: 26rpx;
+    flex: 1;
+}
+.detail_contract_every view:nth-of-type(2) {
+    color: rgba(153, 153, 153, 1);
+    font-size: 26rpx;
+    flex: 1;
+}
+.detail_record_every view:nth-of-type(2) {
+    color: rgba(153, 153, 153, 1);
+    font-size: 26rpx;
+    flex: 1;
+} 
+
+/* 暂无信息 */
+.detail_contract_no,
+.detail_plan_no,
+.detail_record_no
+{
+    text-align: center;
+    color: #ccc;
+    font-size: 22rpx;
+}
+/* 合同列表 */
+/* 设置合同距离下一个合同底部距离 */
+.detail_contract_show {
+    margin-bottom: 15rpx;
+}
+
+/* 拜访计划 */
+
+/* 添加记录或计划的按钮 */
+.detail_add {
+    width: 100%;
+    margin-top: 40rpx;
+}
+.add_plan,.add_record {
+    width: 95%;
+    margin: 15rpx auto;
+}
+
