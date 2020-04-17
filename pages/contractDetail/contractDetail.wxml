@@ -1,164 +1,126 @@
 <view class="container">
-    <!-- 1.展示项目详情信息 -->
-    <!-- 2.展示项目的拜访计划 -->
-    <!-- 3.展示项目的拜访记录列表 -->
-    <!-- 4.添加拜访计划 -->
-    <!-- contractList: [],//项目 ==> 合同列表
-        aloneVisit: [],//项目 ==> 拜访记录列表
-        projectDetail: {},//项目  ==> 详情信息
-        visitListPlan: [],//项目  ==>  拜访计划 -->
     <!-- 头部展示详情 -->
     <view class="detail_header">
         <view class="detail_header_title">
-            <view>项目详情</view>
+            <view>合同详情</view>
         </view>
         <view class="detail_header_show">
             <view class="detail_header_every">
                 <view class="detail_template">
-                    <view>项目名称:</view>
-                    <view>{{ projectDetail.ProjectName }}</view>
+                    <view>合同名称:</view>
+                    <view>{{ contractData.ContractName }}</view>
                 </view>
                 <view class="detail_template">
-                    <view>项目描述:</view>
-                    <view>{{ projectDetail.ProjectDescribe }}</view>
+                    <view>所属项目:</view>
+                    <view>{{ contractData.ProjectName }}</view>
                 </view>
             </view>
             <view class="detail_header_every">
                 <view class="detail_template">
-                    <view>项目等级:</view>
-                    <view>P{{ projectDetail.ProjectPLevel }}</view>
+                    <view>合同金额:</view>
+                    <view>P{{ contractData.ContractAmount }}</view>
                 </view>
+                <view class="detail_template">
+                    <view>已收金额:</view>
+                    <view>{{ contractData.ContractAlreadyRec }}</view>
+                </view>
+            </view>
+            <view class="detail_header_every">
                 <view class="detail_template">
                     <view>创建时间:</view>
-                    <view>{{ projectDetail.ProjectCreateTime }}</view>
+                    <view>{{ contractData.ContractCreateTime }}</view>
+                </view>
+                <view class="detail_template">
+                    <view>结束时间:</view>
+                    <view>{{ contractData.ContractEndTime }}</view>
                 </view>
             </view>
             <view class="detail_header_every">
                 <view class="detail_template">
-                    <view>项目备注:</view>
-                    <view>{{ projectDetail.ProjectRemark }}</view>
+                    <view>合同备注:</view>
+                    <view>{{ contractData.ContractRemark }}</view>
                 </view>
                 <view class="detail_template">
-                    <view>联系人姓名:</view>
-                    <view>{{ projectDetail.ContactName }}</view>
-                </view>
-            </view>
-            <view class="detail_header_every">
-                <view class="detail_template">
-                    <view>联系人电话:</view>
-                    <view>{{ projectDetail.ContactTel }}</view>
-                </view>
-                <view class="detail_template">
-                    <view>联系人职位:</view>
-                    <view>{{ projectDetail.ContactDuty }}</view>
+                    <view>合同类型:</view>
+                    <view>{{ contractData.ContractType }}</view>
                 </view>
             </view>
         </view>
     </view>
-    <!-- 合同列表 -->
+    <!-- 发票列表 -->
     <view class="detail_contract">
-        <view class="detail_contract_title">合同列表</view>
-        <block wx:if="{{ contractList.length > 0}}">
-            <view class="detail_contract_show" wx:for="{{ contractList }}" wx:key="index">
+        <view class="detail_contract_title">发票列表</view>
+        <block wx:if="{{ contractData.InvoiceList._Items && contractData.InvoiceList._Items.length  > 0 }}">
+            <view class="detail_contract_show" wx:for="{{ contractData.InvoiceList._Items }}" wx:key="index">
                 <view class="detail_contract_every">
                     <view class="detail_template">
-                        <view>合同名称:</view>
-                        <view>{{ item.ContractName }}</view>
+                        <view>开票人:</view>
+                        <view>{{ item.InvoicePerson }}</view>
                     </view>
                     <view class="detail_template">
-                        <view>合同状态:</view>
-                        <view>{{ item.ContractStatus }}</view>
+                        <view>开票金额:</view>
+                        <view>{{ item.InvoiceAmount }}</view>
                     </view>
                 </view>
                 <view class="detail_contract_every">
                     <view class="detail_template">
-                        <view>合同类别:</view>
-                        <view>{{ item.ContractType }}</view>
+                        <view>开票时间:</view>
+                        <view>{{ item.InvoiceTime }}</view>
                     </view>
                     <view class="detail_template">
-                        <view>合同备注:</view>
-                        <view>{{ item.ContractRemark }}</view>
-                    </view>
-                </view>
-                <view class="detail_contract_every">
-                    <view class="detail_template">
-                        <view>创建时间:</view>
-                        <view>{{ item.ContractCreateTime }}</view>
-                    </view>
-                    <view class="detail_template">
-                        <view>结束时间:</view>
-                        <view>{{ item.ContractEndTime }}</view>
-                    </view>
-                </view>
-                <view class="detail_contract_every">
-                    <view class="detail_template">
-                        <view>合同总额:</view>
-                        <view>{{ item.ContractAmount }}￥</view>
-                    </view>
-                    <view class="detail_template">
-                        <view>已收总额:</view>
-                        <view>{{ item.ContractAlreadyRec }}￥</view>
+                        <view>开票类型:</view>
+                        <view>{{ item.InvoiceType }}</view>
                     </view>
                 </view>
             </view>
         </block>
-        <view class="detail_contract_no" wx:else>暂无合同列表</view>
+        <view class="detail_contract_no" wx:else>{{ contractData.InvoiceList }}</view>
     </view>
-    <!-- 拜访计划 -->
+    <!-- 收款列表 -->
     <view class="detail_plan">
-        <view class="detail_plan_title">拜访计划</view>
-        <block wx:if="{{ visitListPlan.length > 0 }}">
-            <view class="detail_plan_show" wx:for="{{ visitListPlan }}" wx:key="index">
+        <view class="detail_plan_title">收款列表</view>
+        <block wx:if="{{ contractData.ReceivableList._Items && contractData.ReceivableList._Items.length  > 0 }}">
+            <view class="detail_plan_show" wx:for="{{ contractData.ReceivableList._Items }}" wx:key="index">
                 <view class="detail_plan_every">
-                    <view>计划时间:</view>
-                    <view>{{ item.VisitPlanTime }}</view>
+                    <view>收款金额:</view>
+                    <view>{{ item.RecAmount }}</view>
                 </view>
                 <view class="detail_plan_every">
-                    <view>计划内容:</view>
-                    <view>{{ item.VisitPlanContent }}</view>
-                </view>
-                <view class="detail_plan_every">
-                    <view>计划备注:</view>
-                    <view>{{ item.VisitRemark }}</view>
+                    <view>收款时间:</view>
+                    <view>{{ item.RecTime }}</view>
                 </view>
             </view>
         </block>
-        <view class="detail_plan_no" wx:else>暂无拜访计划</view>
+        <view class="detail_plan_no" wx:else>{{ contractData.ReceivableList }}</view>
     </view>
-    <!-- 拜访记录 -->
+    <!-- 阶段信息 -->
     <view class="detail_record">
-        <view class="detail_record_title">拜访记录</view>
-        <block wx:if="{{ aloneVisit.length > 0 }}">
-            <view class="detail_record_show" wx:for="{{ aloneVisit }}" wx:key="index">
+        <view class="detail_record_title">阶段信息</view>
+        <block wx:if="{{ contractData.PhaseList._Items && contractData.PhaseList._Items.length  > 0 }}">
+            <view class="detail_record_show" wx:for="{{ contractData.PhaseList._Items }}" wx:key="index">
                 <view class="detail_record_every">
                     <view class="detail_template">
-                        <view>计划内容:</view>
-                        <view>{{ item.VisitPlanContent || "暂无"}}</view>
+                        <view>阶段描述:</view>
+                        <view>{{ item.PhaseDescribe }}</view>
                     </view>
                     <view class="detail_template">
-                        <view>计划时间:</view>
-                        <view>{{ item.VisitPlanTime }}</view>
+                        <view>阶段时间:</view>
+                        <view>{{ item.PlanTime }}</view>
                     </view>
                 </view>
                 <view class="detail_record_every">
                     <view class="detail_template">
-                        <view>实际内容:</view>
-                        <view>{{ item.VisitFactContent }}</view>
+                        <view>阶段金额:</view>
+                        <view>{{ item.PhaseAmount }}</view>
                     </view>
                     <view class="detail_template">
-                        <view>实际时间:</view>
-                        <view>{{ item.VisitFactTime }}</view>
-                    </view>
-                </view>
-                <view class="detail_record_every">
-                    <view class="detail_template">
-                        <view>备注:</view>
-                        <view>{{ item.VisitRemark }}</view>
+                        <view>阶段类型:</view>
+                        <view>{{ item.PhaseType }}</view>
                     </view>
                 </view>
             </view>
         </block>
-        <view class="detail_record_no" wx:else>暂无拜访记录</view>
+        <view class="detail_record_no" wx:else>{{ contractData.PhaseList }}</view>
     </view>
     <!-- 添加拜访记录或拜访计划 -->
     <view class="detail_add">
@@ -170,12 +132,12 @@
                 type="info" 
                 size="small" 
                 custom-style="background:#108ee9;color:#fff" 
-                bind:click="handleAddPlan"
+                bind:click="handleUpdateContract"
             >
-                添加计划
+                修改合同
             </van-button>
         </view>
-        <view class="add_record">
+        <!-- <view class="add_record">
             <van-button 
                 plain 
                 block 
@@ -187,6 +149,6 @@
             >
                 添加记录
             </van-button>
-        </view>
+        </view> -->
     </view>
 </view>

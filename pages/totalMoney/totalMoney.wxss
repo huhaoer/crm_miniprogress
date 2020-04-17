@@ -139,11 +139,14 @@
   box-sizing: border-box;
   color: #333;
   font-weight: bold;
-  font-size: 28rpx;
+  font-size: 26rpx;
   display: flex;
 }
-.project_showmoney .show_margin {
-  margin-right: 60rpx;
+.project_showmoney view:nth-last-of-type(1) {
+  flex: 1;
+}
+.project_showmoney view:nth-last-of-type(2) {
+  flex: 1;
 }
 .my_project .every_project .project_wrapper{
   border-radius: 15rpx;
@@ -217,9 +220,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999999;
 }
 
 /* 我的合同详情 */
 .my_contract {
   background-color: royalblue;
+}
+
+/* 暂无数据 */
+.no_data {
+  text-align: center;
+  color: #B5B5B5;
+  font-size: 26rpx;
+  padding: 10rpx 0;
 }

@@ -8,7 +8,7 @@ const rp = require('request-promise');//request-promise包
 exports.main = async (event, context) => {
   const Token = event.Token;
   const UserId = event.UserId;
-  const URL = 'http://g8x7bk.natappfree.cc/ProjectMgeSvr.assx/appFirstPageCount'
+  const URL = 'http://8kwp55.natappfree.cc/ProjectMgeSvr.assx/appFirstPageCount'
   let options = {
     uri: URL,
     qs: {

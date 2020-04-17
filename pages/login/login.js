@@ -11,10 +11,10 @@ Page({
   },
   // 校验用户输入
   checkUserInput() {
-    const account = this.data.user_account;//用户名
+    const loginId = this.data.user_account;//用户名
     const password = this.data.user_pwd;//密码
     // 校验用户名
-    if(!account) {
+    if(!loginId) {
       wx.showToast({
         title: "请输入用户名",
         icon: "none",
@@ -44,15 +44,15 @@ Page({
     }
     try {
       let res = await cloudFunc("login", {
-        UserName: that.data.user_account,
-        Password: that.data.user_pwd,
+        loginId: that.data.user_account,
+        password: that.data.user_pwd,
       });
       let result = JSON.parse(res.result);
       console.log(result, "JSON转换的result");
       // 密码错误
-      if (result.message === "登录失败,账户或密码错误") {
+      if (result.Code !== 0) {
         wx.showToast({
-          title: "密码错误",
+          title: "登录失败",
           icon: "none",
           duration: 1000,
           mask: true,
@@ -60,16 +60,15 @@ Page({
         return;
       } else {
         //保存token
-        setToken(result.token);
+        setToken(result.Token);
         // 保存用户id
-        setUserId(result.user.userId);
+        setUserId(result.UserId);
         // 跳转到首页
         wx.redirectTo({
           url: "/pages/home/home",
         });
       }
     } catch (error) {
-      console.log(error, "登录失败");
       wx.showToast({
         title: "登录失败",
         icon: "none",

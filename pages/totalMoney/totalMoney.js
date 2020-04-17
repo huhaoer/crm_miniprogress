@@ -72,14 +72,18 @@ Page({
   },
   // 6.点击跳转到合同详情
   handleToContractdetail(e) {
+    const conid = e.currentTarget.dataset.conid;//点击每个合同获取的合同id
     // 点击每一个合同跳转到合同详情
     wx.navigateTo({
-      url: '/pages/contractDetail/contractDetail'
+      url: '/pages/contractDetail/contractDetail?conid=' + conid 
     });
   },
   // 7.点击按钮添加合同
   addContract() {
     console.log("添加合同")
+    wx.navigateTo({
+      url: '/pages/addContract/addContract'
+    });
   },
 
   // 6.switch case选择当前tab选项获取数据

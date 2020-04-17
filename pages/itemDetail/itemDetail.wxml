@@ -188,5 +188,18 @@
                 添加记录
             </van-button>
         </view>
+        <view class="update_item">
+            <van-button 
+                plain 
+                block 
+                hairline 
+                type="info" 
+                size="small" 
+                custom-style="background:#108ee9;color:#fff"
+                bind:click="handleChangeItem"
+            >
+                修改项目
+            </van-button>
+        </view>
     </view>
 </view>

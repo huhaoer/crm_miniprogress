@@ -82,6 +82,14 @@ Page({
       url: '/pages/addVisitRecord/addVisitRecord?proid=' + this.data.proid//跳转到添加记录页面 传递当前的项目id
     });
   },
+
+  // 3.点击进入修改项目信息页面
+  handleChangeItem() {
+    wx.navigateTo({
+      url: '/pages/changeItem/changeItem?proid=' + this.data.proid + '&proname=' + this.data.proname
+    });
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */

@@ -7,17 +7,18 @@ const rp = require('request-promise');//request-promise包
 // 云函数入口函数
 exports.main = async (event, context) => {
   // 通过event传递参数
-  const UserName = event.UserName
-  const Password = event.Password
-  const URL = 'http://g8x7bk.natappfree.cc/ContractController/login'
+  const loginId = event.loginId
+  const password = event.password
+  const URL = 'http://8kwp55.natappfree.cc/Authorize.assx/Login'
+
   let options = {
     uri: URL,
     qs: {
-      UserName,
-      Password
+      loginId,
+      password
     },
     // json: true 
   };
 
-  return await rp(options).then(res => res).catch(err => err)
+  return await rp(options)
 }

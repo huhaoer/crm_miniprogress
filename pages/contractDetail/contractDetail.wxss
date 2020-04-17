@@ -21,8 +21,8 @@
     justify-content: space-between;
     margin-bottom: 15rpx;
     font-weight: 600;
-    color: #333;
-    font-size: 26rpx;
+    color: #000;
+    font-size: 28rpx;
 }
 .detail_record_show,
 .detail_plan_show
@@ -40,6 +40,12 @@
     background-color: #f5f5f5;
     padding: 0 5rpx 15rpx 5rpx;
     box-sizing: border-box;
+}
+.detail_plan_show {
+    display: flex;
+}
+.detail_plan_show .detail_plan_every {
+    flex: 1;
 }
 .detail_header_every,
 .detail_contract_every,
@@ -62,7 +68,7 @@
 }
 .detail_template view:nth-of-type(2) {
     color: rgba(153, 153, 153, 1);
-    font-size: 26rpx;
+    font-size: 24rpx;
     flex: 1;
 }
 
@@ -77,24 +83,24 @@
 }
 .detail_plan_every view:nth-of-type(2) {
     color: rgba(153, 153, 153, 1);
-    font-size: 26rpx;
+    font-size: 24rpx;
     flex: 1;
 }
 
 
-.detail_header_every view:nth-of-type(2) {
+.detail_header_every .detail_template view:nth-of-type(2) {
     color: rgba(153, 153, 153, 1);
-    font-size: 26rpx;
+    font-size: 24rpx;
     flex: 1;
 }
 .detail_contract_every view:nth-of-type(2) {
     color: rgba(153, 153, 153, 1);
-    font-size: 26rpx;
+    font-size: 24rpx;
     flex: 1;
 }
 .detail_record_every view:nth-of-type(2) {
     color: rgba(153, 153, 153, 1);
-    font-size: 26rpx;
+    font-size: 24rpx;
     flex: 1;
 } 
 

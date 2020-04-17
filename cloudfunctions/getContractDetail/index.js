@@ -7,17 +7,20 @@ const rp = require('request-promise');//request-promise包
 // 云函数入口函数
 exports.main = async (event, context) => {
   // 通过event传递参数
-  const Token = event.Token
-  const Option = event.Option
-  const URL = 'http://8kwp55.natappfree.cc/ProjectMgeSvr.assx/getRecentVisitList'
+  const token = event.token;
+  const ContractCode = event.ContractCode;
+  const Option = event.Option;
+
+  const URL = 'http://8kwp55.natappfree.cc/ContractMgeSvr.assx/getContractDetail'
   let options = {
     uri: URL,
     qs: {
-      Token,
+      token,
+      ContractCode,
       Option
     },
     // json: true 
-};
+  };
 
-return await rp(options)
+  return await rp(options)
 }

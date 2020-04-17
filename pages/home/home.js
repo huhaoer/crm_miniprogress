@@ -14,6 +14,8 @@ Page({
     show_header: {}, //首页头部数据渲染
     recent_visit: [], //近期拜访的数据列表
     recent_project: [], //近期展示的项目
+
+    show_percent: '',//根据总金额和收款金额计算百分比
   },
 
   // 返回顶部
@@ -120,8 +122,9 @@ Page({
       // 处理项目创建时间
       result.forEach(item => {
         item.ProjectCreateTime = item.ProjectCreateTime && parseTime(item.ProjectCreateTime / 1000);
-        
+        item.Percentage = item.projectReceiveTotal === 0 ? 0 : item.projectReceiveTotal / item.projectAllContractTotal * 100;
       })
+      console.log(result,'<<<<<<<<<<<<<<<<')
       that.setData({
         recent_project: result, //将获取的数据赋值渲染
       });
@@ -179,6 +182,20 @@ Page({
       obj[key] = Math.round((parseInt(item) / 10000)) + '万'
     }
     return obj
+  },
+
+  // handleToItemDetail  点击每一个首页的项目跳转到项目详情
+  handleToItemDetail(e) {
+    const proid = e.currentTarget.dataset.proid;//获取当前点击的项目id
+    const proname = e.currentTarget.dataset.proname;//获取当前点击的项目名字
+    wx.navigateTo({
+      url: '/pages/itemDetail/itemDetail?proid=' + proid + '&proname=' + proname
+    });
+  },
+
+  // onChooseChange
+  onChooseChange() {
+    // 取消事件冒泡
   },
   /**
    * 生命周期函数--监听页面加载

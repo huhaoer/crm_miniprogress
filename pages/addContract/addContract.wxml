@@ -1,0 +1,111 @@
+<view class="container">
+
+    <!-- 合同表单填写 -->
+    <view class="wrapper">
+        <van-cell-group>
+            <!-- 合同名 -->
+            <van-field 
+                value="{{ contract_name_val }}"  
+                clearable label="合同名：" 
+                border="{{ true }}" 
+                bind:input="contractNameInp"
+            />
+            <!-- 所属项目 -->
+            <van-cell title="所属项目：" is-link bind:click="showItemMenu" value="{{ contract_item_val }}" />
+            <van-action-sheet 
+                show="{{ is_show_item }}" 
+                actions="{{ contract_item_arr }}" 
+                bind:close="closeItemMenu" 
+                bind:select="selectItemMenu" 
+                overlay="{{true}}"
+                close-on-click-action="{{true}}"
+                close-on-click-overlay="{{false}}"
+                title="选择项目"
+            />
+            <!-- 合同编号 -->
+            <van-field 
+                value="{{ contract_id_val }}" 
+                label="合同编号"  
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="contractIdInp"
+            />
+            <!-- 父合同编号 -->
+            <van-cell title="父合同编号：" is-link bind:click="showParentMenu" value="{{ contract_parent_val }}" />
+            <van-action-sheet 
+                show="{{ is_show_parent }}" 
+                actions="{{ contract_parent_arr }}" 
+                bind:close="closeParentMenu" 
+                bind:select="selectParentMenu" 
+                overlay="{{true}}"
+                close-on-click-action="{{true}}"
+                close-on-click-overlay="{{false}}"
+                title="选择父合同"
+            />
+            <!-- 合同分类 -->
+            <van-cell 
+                title="合同分类" 
+                is-link 
+                bind:click="showTypeMenu" 
+                value="{{ contract_kind_val }}" 
+            />
+            <van-action-sheet 
+                show="{{ is_show_type }}" 
+                actions="{{ contract_kind_arr }}" 
+                bind:close="closeTypeMenu" 
+                bind:select="selectTypeMenu"
+                overlay="{{true}}"
+                close-on-click-overlay="{{false}}"
+                safe-area-inset-bottom="{{false}}"
+                title="选择合同分类"
+            />
+            <!-- 合同金额 -->
+             <van-field 
+                value="{{  }}" 
+                label="合同金额" 
+                type="number"
+                autosize 
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="contractPriceInp"
+             />
+            <!-- 签订时间 -->
+            <van-cell title="签订时间" is-link bind:click="showStartMenu" value="{{ contract_start_val }}" />
+            <van-datetime-picker
+                type="date"
+                bind:confirm="confirmStart"
+                bind:cancel="cancelStart"
+                min-date="{{ minDate }}"
+                formatter="{{ formatter }}"
+                wx:if="{{ is_show_start }}"
+            />
+            <!-- 到期时间 -->
+            <van-cell title="到期时间" is-link bind:click="showStopMenu" value="{{ contract_stop_val }}" />
+            <van-datetime-picker
+                type="date"
+                bind:confirm="confirmStop"
+                bind:cancel="cancelStop"
+                min-date="{{ minDate }}"
+                formatter="{{ formatter }}"
+                wx:if="{{ is_show_stop }}"
+            />
+            <!-- 合同备注 -->
+            <van-field 
+                value="{{ contract_remark_val }}" 
+                label="合同备注"
+                autosize 
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="contractRemarkInp"
+            />
+        </van-cell-group>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view>
+        <van-button type="info" block square bind:click="handleSubmit">提交</van-button>
+    </view>
+</view>

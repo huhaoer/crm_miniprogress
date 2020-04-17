@@ -6,37 +6,46 @@
   <van-grid column-num="5" border="{{ false }}" square custom-class="bg_change" clickable>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="total_money_num">
-        <text class="big_count">{{ show_header.projectTotal }}</text>
+        <view class="big_count">
+          {{ show_header.projectTotal }}
+        </view>
       </view>
       <text class="total_money">项目总额</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="noback_money_num">
-        <text class="big_count">{{ show_header.alreadyReceivable }}</text>
+        <view class="big_count">
+          {{ show_header.alreadyReceivable }}
+        </view>
       </view>
       <text class="noback_money">已收款</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="wait_money_num">
-        <text class="big_count">{{ show_header.waitReceivable }}</text>
+        <view class="big_count">
+          {{ show_header.waitReceivable }}
+        </view>
       </view>
       <text class="wait_money">未收款</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=project" link-type="navigateTo">
       <view class="my_project_num">
-        <text class="big_count">{{ show_header.projectNumber }}</text>
-        <!-- <text class="mini_count">+{{2}}</text> -->
+        <view class="big_count">
+          {{ show_header.projectNumber }}
+        </view>
       </view>
       <text class="my_project">我的项目</text>
     </van-grid-item>
     <van-grid-item use-slot content-class="bg_change_item" url="/pages/totalMoney/totalMoney?name=contract" link-type="navigateTo">
       <view class="my_contract_num">
-        <text class="big_count">{{ show_header.contractTotal }}</text>
-        <!-- <text class="mini_count">+{{2}}</text> -->
+        <view class="big_count">
+          {{ show_header.contractTotal }}
+        </view>
       </view>
       <text class="my_contract">我的合同</text>
     </van-grid-item>
   </van-grid>
+
   <!-- 展示近期拜访 -->
   <view class="recent_visit">
     <view class="recent_title">
@@ -71,12 +80,22 @@
     <view class="recent_left">我的收藏项目</view>
   </view>
   <block wx:if="{{ recent_project.length > 0 }}">
-    <view class="recent_project" wx:for="{{ recent_project }}" wx:key="index">
+    <view 
+      class="recent_project" 
+      wx:for="{{ recent_project }}" 
+      wx:key="index"
+      catch:tap="handleToItemDetail"
+      data-proid="{{ item.ProjectCode }}" 
+      data-proname="{{ item.ProjectName }}"
+    >
       <!-- 头部信息 -->
       <view class="project_head">
         <view class="head_wrap">
           <!-- 进度条 -->
-          <van-circle value="{{ item.projectPercentage * 100 }}" stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE" clockwise="{{false}}" />
+          <!-- <van-circle value="{{ item.projectPercentage * 100 }}" stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE" clockwise="{{false}}" /> -->
+          <view class="project_circle">
+            <view class="circle_bg" style="top: {{ 100 - item.Percentage }}rpx"></view>
+          </view>
           <!-- 项目名 -->
           <view class="project_mid">
             <view class="name">{{ item.ProjectName }}</view>
@@ -86,6 +105,7 @@
         <!-- 标签 -->
         <van-tag type="primary" custom-class="tag_class">p{{ item.ProjectPLevel }}</van-tag>
       </view>
+
       <!-- 主体信息 -->
       <view class="project_main">
         <!-- 项目状态-创建时间 -->
@@ -122,8 +142,9 @@
           </view>
         </view>
       </view>
+
       <!-- 合同信息 -->
-      <view class="project_footer">
+      <view class="project_footer" catch:tap="onChooseChange">
         <van-collapse value="{{ activeNames }}" bind:change="onChangeColl" accordion border="{{false}}">
           <van-collapse-item name="constract{{index}}">
             <view slot="title" style="color: rgba(51, 51, 51, .8)">
@@ -152,10 +173,13 @@
     </view>
   </block>
   <view class="no_data" wx:else>暂无数据</view>
+
   <!-- 返回顶部 -->
   <view class="back_top" catch:tap="handleTop" hidden="{{!showScroll}}">
     <van-icon name="upgrade" color="#1989fa" size="80rpx" custom-class="" />
   </view>
+
   <!-- 底部额外信息 -->
   <van-divider contentPosition="center" customStyle="color: #b5b5b5;border-color: #b5b5b5;font-size: 24rpx;">我也是有底线的</van-divider>
+
 </view>

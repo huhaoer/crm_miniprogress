@@ -1,0 +1,74 @@
+<view class="container">
+
+    <!-- 项目表单填写 -->
+    <view class="wrapper">
+        <van-cell-group>
+            <!-- 项目名 -->
+            <van-field 
+                value="{{ projectDetail.ProjectName }}"  
+                clearable label="项目名：" 
+                disabled
+                border="{{ true }}" 
+                bind:input="projectNameInp"
+            />
+            <!-- 项目描述 -->
+            <van-field 
+                value="{{ projectDetail.ProjectDescribe }}" 
+                label="项目描述：" 
+                disabled 
+                clearable  
+                border="{{ true }}"
+            />
+            <!-- 项目分类菜单 -->
+            <van-cell 
+                title="项目分类：" 
+                value="{{ projectDetail.ProjectType }}"
+            />
+            <!-- 项目备注 -->
+             <van-field 
+                value="{{ projectDetail.ProjectRemark }}" 
+                label="项目备注：" 
+                disabled
+                autosize 
+                clearable  
+                border="{{ true }}"
+             />
+            <!-- 客户 -->
+            <van-cell title="客户：" value="{{ projectDetail.CustomerName }}" />
+            
+            <!-- 联系人姓名 -->
+            <van-field 
+                value="{{ connectName }}" 
+                label="联系人姓名："  
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="projectConnameInp"
+            />
+            <!-- 联系人电话 -->
+            <van-field 
+                value="{{ connectTel }}" 
+                type="number" 
+                label="联系人电话："  
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="projectContelInp"
+            />
+            <!-- 联系人职务 -->
+            <van-field 
+                value="{{ connectDuty }}" 
+                label="联系人职务：" 
+                clearable  
+                border="{{ true }}" 
+                error-message="" 
+                bind:input="projectCondutyInp"
+            />
+        </van-cell-group>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view>
+        <van-button type="info" block square bind:click="handleSubmit">提交</van-button>
+    </view>
+</view>

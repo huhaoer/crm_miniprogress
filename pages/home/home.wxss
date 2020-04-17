@@ -4,12 +4,9 @@
 }
 .bg_change_item {
     background-color: #263238 !important;
-    /* border: 1px solid #FF3535; */
+    padding: 0 !important;
 }
 
-.total_money_num {
-    
-}
 .total_money_num .big_count{
     color: #D98BFF;
     font-size: 36rpx;
@@ -167,6 +164,26 @@
 .project_head .head_wrap{
     display: flex;
     align-items: center;
+}
+.project_head .head_wrap .project_circle{
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    border: .5rpx solid #333;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 100rpx;
+    position: relative;
+    overflow: hidden;
+}
+.project_head .head_wrap .project_circle .circle_bg {
+    display: block;
+    width: 100rpx;
+    height: 100rpx;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #263238;
 }
 .project_head .head_wrap .project_mid{
     margin-left: 30rpx;

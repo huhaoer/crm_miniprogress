@@ -26,8 +26,15 @@
             <!-- 显示我的项目详情 -->
             <view class="my_project">
                 <!-- block遍历生成每一个项目 -->
-                <block wx:for="{{ projectNameData }}" wx:key="index">
-                    <view class="every_project" bind:tap="handleToItemdetail" data-proid="{{ item.ProjectCode }}" data-proname="{{ item.ProjectName }}">
+                <block wx:if="{{ projectNameData.length > 0 }}">
+                    <view 
+                        class="every_project" 
+                        bind:tap="handleToItemdetail" 
+                        data-proid="{{ item.ProjectCode }}" 
+                        data-proname="{{ item.ProjectName }}"
+                        wx:for="{{ projectNameData }}" 
+                        wx:key="index"
+                    >
                         <view class="project_showmoney">
                             <view class="show_margin">项目总金额：{{ item. ContractTotal }}￥</view>
                             <view>项目已收金额：{{ item. ReceiveTotal }}￥</view>
@@ -73,6 +80,7 @@
                         </view>
                     </view>
                 </block>
+                <view wx:else class="no_data">暂无项目</view>
             </view>
         </van-tab>
 
@@ -94,8 +102,14 @@
             <!-- 显示我的合同列表详情 -->
                 <view class="my_project">
                 <!-- block遍历生成每一个项目 -->
-                <block wx:for="{{ contractNameData._Items }}" wx:key="index">
-                    <view class="every_project" bind:tap="handleToContractdetail">
+                <block wx:if="{{ contractNameData._Items.length > 0 }}">
+                    <view 
+                        class="every_project" 
+                        bind:tap="handleToContractdetail"
+                        data-conid="{{ item.ContractCode }}"
+                        wx:for="{{ contractNameData._Items }}" 
+                        wx:key="index"
+                    >
                         <view class="project_showmoney">
                             <view class="show_margin">合同总金额：{{ item.ContractAmount }}￥</view>
                             <view>合同已收金额：{{ item.ContractAlreadyRec }}￥</view>
@@ -141,6 +155,7 @@
                         </view> -->
                     </view>
                 </block>
+                <view wx:else class="no_data">暂无合同</view>
             </view>
         </van-tab>
     </van-tabs>

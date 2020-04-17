@@ -9,7 +9,10 @@
     "pages/addItem/addItem",
     "pages/addVisit/addVisit",
     "pages/addVisitRecord/addVisitRecord",
-    "pages/test/test"
+    "pages/test/test",
+    "pages/addContract/addContract",
+    "pages/changeItem/changeItem",
+    "pages/changeContract/changeContract"
   ],
   "window": {
     "backgroundTextStyle": "light",
