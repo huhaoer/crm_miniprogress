@@ -9,10 +9,19 @@ Page({
    */
   data: {
     topDetail: {}, //详情页面渲染顶部信息是通过上个页面点击进来时传递的数据渲染
-    visitRecordList: [], //历史拜访记录列表
     visitListPlan: [], //计划拜访列表
     aloneVisit: [], //已经拜访列表
+    lastAloneVisit: {},//最近一条拜访记录信息
     visitid: null, //点击进来的那一条计划
+
+    activeNames: [],
+  },
+
+  // 折叠面板
+  onChange(event) {
+    this.setData({
+      activeNames: event.detail
+    });
   },
 
   // 1.点击跳转到addVisitRecord
@@ -23,7 +32,6 @@ Page({
   },
   // 2.点击填写计划 跳转到addVisitRecord  自动填充当时的内容
   gotoAddPlan(e) {
-    console.log(e, "sakdsidjasoibn ");
     const plancontent = e.currentTarget.dataset.plancontent; //计划的内容
     const planremark = e.currentTarget.dataset.planremark; //计划的备注
     const plantime = e.currentTarget.dataset.plantime; //计划的时间
@@ -42,7 +50,18 @@ Page({
         JSON.stringify(planData), //传递数据到 要提交计划
     });
   },
-  // 3.生命周期  ===  请求下面拜访记录列表数据
+
+  // 3.点击修改计划内容  跳转到changePlan 页面 并传递数据
+  goToChangePlan(e) {
+    console.log(e,'我是跳转到chnagePlan页面的数据')
+    const { time, content, remark, id } = e.currentTarget.dataset;//解构出传递给修改页面的数据
+    wx.navigateTo({
+      url: `/pages/changePlan/changePlan?time=${time}&content=${content}&remark=${remark}&id=${id}`,
+    });
+  },
+
+
+  // 4.生命周期  ===  请求下面拜访记录列表数据
   async getVisitList() {
     const that = this;
     try {
@@ -55,26 +74,26 @@ Page({
       const result = JSON.parse(res.result); //将数据转换为JSON
       console.log(result, "!!!!!!!!!!");
       // 计划拜访列表  处理时间戳 转换为正常时间
-      result.visitListPlan.forEach((item) => {
+      result.visitListPlan.length > 0 && result.visitListPlan.forEach((item) => {
         item.VisitPlanTime =
           item.VisitPlanTime &&
           item.VisitPlanTime.split("T")[0].replace(/\-/g, "."); //时间处理
       });
-      // 已经拜访列表  处理时间戳 转换为正常时间
-      result.aloneVisit.forEach((item) => {
+      // // 已经拜访列表  处理时间戳 转换为正常时间
+      result.aloneVisit.length > 0 && result.aloneVisit.forEach((item) => {
         item.VisitFactTime =
           item.VisitFactTime &&
           item.VisitFactTime.split("T")[0].replace(/\-/g, "."); //时间处理
         item.VisitPlanTime =
           item.VisitPlanTime &&
           item.VisitPlanTime.split("T")[0].replace(/\-/g, "."); //时间处理
+
+          that.setData({
+            lastAloneVisit: {...result.aloneVisit[0]},//处理最近一条数据显示
+          })
       });
+      console.log(this.data,'p')
       // 重新赋值渲染的数据
-      console.log(
-        result.visitListPlan,
-        result.aloneVisit,
-        "处理过后的数据  时间"
-      );
       that.setData({
         visitListPlan: result.visitListPlan,
         aloneVisit: result.aloneVisit,

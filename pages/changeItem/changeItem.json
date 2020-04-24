@@ -4,7 +4,9 @@
     "van-cell": "@vant/weapp/cell",
     "van-cell-group": "@vant/weapp/cell-group",
     "van-action-sheet": "@vant/weapp/action-sheet",
-    "van-button": "@vant/weapp/button"
+    "van-button": "@vant/weapp/button",
+    "van-datetime-picker": "@vant/weapp/datetime-picker",
+    "van-picker": "@vant/weapp/picker"
   },
   "backgroundTextStyle": "dark",
   "backgroundColor": "#000000",

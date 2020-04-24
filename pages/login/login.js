@@ -69,6 +69,7 @@ Page({
         });
       }
     } catch (error) {
+      console.log(error,'登录失败')
       wx.showToast({
         title: "登录失败",
         icon: "none",

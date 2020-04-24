@@ -1,0 +1,50 @@
+<view class="container">
+    <!-- 拜访表单填写 -->
+    <view class="wrapper">
+        <van-cell-group>
+            <!-- 拜访记录备注 -->
+            <van-field 
+                value="{{ VisitRemark }}" 
+                title-width="200rpx"
+                type="textarea"  
+                clearable 
+                autosize
+                label="计划备注：" 
+                border="{{ true }}"
+                bind:input="onVisitRemarkInp" 
+            />
+            <!-- 拜访记录内容 -->
+            <van-field 
+                value="{{ VisitPlanContent }}" 
+                title-width="200rpx" 
+                type="textarea" 
+                label="计划内容：" 
+                autosize 
+                clearable  
+                border="{{ true }}"
+                bind:input="onVisitPlanContentInp" 
+            />
+            <!-- 拜访记录时间 -->
+            <van-cell 
+                title="计划时间：" 
+                is-link 
+                bind:click="onChangeShowPicker" 
+                value="{{ VisitPlanTime }}" 
+            />
+            <van-datetime-picker
+                type="date"
+                value="{{ currentDate }}"
+                bind:confirm="onConfirmShowPicker"
+                bind:cancel="onCancelShowPicker"
+                min-date="{{ minDate }}"
+                formatter="{{ formatter }}"
+                wx:if="{{ isShowPicker }}"
+            />
+        </van-cell-group>
+    </view>
+
+    <!-- 提交按钮 -->
+    <view class="submit_btn">
+        <van-button type="info" block square bind:click="handleSubmit">提交</van-button>
+    </view>
+</view>

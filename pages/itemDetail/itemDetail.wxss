@@ -19,11 +19,28 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 15rpx;
     font-weight: 600;
     color: #000;
     font-size: 28rpx;
 }
+/* 设置 标题文字 */
+.detail_header_title view {
+    height: 100rpx;
+    line-height: 100rpx;
+}
+.detail_contract_title {
+    height: 100rpx;
+}
+.detail_plan_title {
+    height: 100rpx;
+}
+.detail_record_title {
+    height: 100rpx;
+}
+
+
 .detail_record_show,
 .detail_plan_show
  {
@@ -49,6 +66,21 @@
     padding: 5rpx 0;
     box-sizing: border-box;
     width: 100%;
+}
+.detail_header_solo {
+    display: flex;
+    padding: 5rpx 0;
+    box-sizing: border-box;
+}
+.detail_header_solo view:nth-of-type(1) {
+    color: rgba(51, 51, 51, 1);
+    font-size: 24rpx;
+    width: 130rpx;
+    flex-shrink: 0;
+}
+.detail_header_solo view:nth-of-type(2) {
+    color: rgba(153, 153, 153, 1);
+    font-size: 24rpx;
 }
 .detail_template
  {
@@ -98,6 +130,22 @@
     flex: 1;
 } 
 
+.detail_record_solo {
+    display: flex;
+    padding: 5rpx 0;
+    box-sizing: border-box;
+}
+.detail_record_solo view:nth-of-type(1) {
+    color: rgba(51, 51, 51, 1);
+    font-size: 24rpx;
+    width: 130rpx;
+    flex-shrink: 0;
+}
+.detail_record_solo view:nth-of-type(2) {
+    font-size: 24rpx;
+    color: rgba(153, 153, 153, 1);
+}
+
 /* 暂无信息 */
 .detail_contract_no,
 .detail_plan_no,
@@ -119,6 +167,7 @@
 .detail_add {
     width: 100%;
     margin-top: 40rpx;
+    margin-bottom: 60rpx;
 }
 .add_plan,
 .add_record,
@@ -126,5 +175,13 @@
  {
     width: 95%;
     margin: 15rpx auto;
+}
+/* 清除折叠面板的padding */
+.van-collapse-item__content {
+    padding: 0!important;
+}
+.van-cell__title {
+    color: #333;
+    font-size: 24rpx;
 }
 

@@ -83,8 +83,8 @@
 
 /* 拜访按钮 */
 .visit_btn {
-    margin-top:30rpx;
     padding: 0 10rpx;
+    margin-top: 30rpx;
 }
 /* 每一条拜访记录 */
 .every_visit {

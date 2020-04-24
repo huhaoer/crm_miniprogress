@@ -9,16 +9,21 @@ exports.main = async (event, context) => {
   // 通过event传递参数
   const Token = event.Token;
   const VisitId = event.VisitId;
+  const VisitPlanTime = event.VisitPlanTime;
+  const VisitPlanContent = event.VisitPlanContent;
   const VisitFactTime = event.VisitFactTime;
   const VisitFactContent = event.VisitFactContent;
   const VisitRemark = event.VisitRemark;
 
-  const URL = 'http://8kwp55.natappfree.cc/ProjectMgeSvr.assx/updateVisit'
+
+  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/updateVisit'
   let options = {
     uri: URL,
     qs: {
       Token,
       VisitId,
+      VisitPlanTime,
+      VisitPlanContent,
       VisitFactTime,
       VisitFactContent,
       VisitRemark

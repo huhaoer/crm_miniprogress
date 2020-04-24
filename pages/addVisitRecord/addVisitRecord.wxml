@@ -21,7 +21,7 @@
     </view>
 
     <!-- 提交按钮 -->
-    <view>
+    <view class="submit_btn">
         <van-button type="info" block square bind:click="handleSubmit">提交</van-button>
     </view>
 </view>

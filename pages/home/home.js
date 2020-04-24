@@ -33,6 +33,22 @@ Page({
     }
   },
 
+  // 点击快捷入口按钮进入修改合同页面
+  quickToContract() {
+    wx.navigateTo({
+      url: '/pages/totalMoney/totalMoney?name=contract',
+    });
+  },
+
+  // 点击滑动单元格
+  clickSwipeCell(e) {
+    console.log(e,'滑动单元格')
+    const { attentionid } = e.currentTarget.dataset;//点击取消单元格时传递的attentionId
+    console.log(attentionid,'attentionidattentionidattentionid')
+    // 调用函数取消关注
+    this.deleteAttention(attentionid)
+  },
+
   // 点击进入拜访详情
   handleToVisit(e) {
     const proid = e.currentTarget.dataset.proid; //当前点击项目的id
@@ -170,6 +186,36 @@ Page({
     }
   },
 
+  // 滑动单元格点击取消关注
+  async deleteAttention(id) {
+    const that = this;
+    try {
+      const Token = getToken();
+      const AttentionId = id; //要取消关注的项目attentionId
+      let res = await cloudFunc("deleteAttention", {
+        Token,
+        AttentionId,
+      });
+      if(res.result && res.result === '1') {
+        wx.showToast({
+          title: '取消成功',
+          icon: 'success',
+          duration: 1000,
+          mask: true,
+        });
+        // 重新获取项目情况
+        this.getAttentionList();
+      }
+    } catch (error) {
+      console.log(error);
+      wx.showToast({
+        title: "取消失败",
+        icon: "none",
+        duration: 1000,
+        mask: true,
+      });
+    }
+  },
   // 处理金钱价格 转换为万为单位
   filterMoney(money = {}) {
     let obj = {};

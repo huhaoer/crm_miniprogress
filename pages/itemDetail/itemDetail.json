@@ -1,6 +1,8 @@
 {
   "usingComponents": {
-    "van-button": "@vant/weapp/button"
+    "van-button": "@vant/weapp/button",
+    "van-collapse": "@vant/weapp/collapse",
+    "van-collapse-item": "@vant/weapp/collapse-item"
   },
   "backgroundTextStyle": "dark",
   "backgroundColor": "#000000",

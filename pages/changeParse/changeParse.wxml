@@ -1,0 +1,68 @@
+<view class="container">
+    <van-cell-group>
+        <!-- 阶段描述 -->
+        <van-field 
+        value="{{ desc }}"  
+        clearable 
+        label="阶段描述：" 
+        border="{{ true }}" 
+        bind:input="onDescInp"
+        />
+        <!-- 阶段总金额 -->
+        <van-field 
+        value="{{ total }}"  
+        clearable label="阶段总金额：" 
+        border="{{ true }}" 
+        bind:input="onTotalInp"
+        />
+        <!-- 阶段类型 -->
+        <van-cell 
+            title="阶段类型" 
+            is-link 
+            bind:click="onParseType" 
+            value="{{ type }}"
+        />
+        <van-picker 
+            show-toolbar 
+            title="选择阶段类型" 
+            columns="{{ parse_type_showArr }}" 
+            bind:cancel="cancelParseType" 
+            bind:confirm="confirmParseType" 
+            wx:if="{{ show_parse_type }}"
+        />
+        <!-- 计划时间 -->
+        <van-cell 
+            title="计划时间" 
+            is-link 
+            bind:click="onPlanTime" 
+            value="{{ time }}" 
+        />
+        <van-datetime-picker
+            type="date"
+            bind:confirm="confirmPlanTime"
+            bind:cancel="cancelPlanTime"
+            min-date="{{ minDate }}"
+            formatter="{{ formatter }}"
+            wx:if="{{ show_parse_plantime }}"
+        />
+        <!-- 实际时间 -->
+        <van-cell 
+            title="实际时间" 
+            is-link 
+            bind:click="onFactTime" 
+            value="{{ factTime }}" 
+        />
+        <van-datetime-picker
+            type="date"
+            bind:confirm="confirmFactTime"
+            bind:cancel="cancelFactTime"
+            min-date="{{ minDate }}"
+            formatter="{{ formatter }}"
+            wx:if="{{ show_parse_facttime }}"
+        />
+    </van-cell-group>
+    <!-- 提交按钮 -->
+    <view class="submit_btn">
+        <van-button type="info" block square bind:click="handleSubmit">修改阶段信息</van-button>
+    </view>
+</view>

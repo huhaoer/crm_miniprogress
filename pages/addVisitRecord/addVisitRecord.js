@@ -6,7 +6,7 @@ let proid = '';
 Page({
   data: {
     currentDate: new Date().getTime(),
-    minDate: new Date().getTime(),
+    // minDate: new Date().getTime(),
     formatter(type, value) {
       if (type === "year") {
         return `${value}年`;
@@ -162,6 +162,8 @@ Page({
       let res = await cloudFunc('updateVisit',{
         Token,
         VisitId: that.data.visitid,
+        VisitPlanTime: '',
+        VisitPlanContent: '',
         VisitFactTime: that.data.picker_value,
         VisitFactContent: that.data.content_mes,
         VisitRemark: that.data.remark_mes

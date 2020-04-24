@@ -46,6 +46,47 @@
     </van-grid-item>
   </van-grid>
 
+  <!-- 快捷入口 -->
+  <view class="recent_enter">
+    <!-- 开票按钮 -->
+    <view class="do_ticket">
+      <van-button 
+        type="info"
+        hairline 
+        plain
+        custom-style="border-radius:5rpx"
+        icon="balance-list-o"
+      >开票</van-button>
+    </view>
+
+    <!-- 修改合同入口 -->
+    <view class="do_contract">
+      <van-button 
+        type="info"
+        hairline
+        plain
+        custom-style="border-radius:5rpx"
+        icon="todo-list-o"
+        bind:click="quickToContract"
+      >修改合同</van-button>
+    </view>
+  </view>
+
+  <!-- 滑动单元格  测试
+  <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 0 }}">
+    <view class="show_project_detail">
+      <view class="front_show">
+        <view class="pro_first">项目状态:</view>
+        <view class="pro_second">{{ 'item.ProjectStatus' }}</view>
+      </view>
+      <view class="back_show">
+        <view class="pro_first">创建时间:</view>
+        <view class="pro_second">{{ 'item.ProjectCreateTime' }}</view>
+      </view>
+    </view>
+    <view slot="right">删除#ee0a24</view>
+  </van-swipe-cell> -->
+
   <!-- 展示近期拜访 -->
   <view class="recent_visit">
     <view class="recent_title">
@@ -59,7 +100,7 @@
         <view class="item_top">
           <view class="left_wrap">
             <view class="name">项目:{{ item.ProjectName }}</view>
-            <view class="danwei">客户:{{ item.CustName }}</view>
+            <view class="danwei">客户:{{ item.CustomerName }}</view>
           </view>
           <view class="time">{{ item.VisitPlanTime }}</view>
         </view>
@@ -68,7 +109,7 @@
             <view class="connect">联系人:{{ item.ContactName }}</view>
             <view class="phone">联系电话:{{ item.ContactTel }}</view>
           </view>
-          <view class="xs">销售:{{ item.UserName }}</view>
+          <view class="xs">销售:{{ item.Name }}</view>
         </view>
       </view>
     </block>
@@ -80,97 +121,89 @@
     <view class="recent_left">我的收藏项目</view>
   </view>
   <block wx:if="{{ recent_project.length > 0 }}">
-    <view 
-      class="recent_project" 
-      wx:for="{{ recent_project }}" 
-      wx:key="index"
-      catch:tap="handleToItemDetail"
-      data-proid="{{ item.ProjectCode }}" 
-      data-proname="{{ item.ProjectName }}"
-    >
-      <!-- 头部信息 -->
-      <view class="project_head">
-        <view class="head_wrap">
-          <!-- 进度条 -->
-          <!-- <van-circle value="{{ item.projectPercentage * 100 }}" stroke-width="4" color="#263238" size="50" layer-color="#E0EEEE" clockwise="{{false}}" /> -->
-          <view class="project_circle">
-            <view class="circle_bg" style="top: {{ 100 - item.Percentage }}rpx"></view>
-          </view>
-          <!-- 项目名 -->
-          <view class="project_mid">
-            <view class="name">{{ item.ProjectName }}</view>
-            <view class="home">{{ item.CustName }}</view>
-          </view>
-        </view>
-        <!-- 标签 -->
-        <van-tag type="primary" custom-class="tag_class">p{{ item.ProjectPLevel }}</van-tag>
-      </view>
 
-      <!-- 主体信息 -->
-      <view class="project_main">
-        <!-- 项目状态-创建时间 -->
-        <view class="show_project_detail">
-          <view class="front_show">
-            <view class="pro_first">项目状态:</view>
-            <view class="pro_second">{{ item.ProjectStatus }}</view>
+  <!-- 滑动单元格  测试 -->
+  <van-swipe-cell 
+    right-width="{{ 65 }}" 
+    left-width="{{ 0 }}" 
+    wx:for="{{ recent_project }}" 
+    wx:key="index"
+    catch:click="clickSwipeCell"
+    data-attentionid="{{ item.AttentionId }}"
+  >
+    <view class="show_project_detail">
+      <view 
+        class="recent_project"     
+        catch:tap="handleToItemDetail"
+        data-proid="{{ item.ProjectCode }}" 
+        data-proname="{{ item.ProjectName }}"
+      >
+        <!-- 头部信息 -->
+        <view class="project_head">
+          <view class="head_wrap">
+            <!-- 进度条 -->
+            <view class="project_circle">
+              <view class="circle_bg" style="top: {{ 100 - item.Percentage }}rpx"></view>
+            </view>
+            <!-- 项目名 -->
+            <view class="project_mid">
+              <view class="name">{{ item.ProjectName }}</view>
+              <view class="home">{{ item.CustName }}</view>
+            </view>
           </view>
-          <view class="back_show">
-            <view class="pro_first">创建时间:</view>
-            <view class="pro_second">{{ item.ProjectCreateTime }}</view>
-          </view>
+          <!-- 标签 -->
+          <van-tag type="primary" custom-class="tag_class">p{{ item.ProjectPLevel }}</van-tag>
         </view>
-        <!-- 联系人-联系电话 -->
-        <view class="show_project_detail">
-          <view class="front_show">
-            <view class="pro_first">联系人:</view>
-            <view class="pro_second">{{ item.ContactName }}</view>
+
+        <!-- 主体信息 -->
+        <view class="project_main">
+          <!-- 总金额 已收金额 -->
+          <view class="show_project_detail">
+            <view class="front_show">
+              <view class="pro_first">总金额:</view>
+              <view class="pro_second">{{ item.projectAllContractTotal }}￥</view>
+            </view>
+            <view class="back_show">
+              <view class="pro_first">已收金额:</view>
+              <view class="pro_second">{{ item.projectReceiveTotal }}￥</view>
+            </view>
           </view>
-          <view class="back_show">
-            <view class="pro_first">联系电话:</view>
-            <view class="pro_second">{{ item.ContactTel }}</view>
+          <!-- 项目状态-创建时间 -->
+          <view class="show_project_detail">
+            <view class="front_show">
+              <view class="pro_first">项目状态:</view>
+              <view class="pro_second">{{ item.ProjectStatus }}</view>
+            </view>
+            <view class="back_show">
+              <view class="pro_first">项目等级:</view>
+              <view class="pro_second">{{ item.ProjectPLevel }}</view>
+            </view>
           </view>
-        </view>
-        <!-- 总金额-已收金额 -->
-        <view class="show_project_detail">
-          <view class="front_show">
-            <view class="pro_first">已收金额:</view>
+          <!-- 联系人-联系电话 -->
+          <view class="show_project_detail">
+            <view class="front_show">
+              <view class="pro_first">联系人:</view>
+              <view class="pro_second">{{ item.ContactName }}</view>
+            </view>
+            <view class="back_show">
+              <view class="pro_first">联系电话:</view>
+              <view class="pro_second">{{ item.ContactTel }}</view>
+            </view>
+          </view>
+          <!-- 备注和描述 -->
+          <view class="show_project_detailmore">
+            <view class="pro_first">项目备注:</view>
             <view class="pro_second">{{ item.receiveTotal }}￥</view>
           </view>
-          <view class="back_show">
-            <view class="pro_first">未收金额:</view>
-            <view class="pro_second">{{ item.notReceiveTotal }}￥</view>
+          <view class="show_project_detailmore">
+            <view class="pro_first">项目描述:</view>
+            <view class="pro_second">{{ item.receiveTotal }}￥</view>
           </view>
         </view>
       </view>
-
-      <!-- 合同信息 -->
-      <view class="project_footer" catch:tap="onChooseChange">
-        <van-collapse value="{{ activeNames }}" bind:change="onChangeColl" accordion border="{{false}}">
-          <van-collapse-item name="constract{{index}}">
-            <view slot="title" style="color: rgba(51, 51, 51, .8)">
-              合同详情
-              <van-icon name="description" />
-            </view>
-            <!-- 合同展示列表 -->
-            <block wx:if="{{ item.notFinishContractList.length > 0 }}">
-              <view class="constract_show" wx:for="{{ item.notFinishContractList }}" wx:key="index">
-                {{ index + 1 }}.
-                <view class="con_name">
-                  <view class="con_con">合同:</view>
-                  <view class="con_content">{{ item.contractName }}</view>
-                </view>
-                <view class="con_price">
-                  <view class="pri_pri">待收款:</view>
-                  <view class="pri_content">{{ item.notReceivable }}￥</view>
-                </view>
-              </view>
-            </block>
-            <!-- 暂无合同列表 -->
-            <view wx:else>暂无合同</view>
-          </van-collapse-item>
-        </van-collapse>
-      </view>
     </view>
+    <view slot="right" class="quit_collect">取消</view>
+  </van-swipe-cell>
   </block>
   <view class="no_data" wx:else>暂无数据</view>
 

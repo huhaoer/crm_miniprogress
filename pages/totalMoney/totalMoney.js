@@ -14,9 +14,12 @@ Page({
     projectNameData: [],//我的项目列表数据
     contractNameData: [],//我的合同列表数据
 
-    disableStyle: 'background:#ccc;color:#bbb',// 禁用样式
-    activeStyle: 'background:#108ee9;color:#fff',
+    disableStyle: 'background:#108ee9;color:#fff',// 禁用样式
+    activeStyle: 'color:#333',
     normalStyle: '',// 禁用样式
+
+    searchVal: '',//项目输入框的关键字
+    searchValContract: '',//合同输入框的关键字
   },
   // 1.折叠面板方法
   onChangeColl(event) {
@@ -85,6 +88,54 @@ Page({
       url: '/pages/addContract/addContract'
     });
   },
+
+  // 项目搜索框====================================================
+  handleSearchChange(e) {
+    const nowWord = e.detail;//当前改变的输入框文字
+    this.setData({
+      searchVal: e.detail
+    })
+    // 文字改变为空时 即删除关键字搜索 获取最初的列表数据
+    !nowWord && this.getOwnProjectList();
+  },
+  handleSearchClear(e) {
+    this.setData({
+      searchVal: ''
+    })
+  },
+  handleSearchOn(e) {
+    const keyWord = e.detail;//输入框点击搜索时的关键字
+    this.setData({
+      searchVal: keyWord
+    })
+    // 有关键字时  发送请求
+    keyWord && this.getProjectByLike(keyWord);
+  },
+
+  // 合同搜索框======================================================
+  contractSearchChange(e) {
+    const nowWord = e.detail;//当前改变的输入框文字
+    this.setData({
+      searchValContract: e.detail
+      // fuzzySearchContract
+    })
+    // 文字改变为空时 即删除关键字搜索 获取最初的列表数据
+    !nowWord && this.getOwnContractList();
+  },
+  contractSearchClear() {
+    this.setData({
+      searchValContract: ''
+    })
+  },
+  contractSearchOn(e) {
+    const keyWord = e.detail;//输入框点击搜索时的关键字
+    this.setData({
+      searchValContract: keyWord
+    })
+    // 有关键字时  发送请求
+    keyWord && this.fuzzySearchContract(keyWord);
+  },
+
 
   // 6.switch case选择当前tab选项获取数据
   getCheckedTab(tabName) {
@@ -172,7 +223,9 @@ Page({
         });
       }
     }
-    
+    this.setData({
+      searchVal: '',//点击收藏或取消收藏后  取消关键字
+    })
   },
   // 生命周期函数  ==  获取我的项目
   async getOwnProjectList() {
@@ -186,14 +239,25 @@ Page({
         UserId,
         Option
       })
-      console.log(res,'转换前的结果','xxxxxxxxxxxxxxx')
+      // console.log(res,'转换前的结果','xxxxxxxxxxxxxxx')
       let result = res.result && JSON.parse(res.result);//转换为JSON
-      // console.log(result,'转换后的结果','xxxxxxxxxxxxxxxxx')
+      console.log(result,'转换后的结果','xxxxxxxxxxxxxxxxx8888888888888')
       const newRes = result.filter(item => item.ProjectCode);//处理过滤有项目id的数据
-      // console.log(newRes,'...')
+      console.log(newRes,'...')
+      // 判断状态的内部函数
+      function _transformStatus (status) {
+        switch (status) {
+          case 0:
+            return '状态未知';
+          case 1:
+            return '进行中';
+          case 2:
+            return '完成';
+        }
+      }
       newRes.length > 0 && newRes.forEach(item => {
         item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".")
-        item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".")
+        item.ProjectStatus =  _transformStatus(item.ProjectStatus)
       })
       // console.log(newRes,'...？？？')
       that.setData({
@@ -240,7 +304,7 @@ Page({
         // 处理收款 JSON
         item.ReceivableList = item.ReceivableList && JSON.parse(item.ReceivableList);
       })
-      console.log(result,'show data with handle')
+      console.log(result,'show data with handle') 
       that.setData({
         contractNameData: result,//设置返回渲染的数据
       })
@@ -254,6 +318,86 @@ Page({
       });
     }
   },
+
+  // 点击搜索模糊查询项目
+  async getProjectByLike(kw) {
+    try {
+      const that = this;
+      const Token = getToken();
+      const Option = 0;
+      const Skip = 0;
+      const Size = -1;
+      let res = await cloudFunc('getProjectByLike',{
+        StrField: kw,
+        Token,
+        Option,
+        Skip,
+        Size
+      })
+      console.log(res,'11111111111111111111111111111')
+      let result = res.result && JSON.parse(res.result);//转换为JSON
+      console.log(result,'resultresultresultresult')
+      // 处理时间 
+      result._Items && result._Items.length > 0 && result._Items.forEach(item => {
+        // 处理时间
+        item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".")
+        // 处理总金额
+        // item.ContractTotal = item.ContractTotal.toLocaleString()
+        // 处理已收金额
+        // item.ReceiveTotal = item.ContractTotal.toLocaleString()
+      })
+      // console.log(result,'show data with handle')
+      that.setData({
+        projectNameData: result._Items,//设置返回渲染的数据
+      })
+    } catch (error) {
+      console.log(error,'错误')
+      wx.showToast({
+        title: '请求错误',
+        icon: 'none',
+        duration: 1500,
+        mask: true,
+      });
+    }
+  },
+
+  // 点合同搜索模糊查询
+  async fuzzySearchContract(kw) {
+    const that = this;
+
+    try {
+      const token = getToken();
+      // const token = "c5MZKBH42dpB2FA3D3D";//模糊查询接口的token
+      const Option = 2;
+      const SearchCondition = kw;
+      let res = await cloudFunc('fuzzySearchContract',{
+        token,
+        SearchCondition,
+        Option,
+      })
+      let result = res.result && JSON.parse(res.result);//转换为JSON
+      // 处理时间 
+      result._Items.length > 0 && result._Items.forEach(item => {
+        item.ContractCreateTime = item.ContractCreateTime && item.ContractCreateTime.split('T')[0].replace(/\-/g,".");//处理创建时间
+        item.ContractEndTime = item.ContractEndTime && item.ContractEndTime.split('T')[0].replace(/\-/g,".");//处理创建时间
+        item.ContractAmount = item.ContractAmount && (+item.ContractAmount).toLocaleString();//处理总金额
+        item.ContractAlreadyRec = item.ContractAlreadyRec && (+item.ContractAlreadyRec).toLocaleString();//处理已收金额
+      })
+      that.setData({
+        contractNameData: result,//设置返回渲染的数据
+      })
+    } catch (error) {
+      console.log(error,'错误')
+      wx.showToast({
+        title: '请求错误',
+        icon: 'none',
+        duration: 1500,
+        mask: true,
+      });
+    }
+  },
+
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -270,6 +414,10 @@ Page({
    */
   onShow: function() {
     this.getCheckedTab(this.data.active);//传入初始化加载的那个tab页面的name值，请求数据
+    this.setData({
+      searchVal: '',//再次进入页面时  取消关键字搜索
+      searchValContract: ''
+    })
   },
 
 

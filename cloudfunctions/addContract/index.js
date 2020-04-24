@@ -34,7 +34,7 @@ exports.main = async (event, context) => {
   const ContractEndTime = event.ContractEndTime;
   const ContractRemark = event.ContractRemark;
 
-  const URL = 'http://8kwp55.natappfree.cc/ContractMgeSvr.assx/addContract'
+  const URL = 'http://d3zgyg.natappfree.cc/ContractMgeSvr.assx/addContract'
   let options = {
     uri: URL,
     qs: {

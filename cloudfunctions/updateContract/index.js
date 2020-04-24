@@ -42,7 +42,7 @@ exports.main = async (event, context) => {
   const ProjectCode = event.ProjectCode
   const ContractNewCode = event.ContractNewCode
 
-  const URL = 'http://8kwp55.natappfree.cc/ContractMgeSvr.assx/updateContract'
+  const URL = 'http://d3zgyg.natappfree.cc/ContractMgeSvr.assx/updateContract'
   let options = {
     uri: URL,
     qs: {

@@ -30,6 +30,9 @@ Page({
     time_show: false,//是否展开时间选择
     proid: '',//通过项目详情页面跳转并传递的proid参数
     proname: '',//通过项目详情页面跳转并传递的proname参数
+
+    columns: [],//选择的项目列表
+    loading: true
   },
   // 1.点击项目分类 展开当前项目选项框
   async showChooseProject() {
@@ -43,15 +46,18 @@ Page({
     try {
       let res = await this.getOwnProjectList();
       console.log(res,'项目列表')
-      const list = JSON.parse(res.result);
-      const pList = list.map(item => {
+      const list = res.result && JSON.parse(res.result);
+      const pList = list.length > 0 && list.map(item => {
         return {
           name: item.ProjectName,
           code: item.ProjectCode
         } 
       })
+      const columnsData = pList.map(item => item.name)
       this.setData({
-        projectList: pList
+        projectList: pList,
+        columns: columnsData,
+        loading: false
       })
     } catch (error) {
       console.log(error)
@@ -62,19 +68,25 @@ Page({
         mask: true
       });
     } 
-  },
-  //2.选择某个具体的项目值
-  selectNowProject(item) {
-    console.log(item,'当前选择项目')
-    const nowProjectValue = item.detail.name;//获取当前选择的项目值
-    const nowProjectCode = item.detail.code;//获取当前选择的项目值的code值
     this.setData({
-      nowProjectValue,
-      nowProjectCode
+      loading: false
     })
   },
+  //2.选择某个具体的项目值
+  confirmChooseProject(e) {
+    const proName = e.detail.value;//点击的项目名字
+    const index = e.detail.index;//点击项目的索引值
+    const proId = this.data.projectList[index].code;//根据索引获取项目id
+    this.setData({
+      nowProjectValue: proName,
+      nowProjectCode: proId,
+      project_item_show: false
+    })
+    console.log(this.data.nowProjectValue)
+    console.log(this.data.nowProjectCode)
+  },
   // 3.点击取消按钮之后 隐藏当前项目选择
-  quitNowProject() {
+  cancelChooseProject() {
     this.setData({
       project_item_show: false
     })
@@ -192,7 +204,7 @@ Page({
         },1000)
       }
     } catch (error) {
-      console.log(err,'失败原因')
+      console.log(error,'失败原因')
       wx.showToast({
         title: '添加失败',
         icon: 'none',

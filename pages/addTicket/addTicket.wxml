@@ -1,0 +1,30 @@
+<view class="container">
+    <van-cell-group custom-class="cell_root_class">
+        <!-- 选择开票阶段 -->
+        <van-cell 
+            title="开票阶段" 
+            is-link 
+            bind:click="onTicket" 
+            value="{{ ticket_parse_show }}"
+        />
+        <van-picker 
+            show-toolbar 
+            title="选择阶段类型" 
+            columns="{{ ticket_parse_showArr }}" 
+            bind:cancel="cancelTicket" 
+            bind:confirm="confirmTicket" 
+            wx:if="{{ is_show_ticket }}"
+        />
+        <!-- 开票金额 -->
+        <van-field 
+            value="{{ ticket_money }}" 
+            clearable 
+            label="开票金额" 
+            border="{{ true }}"
+            disabled
+        />
+    </van-cell-group>
+    <view class="submit_btn">
+        <van-button type="info" block square bind:click="handleSubmit">我要开票</van-button>
+    </view>
+</view>

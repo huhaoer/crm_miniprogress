@@ -1,0 +1,10 @@
+<view wx:if="{{showAndroidDialog}}" class="weui-skin_android fadeIn">
+  <view class="weui-mask" bindtap="close"></view>
+  <view class="weui-actionsheet" bindtap="makeCall">
+    <view class="weui-actionsheet__menu">
+      <view class="weui-actionsheet__cell" bindtap="makeCall">手机号</view>
+      <view class="weui-actionsheet__cell" bindtap="makeCall2">家庭电话</view>
+      <view class="weui-actionsheet__cell">公司电话</view>
+    </view>
+  </view>
+</view>

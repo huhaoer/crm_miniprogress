@@ -12,7 +12,12 @@
     "pages/test/test",
     "pages/addContract/addContract",
     "pages/changeItem/changeItem",
-    "pages/changeContract/changeContract"
+    "pages/changeContract/changeContract",
+    "pages/sheets/sheets",
+    "pages/changeParse/changeParse",
+    "pages/addParse/addParse",
+    "pages/addTicket/addTicket",
+    "pages/changePlan/changePlan"
   ],
   "window": {
     "backgroundTextStyle": "light",

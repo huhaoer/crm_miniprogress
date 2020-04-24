@@ -105,6 +105,13 @@
 					"id": -1,
 					"name": "addContract",
 					"pathName": "pages/addContract/addContract",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "sheets",
+					"pathName": "pages/sheets/sheets",
 					"scene": null
 				}
 			]

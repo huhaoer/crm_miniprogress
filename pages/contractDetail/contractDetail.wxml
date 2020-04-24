@@ -18,7 +18,7 @@
             <view class="detail_header_every">
                 <view class="detail_template">
                     <view>合同金额:</view>
-                    <view>P{{ contractData.ContractAmount }}</view>
+                    <view>{{ contractData.ContractAmount }}</view>
                 </view>
                 <view class="detail_template">
                     <view>已收金额:</view>
@@ -47,81 +47,199 @@
             </view>
         </view>
     </view>
+
     <!-- 发票列表 -->
     <view class="detail_contract">
         <view class="detail_contract_title">发票列表</view>
-        <block wx:if="{{ contractData.InvoiceList._Items && contractData.InvoiceList._Items.length  > 0 }}">
-            <view class="detail_contract_show" wx:for="{{ contractData.InvoiceList._Items }}" wx:key="index">
+        <block wx:if="{{ InvoiceList.length  > 0 }}">
+            <view class="detail_contract_show">
                 <view class="detail_contract_every">
                     <view class="detail_template">
                         <view>开票人:</view>
-                        <view>{{ item.InvoicePerson }}</view>
+                        <view>{{ lastInvoiceList.InvoicePerson }}</view>
                     </view>
                     <view class="detail_template">
                         <view>开票金额:</view>
-                        <view>{{ item.InvoiceAmount }}</view>
+                        <view>{{ lastInvoiceList.InvoiceAmount }}</view>
                     </view>
                 </view>
                 <view class="detail_contract_every">
                     <view class="detail_template">
                         <view>开票时间:</view>
-                        <view>{{ item.InvoiceTime }}</view>
+                        <view>{{ lastInvoiceList.InvoiceTime }}</view>
                     </view>
                     <view class="detail_template">
                         <view>开票类型:</view>
-                        <view>{{ item.InvoiceType }}</view>
+                        <view>{{ lastInvoiceList.InvoiceType }}</view>
                     </view>
                 </view>
             </view>
+            <!-- 发票折叠列表 -->
+            <van-collapse value="{{ activeNames }}" bind:change="onChange">
+                <van-collapse-item title="查看更多" name="0">
+                    <block wx:if="{{ InvoiceList.length > 0 }}">
+                        <view class="detail_contract_show" wx:for="{{ InvoiceList }}" wx:key="index">
+                            <view class="detail_contract_every">
+                                <view class="detail_template">
+                                    <view>开票人:</view>
+                                    <view>{{ item.InvoicePerson }}</view>
+                                </view>
+                                <view class="detail_template">
+                                    <view>开票金额:</view>
+                                    <view>{{ item.InvoiceAmount }}</view>
+                                </view>
+                            </view>
+                            <view class="detail_contract_every">
+                                <view class="detail_template">
+                                    <view>开票时间:</view>
+                                    <view>{{ item.InvoiceTime }}</view>
+                                </view>
+                                <view class="detail_template">
+                                    <view>开票类型:</view>
+                                    <view>{{ item.InvoiceType }}</view>
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                </van-collapse-item>
+            </van-collapse>
         </block>
-        <view class="detail_contract_no" wx:else>{{ contractData.InvoiceList }}</view>
+        <view class="detail_contract_no" wx:else>暂无发票列表</view>
     </view>
+
     <!-- 收款列表 -->
     <view class="detail_plan">
         <view class="detail_plan_title">收款列表</view>
-        <block wx:if="{{ contractData.ReceivableList._Items && contractData.ReceivableList._Items.length  > 0 }}">
-            <view class="detail_plan_show" wx:for="{{ contractData.ReceivableList._Items }}" wx:key="index">
+        <block wx:if="{{ ReceivableList.length  > 0 }}">
+            <view class="detail_plan_show">
                 <view class="detail_plan_every">
                     <view>收款金额:</view>
-                    <view>{{ item.RecAmount }}</view>
+                    <view>{{ lastReceivableList.RecAmount }}</view>
                 </view>
                 <view class="detail_plan_every">
                     <view>收款时间:</view>
-                    <view>{{ item.RecTime }}</view>
+                    <view>{{ lastReceivableList.RecTime }}</view>
                 </view>
             </view>
+            <!-- 收款折叠面板 -->
+            <van-collapse value="{{ activeNames }}" bind:change="onChange">
+                <van-collapse-item title="查看更多" name="1">
+                    <block wx:if="{{ ReceivableList.length > 0 }}">
+                        <view class="detail_plan_show" wx:for="{{ ReceivableList }}" wx:key="index">
+                            <view class="detail_plan_every">
+                                <view>收款金额:</view>
+                                <view>{{ item.RecAmount }}</view>
+                            </view>
+                            <view class="detail_plan_every">
+                                <view>收款时间:</view>
+                                <view>{{ item.RecTime }}</view>
+                            </view>
+                        </view>
+                    </block>
+                </van-collapse-item>
+            </van-collapse>
         </block>
-        <view class="detail_plan_no" wx:else>{{ contractData.ReceivableList }}</view>
+        <view class="detail_plan_no" wx:else>暂无收款列表</view>
     </view>
+
     <!-- 阶段信息 -->
     <view class="detail_record">
-        <view class="detail_record_title">阶段信息</view>
-        <block wx:if="{{ contractData.PhaseList._Items && contractData.PhaseList._Items.length  > 0 }}">
-            <view class="detail_record_show" wx:for="{{ contractData.PhaseList._Items }}" wx:key="index">
+        <view class="detail_record_title">
+            <view>阶段信息</view>
+            <view class="add_parse">
+                <van-button 
+                    hairline 
+                    type="info"
+                    size="mini"
+                    bind:click="addParseInfo"
+                    data-code="{{ contractData.ContractCode }}"
+                    custom-class="on_add_parse"
+                >添加阶段</van-button>
+                <van-button 
+                    hairline 
+                    type="info"
+                    size="mini"
+                    bind:click="addTicket"
+                    data-code="{{ contractData.ContractCode }}"
+                >我要开票</van-button>
+            </view>
+        </view>
+        <block wx:if="{{ PhaseList.length  > 0 }}">
+            <view 
+                class="detail_record_show"
+                catch:tap="changeParseInfo"
+                data-code="{{ contractData.ContractCode }}"
+                data-desc="{{ lastPhaseList.PhaseDescribe }}"
+                data-time="{{ lastPhaseList.PlanTime }}"
+                data-type="{{ lastPhaseList.PhaseType }}"
+                data-total="{{ lastPhaseList.PhaseAmount }}"
+                data-id="{{ lastPhaseList.PhaseId }}"
+            >
                 <view class="detail_record_every">
                     <view class="detail_template">
-                        <view>阶段描述:</view>
-                        <view>{{ item.PhaseDescribe }}</view>
+                        <view>阶段名称:</view>
+                        <view>{{ lastPhaseList.PhaseDescribe }}</view>
                     </view>
                     <view class="detail_template">
                         <view>阶段时间:</view>
-                        <view>{{ item.PlanTime }}</view>
+                        <view>{{ lastPhaseList.PlanTime }}</view>
                     </view>
                 </view>
                 <view class="detail_record_every">
                     <view class="detail_template">
                         <view>阶段金额:</view>
-                        <view>{{ item.PhaseAmount }}</view>
+                        <view>{{ lastPhaseList.PhaseAmount }}</view>
                     </view>
                     <view class="detail_template">
                         <view>阶段类型:</view>
-                        <view>{{ item.PhaseType }}</view>
+                        <view>{{ lastPhaseList.PhaseType }}</view>
                     </view>
                 </view>
             </view>
+            <!-- 阶段折叠面板 -->
+            <van-collapse value="{{ activeNames }}" bind:change="onChange">
+                <van-collapse-item title="查看更多" name="2">
+                    <block wx:if="{{ PhaseList.length > 0 }}">
+                        <view 
+                            class="detail_record_show"
+                            catch:tap="changeParseInfo"
+                            wx:for="{{ PhaseList }}"
+                            wx:key="index"
+                            data-code="{{ contractData.ContractCode }}"
+                            data-desc="{{ item.PhaseDescribe }}"
+                            data-time="{{ item.PlanTime }}"
+                            data-type="{{ item.PhaseType }}"
+                            data-total="{{ item.PhaseAmount }}"
+                            data-id="{{ item.PhaseId }}"
+                        >
+                            <view class="detail_record_every">
+                                <view class="detail_template">
+                                    <view>阶段名称:</view>
+                                    <view>{{ item.PhaseDescribe }}</view>
+                                </view>
+                                <view class="detail_template">
+                                    <view>阶段时间:</view>
+                                    <view>{{ item.PlanTime }}</view>
+                                </view>
+                            </view>
+                            <view class="detail_record_every">
+                                <view class="detail_template">
+                                    <view>阶段金额:</view>
+                                    <view>{{ item.PhaseAmount }}</view>
+                                </view>
+                                <view class="detail_template">
+                                    <view>阶段类型:</view>
+                                    <view>{{ item.PhaseType }}</view>
+                                </view>
+                            </view>
+                        </view>
+                    </block>
+                </van-collapse-item>
+            </van-collapse>
         </block>
-        <view class="detail_record_no" wx:else>{{ contractData.PhaseList }}</view>
+        <view class="detail_record_no" wx:else>暂无阶段列表</view>
     </view>
+
     <!-- 添加拜访记录或拜访计划 -->
     <view class="detail_add">
         <view class="add_plan">
@@ -130,7 +248,7 @@
                 block 
                 hairline 
                 type="info" 
-                size="small" 
+                size="large" 
                 custom-style="background:#108ee9;color:#fff" 
                 bind:click="handleUpdateContract"
             >

@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   const ProjectCode = event.ProjectCode;
   const Option = event.Option;
   const Token = event.Token;
-  const URL = 'http://8kwp55.natappfree.cc/ProjectMgeSvr.assx/getProjectDetail'
+  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/getProjectDetail'
   let options = {
     uri: URL,
     qs: {

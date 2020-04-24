@@ -27,7 +27,14 @@
     <view class="show_all_plan">
         <view class="all_plan_title">拜访计划</view>
         <view class="all_plan_one" wx:for="{{ visitListPlan }}" wx:key="index">
-            <view class="row_one">
+            <view 
+                class="row_one" 
+                bind:tap="goToChangePlan"
+                data-time="{{ item.VisitPlanTime }}"
+                data-content="{{ item.VisitPlanContent }}"
+                data-remark="{{ item.VisitRemark }}"
+                data-id="{{ item.VisitId }}"
+            >
                 <view class="active">
                     <view>
                         计划时间：{{ (item.VisitPlanTime == null || item.VisitPlanTime == "") ? '暂无' : item.VisitPlanTime }}
@@ -62,35 +69,40 @@
         </view>
     </view>
 
-    <!-- 添加拜访按钮 -->
-    <view class="visit_btn">
-        <!-- 点击跳转到添加拜访记录页面  addVisitRecord -->
-        <van-button 
-            block 
-            plain 
-            hairline 
-            type="info" 
-            bind:click="gotoAddRecord"
-            custom-style="background:#108ee9;color:#fff"
-        >+拜访记录</van-button>
-    </view>
-
     <!-- 项目已经拜访记录展示 -->
     <view class="show_all_record">
         <view class="all_record_title">拜访记录</view>
         <block wx:if="{{ aloneVisit.length > 0}}">
-            <view class="all_record_one" wx:for="{{ aloneVisit }}" wx:key="index">
+            <view class="all_record_one">
                 <view class="row_one">
-                    <view>计划内容：{{ (item.VisitPlanContent == null || item.VisitPlanContent == "") ? "暂无" :  item.VisitPlanContent}}</view>
-                    <view>计划时间：{{ (item.VisitPlanTime == null || item.VisitPlanTime == "") ? "暂无" : item.VisitPlanTime }}</view>
-                    <view>计划备注：{{ (item.VisitRemark == null || item.VisitRemark == "") ? "暂无" : item.VisitRemark }}</view>
-                    <view>实际内容：{{ (item.VisitFactContent == null || item.VisitFactContent == "") ? "暂无" : item.VisitFactContent }}</view>
-                    <view>实际时间：{{ (item.VisitFactTime == null || tem.VisitFactTime == "") ? "暂无" : item.VisitFactTime }}</view>
+                    <view>计划内容：{{ lastAloneVisit.VisitPlanContent ? lastAloneVisit.VisitPlanContent : '暂无' }}</view>
+                    <view>计划时间：{{ lastAloneVisit.VisitPlanTime ? lastAloneVisit.VisitPlanTime : '暂无'  }}</view>
+                    <view>计划备注：{{ lastAloneVisit.VisitRemark ? lastAloneVisit.VisitRemark : '暂无'  }}</view>
+                    <view>实际内容：{{ lastAloneVisit.VisitFactContent ? lastAloneVisit.VisitFactContent : '暂无'  }}</view>
+                    <view>实际时间：{{ lastAloneVisit.VisitFactTime ? lastAloneVisit.VisitFactTime : '暂无'  }}</view>
                 </view>
                 <view class="row_two">
                     <icon class="" type="success" size="23" color=""></icon>
                 </view>
             </view>
+            <van-collapse value="{{ activeNames }}" bind:change="onChange">
+                <van-collapse-item title="查看更多" name="0">
+                    <block wx:if="{{ aloneVisit.length > 0 }}">
+                        <view class="all_record_one" wx:for="{{ aloneVisit }}" wx:key="index">
+                            <view class="row_one">
+                                <view>计划内容：{{ item.VisitPlanContent ? item.VisitPlanContent : '暂无' }}</view>
+                                <view>计划时间：{{ item.VisitPlanTime ? item.VisitPlanTime : '暂无'  }}</view>
+                                <view>计划备注：{{ item.VisitRemark ? item.VisitRemark : '暂无'  }}</view>
+                                <view>实际内容：{{ item.VisitFactContent ? item.VisitFactContent : '暂无'  }}</view>
+                                <view>实际时间：{{ item.VisitFactTime ? item.VisitFactTime : '暂无'  }}</view>
+                            </view>
+                            <view class="row_two">
+                                <icon class="" type="success" size="23" color=""></icon>
+                            </view>
+                        </view>
+                    </block>
+                </van-collapse-item>
+            </van-collapse>
         </block>
         <view wx:else class="no_record">暂无记录</view>
     </view>
@@ -106,4 +118,18 @@
             <!-- <van-cell size="large" title="{{item.VisitRemark}}" label="{{item.VisitFactContent}}" value="{{item.VisitFactTime}}" border wx:for="{{visitRecordList}}" wx:key="VisitRemark" /> -->
         <!-- </van-cell-group> -->
     <!-- </view> -->
+
+    
+    <!-- 添加拜访按钮 -->
+    <view class="visit_btn">
+        <!-- 点击跳转到添加拜访记录页面  addVisitRecord -->
+        <van-button 
+            block 
+            plain 
+            hairline 
+            type="info" 
+            bind:click="gotoAddRecord"
+            custom-style="background:#108ee9;color:#fff"
+        >+拜访记录</van-button>
+    </view>
 </view>

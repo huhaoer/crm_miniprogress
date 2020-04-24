@@ -5,3 +5,7 @@
     background-color: #f5f5f5;
     /* margin-top: 30rpx; */
 }
+.submit_btn {
+    padding: 0 30rpx;
+    box-sizing: border-box;
+}

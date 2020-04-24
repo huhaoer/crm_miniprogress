@@ -24,6 +24,10 @@
     color: #000;
     font-size: 28rpx;
 }
+/* 添加阶段按钮 */
+.add_parse {
+    
+}
 .detail_record_show,
 .detail_plan_show
  {
@@ -35,14 +39,18 @@
 .detail_record_show
  {
     width: 100%;
-    border-bottom: 0.5rpx solid #ccc;
     border-radius: 10rpx;
-    background-color: #f5f5f5;
+    /* background-color: 	#FFFAF0; */
     padding: 0 5rpx 15rpx 5rpx;
     box-sizing: border-box;
 }
 .detail_plan_show {
     display: flex;
+}
+/* 阶段信息  背景颜色 */
+.detail_record_show {
+    border: 1rpx solid #FFEFDB;
+    border-radius: 10rpx;
 }
 .detail_plan_show .detail_plan_every {
     flex: 1;
@@ -63,7 +71,7 @@
 }
 .detail_template view:nth-of-type(1) {
     color: rgba(51, 51, 51, 1);
-    font-size: 24rpx;
+    font-size: 26rpx;
     width: 130rpx;
 }
 .detail_template view:nth-of-type(2) {
@@ -78,7 +86,7 @@
 }
 .detail_plan_every view:nth-of-type(1) {
     color: rgba(51, 51, 51, 1);
-    font-size: 24rpx;
+    font-size: 26rpx;
     width: 130rpx;
 }
 .detail_plan_every view:nth-of-type(2) {
@@ -131,3 +139,7 @@
     margin: 15rpx auto;
 }
 
+/* 添加阶段 */
+.on_add_parse {
+    margin-right: 20rpx;
+}

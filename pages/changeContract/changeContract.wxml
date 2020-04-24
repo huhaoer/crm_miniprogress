@@ -51,15 +51,14 @@
             />
             <!-- 所属项目 -->
             <van-cell title="所属项目：" is-link bind:click="showItemMenu" value="{{ ProjectCodeMap }}" />
-            <van-action-sheet 
-                show="{{ is_show_item }}" 
-                actions="{{ contract_item_arr }}" 
-                bind:close="closeItemMenu" 
-                bind:select="selectItemMenu" 
-                overlay="{{true}}"
-                close-on-click-action="{{true}}"
-                close-on-click-overlay="{{false}}"
+            <van-picker
+                show-toolbar
                 title="选择项目"
+                columns="{{ columns }}"
+                bind:cancel="cancelItemMenu"
+                bind:confirm="confirmItemMenu"
+                wx:if="{{ is_show_item }}"
+                loading="{{ loading }}"
             />
              <!-- 甲方 -->
              <van-field 
@@ -84,7 +83,7 @@
             />
             <!-- 合同总金额 -->
              <van-field 
-                value="{{ ContractAmount }}"  
+                value="{{ ContractAmount }}"
                 clearable label="总金额：" 
                 border="{{ true }}" 
                 bind:input="onTotalInp"
@@ -113,7 +112,7 @@
     </view>
 
     <!-- 提交按钮 -->
-    <view>
+    <view class="submit_btn">
         <van-button type="info" block square bind:click="handleSubmit">提交</van-button>
     </view>
 </view>

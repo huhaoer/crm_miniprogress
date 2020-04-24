@@ -36,6 +36,8 @@ Page({
       ContractEndTime: '',
       ContractRemark: '',
       ProjectCode: '',
+      loading: true,//是否在加载中
+      columns: [],//项目选择的列表
       ProjectCodeMap: '',//项目code对应映射名字
 
       is_show_type: false,//是否显示合同分类菜单
@@ -110,9 +112,9 @@ Page({
   },
   // onTotalInp
   onTotalInp(e) {
-    if(this.data.ContractAmount.includes('￥')) {
-      this.data.ContractAmount = '';//先清空 避免其余字符串
-    }
+    // if(this.data.ContractAmount.includes('￥')) {
+    //   this.data.ContractAmount = '';//先清空 避免其余字符串
+    // }
     const ContractAmount = e.detail
     this.setData({
       ContractAmount,
@@ -161,21 +163,28 @@ Page({
       item.name = item.ProjectName;
       item.code = item.ProjectCode
     })
+
+    const columnsData = result.length > 0 && result.map(item => item.name)
+    
     this.setData({
-      contract_item_arr: result
+      contract_item_arr: result,
+      loading: false,//取消加载
+      columns: columnsData
     })
   },
-  closeItemMenu() {
+  cancelItemMenu() {
     this.setData({
       is_show_item: false
     })
   },
-  selectItemMenu(e) {
-    const ProjectCode = e.detail.code
-    const ProjectCodeMap = e.detail.name
+  confirmItemMenu(e) {
+    const proName = e.detail.value;//当前点击选项的名称
+    const index = e.detail.index;//索引
+    const proId = this.data.contract_item_arr[index].code;//根据索引获取当前点击项目的对应code值
     this.setData({
-      ProjectCode,
-      ProjectCodeMap
+      ProjectCode: proId,//设置项目id
+      ProjectCodeMap: proName,//设置项目对应的名称
+      is_show_item: false//取消显示picker
     })
   },
 
@@ -277,6 +286,9 @@ Page({
         duration: 1000,
         mask: true
       });
+      this.setData({
+        loading: false,//取消加载
+      })
     }
   },
 
@@ -298,7 +310,6 @@ Page({
           duration: 1000,
           mask: true,
         });
-        wx.stopPullDownRefresh(); //下拉刷新成功
       }else {
         wx.showToast({
           title: "更新成功",
@@ -306,7 +317,10 @@ Page({
           duration: 1000,
           mask: true,
         });
-        wx.stopPullDownRefresh(); //下拉刷新成功
+        // 返回上一页
+        setTimeout(_ => {
+          wx.navigateBack();
+        },1000)
       }
     } catch (error) {
       console.log(error, "错误");
@@ -316,7 +330,6 @@ Page({
         duration: 1000,
         mask: true,
       });
-      wx.stopPullDownRefresh(); //下拉刷新成功
     }
   },
 

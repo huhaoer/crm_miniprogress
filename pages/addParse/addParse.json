@@ -1,0 +1,16 @@
+{
+  "usingComponents": {
+    "van-field": "@vant/weapp/field",
+    "van-cell": "@vant/weapp/cell",
+    "van-cell-group": "@vant/weapp/cell-group",
+    "van-button": "@vant/weapp/button",
+    "van-picker": "@vant/weapp/picker",
+    "van-datetime-picker": "@vant/weapp/datetime-picker"
+  },
+  "backgroundTextStyle": "dark",
+  "backgroundColor": "#000000",
+  "navigationBarBackgroundColor": "#263238",
+  "navigationBarTitleText": "添加阶段信息",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh":false
+}

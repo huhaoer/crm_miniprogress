@@ -9,7 +9,11 @@
     "van-tag": "@vant/weapp/tag",
     "van-icon": "@vant/weapp/icon",
     "van-collapse": "@vant/weapp/collapse",
-    "van-collapse-item": "@vant/weapp/collapse-item"
+    "van-collapse-item": "@vant/weapp/collapse-item",
+    "van-button": "@vant/weapp/button",
+    "van-swipe-cell": "@vant/weapp/swipe-cell",
+    "van-cell": "@vant/weapp/cell",
+    "van-cell-group": "@vant/weapp/cell-group"
   },
   "backgroundColor": "#000000",
   "navigationBarBackgroundColor": "#263238",

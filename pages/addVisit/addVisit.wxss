@@ -1,7 +1,10 @@
 .container {
+    background-color: rgb(241, 233, 233);
 }
 .wrapper {
     padding: 40rpx 0;
-    background-color: rgb(241, 233, 233);
-    /* margin-top: 30rpx; */
+}
+.submit_btn {
+    padding: 0 30rpx;
+    box-sizing: border-box;
 }

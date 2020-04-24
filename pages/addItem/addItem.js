@@ -41,6 +41,9 @@ Page({
     show_user_item: false,//'是否展示客户分类选项'
     
 
+    columns:[],
+    loading: true,//是否加载中
+
   },
 
   // 1.点击选择弹出项目分类菜单
@@ -65,31 +68,41 @@ Page({
   },
   // 4.点击选择弹出客户分类菜单
   async showUserMenu() {
+    const that = this;
     this.setData({
-      show_user_item: true
+      show_user_item: true,
+      loading: true
     })
+
     // 调用接口获取客户列表
     let res = await this.getCustomerList()
-    let newRes = JSON.parse(res.result);
+    console.log(res,'获取的客户、、、、、、、、、、、、、、、、、、、、')
+    let newRes = res.result && JSON.parse(res.result);
     newRes && newRes.forEach(item => item.name = item.CustName);
     console.log(newRes,'新的数据')
+    const data = newRes && newRes.map(item => item.CustName)
     this.setData({
-      project_customer_arr: newRes
+      columns: data || [],
+      project_customer_arr: newRes,//设置该值 便于下面选择根据索引查询用户id
+      loading: false//取消加载
     })
     
   },
   // 5.点击关闭客户选择
-  closeUserMenu() {
+  cancelUserMenu() {
     this.setData({
       show_user_item: false
     })
   },
-  // 6.点击选中某一个项目等级
-  selectUserMenu(e) {
-    const CustId = e.detail.CustId;//点击的客户id
+  // 6.点击选中某一个项目等级  确定按钮
+  confirmUserMenu(e) {
+    const custName = e.detail.value;//点击的客户名字
+    const index = e.detail.index;//点击客户的索引值
+    const custId = this.data.project_customer_arr[index].CustId;//根据索引获取id
     this.setData({
-      project_customer_val: e.detail.name,//客户姓名值
-      project_customer_id: CustId//客户id
+      project_customer_val: custName,//客户姓名值
+      project_customer_id: custId,//客户id
+      show_user_item: false
     })
   },
   // 项目名称监听输入事件
@@ -225,15 +238,12 @@ Page({
 
   // 获取客户列表
   async getCustomerList() {
-
+    const that = this;
     try {
-      const that = this;
       const token = getToken();//获取Token
-      const UserId = getUserId(); //缓存中读取用户id
-      const Option = 0; //
+      const Option = 1; //
       let res = await cloudFunc("getCustomerList", {
         token,
-        UserId,
         Option
       });
       return res
@@ -245,6 +255,9 @@ Page({
         duration: 1000,
         mask: true
       });
+      that.setData({
+        loading: false,//请求失败也取消加载
+      })
     }
   },
   /**

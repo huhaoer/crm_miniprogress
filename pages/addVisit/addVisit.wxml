@@ -5,15 +5,14 @@
         <van-cell-group>
             <!-- 项目名 -->
             <van-cell title="项目分类：" is-link bind:click="showChooseProject" value="{{nowProjectValue}}" />
-            <van-action-sheet 
-                show="{{ project_item_show }}" 
-                actions="{{ projectList }}" 
-                bind:close="quitNowProject" 
-                bind:select="selectNowProject"
-                overlay="{{true}}"
-                close-on-click-action="{{true}}"
-                close-on-click-overlay="{{false}}"
-                title="选择项目分类"
+            <van-picker
+                show-toolbar
+                title="选择项目"
+                columns="{{ columns }}"
+                bind:cancel="cancelChooseProject"
+                bind:confirm="confirmChooseProject"
+                wx:if="{{ project_item_show }}"
+                loading="{{ loading }}"
             />
             <!-- 计划内容 -->
             <van-field 
@@ -56,7 +55,7 @@
     </view>
 
     <!-- 提交按钮 -->
-    <view>
+    <view class="submit_btn">
         <van-button type="info" block square bind:click="handleSubmit">提交</van-button>
     </view>
 </view>

@@ -23,6 +23,17 @@
                     </view>
                 </view>
             </view>
+
+            <!-- 显示搜索框  模糊查询-->
+            <van-search 
+                value="{{ searchVal }}" 
+                placeholder="请输入搜索关键词" 
+                background="#f5f5f5" 
+                bind:clear="handleSearchClear"
+                bind:change="handleSearchChange"
+                bind:search="handleSearchOn"
+            />
+
             <!-- 显示我的项目详情 -->
             <view class="my_project">
                 <!-- block遍历生成每一个项目 -->
@@ -51,23 +62,19 @@
                                     <view class="left_name">项目等级:</view>
                                     <view class="right_desc">P{{ item.ProjectPLevel }}</view>
                                 </view>
-                                <view class="sure_one">
-                                    <view class="left_name">项目描述:</view>
-                                    <view class="right_desc">P{{ item.ProjectDescribe }}</view>
-                                </view>
                             </view>
                             <view class="two_rowinfo">
-                                <view class="sure_one">
+                                <!-- <view class="sure_one">
                                     <view class="left_name">项目时间:</view>
                                     <view class="right_desc">{{ item.ProjectCreateTime }}</view>
+                                </view> -->
+                                <view class="sure_one">
+                                    <view class="left_name">项目状态:</view>
+                                    <view class="right_desc">{{ item.ProjectStatus }}</view>
                                 </view>
                                 <view class="sure_one">
                                     <view class="left_name">项目类型:</view>
                                     <view class="right_desc">{{ item.ProjectType }}</view>
-                                </view>
-                                <view class="sure_one">
-                                    <view class="left_name">项目状态:</view>
-                                    <view class="right_desc">{{ item.ProjectStatus }}</view>
                                 </view>
                             </view>
                         </view>
@@ -75,8 +82,12 @@
                             <view class="left_name">项目备注:</view>
                             <view class="right_desc">{{ item.ProjectRemark }}</view>
                         </view>
+                        <view class="solo_tips">
+                            <view class="left_name">项目描述:</view>
+                            <view class="right_desc">{{ item.ProjectDescribe }}</view>
+                        </view>
                         <view class="add_collect" catchtap="addCollect" data-item="{{ item }}">
-                            <van-button icon="like-o" plain block hairline type="info" size="small" disabled="{{ item.AttentionId !== 0 }}" custom-style="{{ item.AttentionId !== 0 ? disableStyle : activeStyle }}"></van-button>
+                            <van-button icon="like-o" plain block hairline type="info" size="normal" custom-style="{{ item.AttentionId !== 0 ? disableStyle : activeStyle }}"></van-button>
                         </view>
                     </view>
                 </block>
@@ -99,6 +110,17 @@
                     </view>
                 </view>
             </view>
+
+            <!-- 显示搜索框  模糊查询-->
+            <van-search 
+                value="{{ searchValContract }}" 
+                placeholder="请输入搜索关键词" 
+                background="#f5f5f5" 
+                bind:clear="contractSearchClear"
+                bind:change="contractSearchChange"
+                bind:search="contractSearchOn"
+            />
+
             <!-- 显示我的合同列表详情 -->
                 <view class="my_project">
                 <!-- block遍历生成每一个项目 -->
@@ -124,11 +146,11 @@
                                 </view>
                                 <view class="sure_one">
                                     <view class="left_name">合同类型:</view>
-                                    <view class="right_desc">P{{ item.ContractType }}</view>
+                                    <view class="right_desc">{{ item.ContractType }}</view>
                                 </view>
                                 <view class="sure_one">
                                     <view class="left_name">签订时间:</view>
-                                    <view class="right_desc">P{{ item.ContractCreateTime }}</view>
+                                    <view class="right_desc">{{ item.ContractCreateTime }}</view>
                                 </view>
                             </view>
                             <view class="two_rowinfo">
@@ -150,9 +172,6 @@
                             <view class="left_name">合同备注:</view>
                             <view class="right_desc">{{ item.ContractRemark }}</view>
                         </view>
-                        <!-- <view class="add_collect" catchtap="addCollect" data-item="{{ item }}">
-                            <van-button icon="like-o" plain block hairline type="info" size="small" disabled="{{ item.AttentionId !== 0 }}" custom-style="{{ item.AttentionId !== 0 ? disableStyle : activeStyle }}"></van-button>
-                        </view> -->
                     </view>
                 </block>
                 <view wx:else class="no_data">暂无合同</view>
