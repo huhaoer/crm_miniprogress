@@ -13,6 +13,7 @@ Page({
     aloneVisit: [], //已经拜访列表
     lastAloneVisit: {},//最近一条拜访记录信息
     visitid: null, //点击进来的那一条计划
+    theOneShow: false,//是否有第一条显示内容
 
     activeNames: [],
   },
@@ -79,7 +80,7 @@ Page({
           item.VisitPlanTime &&
           item.VisitPlanTime.split("T")[0].replace(/\-/g, "."); //时间处理
       });
-      // // 已经拜访列表  处理时间戳 转换为正常时间
+      // 已经拜访列表  处理时间戳 转换为正常时间
       result.aloneVisit.length > 0 && result.aloneVisit.forEach((item) => {
         item.VisitFactTime =
           item.VisitFactTime &&
@@ -88,16 +89,19 @@ Page({
           item.VisitPlanTime &&
           item.VisitPlanTime.split("T")[0].replace(/\-/g, "."); //时间处理
 
+          // 设置第一条数据
           that.setData({
             lastAloneVisit: {...result.aloneVisit[0]},//处理最近一条数据显示
+            theOneShow: true,//设置有第一条数据显示了
           })
       });
-      console.log(this.data,'p')
-      // 重新赋值渲染的数据
+
       that.setData({
         visitListPlan: result.visitListPlan,
-        aloneVisit: result.aloneVisit,
+        aloneVisit: result.aloneVisit.slice(1),//截取第一条显示的剩下内容
       });
+      console.log(this.data.lastAloneVisit,'this.data.lastAloneVisit')
+      console.log(this.data.aloneVisit,'this.data.aloneVisit')
     } catch (error) {
       console.log(error, "错误");
       wx.showToast({

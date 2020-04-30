@@ -77,10 +77,15 @@
     font-size: 24rpx;
     width: 130rpx;
     flex-shrink: 0;
+    text-align-last:justify;
+    text-align:justify;
+    /* 这行必加，兼容ie浏览器 */
+    text-justify:distribute-all-lines;
 }
 .detail_header_solo view:nth-of-type(2) {
     color: rgba(153, 153, 153, 1);
     font-size: 24rpx;
+    padding-left: 10rpx;
 }
 .detail_template
  {
@@ -91,11 +96,16 @@
     color: rgba(51, 51, 51, 1);
     font-size: 24rpx;
     width: 130rpx;
+    text-align-last:justify;
+    text-align:justify;
+    /* 这行必加，兼容ie浏览器 */
+    text-justify:distribute-all-lines;
 }
 .detail_template view:nth-of-type(2) {
     color: rgba(153, 153, 153, 1);
     font-size: 24rpx;
     flex: 1;
+    padding-left: 10rpx;
 }
 
 /* 计划的单独写样式 */
@@ -106,11 +116,16 @@
     color: rgba(51, 51, 51, 1);
     font-size: 24rpx;
     width: 130rpx;
+    text-align-last:justify;
+    text-align:justify;
+    /* 这行必加，兼容ie浏览器 */
+    text-justify:distribute-all-lines;
 }
 .detail_plan_every view:nth-of-type(2) {
     color: rgba(153, 153, 153, 1);
     font-size: 24rpx;
     flex: 1;
+    padding-left: 10rpx;
 }
 
 
@@ -140,10 +155,15 @@
     font-size: 24rpx;
     width: 130rpx;
     flex-shrink: 0;
+    text-align-last:justify;
+    text-align:justify;
+    /* 这行必加，兼容ie浏览器 */
+    text-justify:distribute-all-lines;
 }
 .detail_record_solo view:nth-of-type(2) {
     font-size: 24rpx;
     color: rgba(153, 153, 153, 1);
+    padding-left: 10rpx;
 }
 
 /* 暂无信息 */

@@ -1,11 +1,38 @@
 const cloudFunc  = require('../../api/index');
 const regeneratorRuntime  = require('../../utils/runtime');//ES7 环境
 import { getToken,getUserId } from "../../utils/storage";
+const {  _projectStatus2Word } = require('../../utils/project')
+const { _contractType2Word } = require('../../utils/contract')
+// 千分位转换
+function getLocaleString(num) {
+  return num.toString().split('').reverse().reduce((total, value, index, array) => {
+      return ((index % 3) ? value : value + ',') + total
+  })
+}
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    // 选择排序的方式
+    show_rank: false,//是否显示排序菜单
+    actions: [
+      {
+        name: '默认排序'
+      },
+      {
+        name: '时间降序'
+      },
+      {
+        name: '时间升序'
+      },
+      {
+        name: '价格降序'
+      },
+      {
+        name: '时间升序'
+      },
+    ],
     activeNames: "", //手风琴页面默认显示的一条,数组形式
     active: "", //tab页面显示的选项页面 根据传递的name值判断显示哪一个页面
     // totalNameData: [],//项目总金额列表数据
@@ -21,6 +48,14 @@ Page({
     searchVal: '',//项目输入框的关键字
     searchValContract: '',//合同输入框的关键字
   },
+
+  // 选择排序
+  onChooseRank() {
+    this.setData({
+      show_rank: true
+    })
+  },
+
   // 1.折叠面板方法
   onChangeColl(event) {
     this.setData({
@@ -203,7 +238,7 @@ Page({
           UserId,
           ProjectCode
         })
-        console.log(res,'原始结果')
+        console.log(res,'添加收藏')
         if(res.result.toString().length > 0) {//添加完成返回的不是对象
           this.getOwnProjectList();
           wx.showToast({
@@ -241,25 +276,16 @@ Page({
       })
       // console.log(res,'转换前的结果','xxxxxxxxxxxxxxx')
       let result = res.result && JSON.parse(res.result);//转换为JSON
-      console.log(result,'转换后的结果','xxxxxxxxxxxxxxxxx8888888888888')
       const newRes = result.filter(item => item.ProjectCode);//处理过滤有项目id的数据
-      console.log(newRes,'...')
-      // 判断状态的内部函数
-      function _transformStatus (status) {
-        switch (status) {
-          case 0:
-            return '状态未知';
-          case 1:
-            return '进行中';
-          case 2:
-            return '完成';
-        }
-      }
       newRes.length > 0 && newRes.forEach(item => {
-        item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".")
-        item.ProjectStatus =  _transformStatus(item.ProjectStatus)
+        // 处理总金额
+        item.ContractTotal = item.ContractTotal === 0 ? 0 : getLocaleString(item.ContractTotal)
+        // 处理已收金额
+        item.ReceiveTotal = item.ReceiveTotal === 0 ? 0 : getLocaleString(item.ReceiveTotal)
+        // 处理状态
+        item.ProjectStatus = _projectStatus2Word(item.ProjectStatus)
       })
-      // console.log(newRes,'...？？？')
+      console.log(newRes,'...？？？')
       that.setData({
         projectNameData: newRes,//设置返回渲染的数据
       })
@@ -288,23 +314,23 @@ Page({
         skipNum,
         sizeNum
       })
-      console.log(res,'show my contract list string','String????????????????')
+      console.log(res,'我的合同')
       let result = res.result && JSON.parse(res.result);//转换为JSON
-      // 处理时间 
-      result._Items.length > 0 && result._Items.forEach(item => {
-        item.ContractCreateTime = item.ContractCreateTime && item.ContractCreateTime.split('T')[0].replace(/\-/g,".");//处理创建时间
+      console.log(result,'show my contract list string','String????????????????')
+      result._Items && result._Items.length > 0 && result._Items.forEach(item => {
+        item.ContractSignTime = item.ContractSignTime && item.ContractSignTime.split('T')[0].replace(/\-/g,".");//处理创建时间
         item.ContractEndTime = item.ContractEndTime && item.ContractEndTime.split('T')[0].replace(/\-/g,".");//处理创建时间
-        item.ContractAmount = item.ContractAmount && (+item.ContractAmount).toLocaleString();//处理总金额
-        item.ContractAlreadyRec = item.ContractAlreadyRec && (+item.ContractAlreadyRec).toLocaleString();//处理已收金额
+        item.ContractAmount = item.ContractAmount && getLocaleString(item.ContractAmount);//处理总金额
+        item.ContractAlreadyRec = item.ContractAlreadyRec && getLocaleString(item.ContractAlreadyRec);//处理已收金额
+        item.ContractType = item.ContractType && _contractType2Word(parseInt(item.ContractType));// 处理合同类型
 
         // 处理发票 JSON
-        item.InvoiceList = item.InvoiceList && JSON.parse(item.InvoiceList);
-        // 处理阶段 JSON
-        item.phaseList = item.phaseList && JSON.parse(item.phaseList);
-        // 处理收款 JSON
-        item.ReceivableList = item.ReceivableList && JSON.parse(item.ReceivableList);
+        // item.InvoiceList = item.InvoiceList && item.InvoiceList._Items && (item.InvoiceList._Items.length > 0 ? item.InvoiceList._Items : []);
+        // // 处理阶段 JSON
+        // item.phaseList = item.phaseList && item.phaseList._Items && (item.phaseList._Items.length > 0 ? item.phaseList._Items : []);
+        // // 处理收款 JSON
+        // item.ReceivableList = item.ReceivableList && item.ReceivableList._Items && (item.ReceivableList._Items.length > 0 ? item.ReceivableList._Items : []);
       })
-      console.log(result,'show data with handle') 
       that.setData({
         contractNameData: result,//设置返回渲染的数据
       })
@@ -321,6 +347,17 @@ Page({
 
   // 点击搜索模糊查询项目
   async getProjectByLike(kw) {
+    // 处理状态
+    function _transformStatus(status) {
+      switch (status) {
+        case 0:
+          return '刚开始';
+        case 1:
+          return '进行中';
+        case 2:
+          return '已完成';
+      }
+    }
     try {
       const that = this;
       const Token = getToken();
@@ -334,21 +371,22 @@ Page({
         Skip,
         Size
       })
-      console.log(res,'11111111111111111111111111111')
+
       let result = res.result && JSON.parse(res.result);//转换为JSON
       console.log(result,'resultresultresultresult')
       // 处理时间 
       result._Items && result._Items.length > 0 && result._Items.forEach(item => {
         // 处理时间
-        item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".")
+        // item.ProjectCreateTime = item.ProjectCreateTime && item.ProjectCreateTime.split('T')[0].replace(/\-/g,".")
         // 处理总金额
-        // item.ContractTotal = item.ContractTotal.toLocaleString()
+        item.ContractTotal = item.ContractTotal === 0 ? 0 : getLocaleString(item.ContractTotal)
         // 处理已收金额
-        // item.ReceiveTotal = item.ContractTotal.toLocaleString()
+        item.ReceiveTotal = item.ReceiveTotal === 0 ? 0 : getLocaleString(item.ReceiveTotal)
+        // 处理状态
+        item.ProjectStatus = _projectStatus2Word(item.ProjectStatus)
       })
-      // console.log(result,'show data with handle')
       that.setData({
-        projectNameData: result._Items,//设置返回渲染的数据
+        projectNameData: result._Items || [],//设置返回渲染的数据
       })
     } catch (error) {
       console.log(error,'错误')
@@ -367,7 +405,6 @@ Page({
 
     try {
       const token = getToken();
-      // const token = "c5MZKBH42dpB2FA3D3D";//模糊查询接口的token
       const Option = 2;
       const SearchCondition = kw;
       let res = await cloudFunc('fuzzySearchContract',{
@@ -376,12 +413,14 @@ Page({
         Option,
       })
       let result = res.result && JSON.parse(res.result);//转换为JSON
+      console.log(result,'模糊查询')
       // 处理时间 
       result._Items.length > 0 && result._Items.forEach(item => {
-        item.ContractCreateTime = item.ContractCreateTime && item.ContractCreateTime.split('T')[0].replace(/\-/g,".");//处理创建时间
+        item.ContractSignTime = item.ContractSignTime && item.ContractSignTime.split('T')[0].replace(/\-/g,".");//处理创建时间
         item.ContractEndTime = item.ContractEndTime && item.ContractEndTime.split('T')[0].replace(/\-/g,".");//处理创建时间
-        item.ContractAmount = item.ContractAmount && (+item.ContractAmount).toLocaleString();//处理总金额
-        item.ContractAlreadyRec = item.ContractAlreadyRec && (+item.ContractAlreadyRec).toLocaleString();//处理已收金额
+        item.ContractAmount = item.ContractAmount && getLocaleString((+item.ContractAmount));//处理总金额
+        item.ContractAlreadyRec = item.ContractAlreadyRec && getLocaleString((+item.ContractAlreadyRec));//处理已收金额
+        item.ContractType = item.ContractType && _contractType2Word(parseInt(item.ContractType));// 处理合同类型
       })
       that.setData({
         contractNameData: result,//设置返回渲染的数据

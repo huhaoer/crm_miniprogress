@@ -23,9 +23,9 @@ Page({
     nowProjectCode: '',//当前动态选择项目的code
     projectList: [],//点击后展开的项目列表
     nowPlanContent: '',//当前计划内容填写的值
-    nowPlanContentErr: '',//当前计划内容错误检验提醒
+    // nowPlanContentErr: '',//当前计划内容错误检验提醒
     nowPlanRemark: '',//当前计划备注填写的值
-    nowPlanRemarkErr: '',//当前计划备注错误检验提醒
+    // nowPlanRemarkErr: '',//当前计划备注错误检验提醒
     nowPlanTime: '',//当前计划时间填写的值
     time_show: false,//是否展开时间选择
     proid: '',//通过项目详情页面跳转并传递的proid参数
@@ -82,8 +82,6 @@ Page({
       nowProjectCode: proId,
       project_item_show: false
     })
-    console.log(this.data.nowProjectValue)
-    console.log(this.data.nowProjectCode)
   },
   // 3.点击取消按钮之后 隐藏当前项目选择
   cancelChooseProject() {
@@ -130,48 +128,46 @@ Page({
   },
   // 9.提交表单 创建拜访
   handleSubmit() {
-    // 校验计划内容属性值正确性
-    if(this.data.nowPlanContent.trim() == "") {//计划内容为空
-      this.setData({
-        nowPlanContentErr: "计划内容错误，请检验"
+    // 校验项目值正确性
+    if(!this.data.nowProjectValue) {
+      wx.showToast({
+        title: '选择项目不能为空',
+        icon: 'none',
+        duration: 1000,
+        mask: true
       })
       return
-    }else {
-      this.setData({
-        nowPlanContentErr: ""
-      })
     }
-    // 校验计划备注属性值正确性
-    if(this.data.nowPlanRemark.trim() == "") {//计划内容为空
-      this.setData({
-        nowPlanRemarkErr: "计划备注错误，请检验"
+    // 校验计划内容属性值正确性
+    if(!this.data.nowPlanContent.trim()) {//计划内容为空
+      wx.showToast({
+        title: '计划内容不能为空',
+        icon: 'none',
+        duration: 1000,
+        mask: true
       })
       return
-    }else {
-      this.setData({
-        nowPlanRemarkErr: ""
-      })
     }
     // 校验计划时间值正确性
-    if(this.data.nowPlanTime == "") {
+    if(!this.data.nowPlanTime) {
       wx.showToast({
-        title: '选择时间',
+        title: '计划时间不能为空',
         icon: 'none',
         duration: 1000,
         mask: true
       })
       return
     }
-    // 校验项目值正确性
-    if(this.data.nowProjectValue == "") {
-      wx.showToast({
-        title: '选择项目',
-        icon: 'none',
-        duration: 1000,
-        mask: true
-      })
-      return
-    }
+    // 校验拜访备注属性值正确性
+    // if(!this.data.nowPlanRemark.trim()) {//计划内容为空
+    //   wx.showToast({
+    //     title: '拜访备注不能为空',
+    //     icon: 'none',
+    //     duration: 1000,
+    //     mask: true
+    //   })
+    //   return
+    // }
 
     // 全部校验成功 调用接口
     this.addVisit();
@@ -189,20 +185,27 @@ Page({
         VisitPlanTime: that.data.nowPlanTime,//选择时间
         VisitPlanContent: that.data.nowPlanContent,//内容信息
       })
-      console.log(res,'这是添加拜访结果00000000000000000000000')
-      if(JSON.parse(res.result).toString() == "[object Object]") {//成功添加记录时 返回当前添加的对象
+      const result = res.result && JSON.parse(res.result);
+      if(Array.isArray(result) && result[0].error_respone.errCode === 302) {//返回数组表示有重复计划
+        wx.showToast({
+          title: result[0].error_respone.errMsg,
+          icon: 'none',
+          duration: 1000,
+          mask: true
+        });
+      }else if(result.VisitId === 0) {
         wx.showToast({
           title: '添加成功',
           icon: 'success',
           duration: 1000,
           mask: true
         });
-  
         // 返回上一页
         setTimeout(_ => {
           wx.navigateBack();
         },1000)
       }
+
     } catch (error) {
       console.log(error,'失败原因')
       wx.showToast({

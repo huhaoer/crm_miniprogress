@@ -7,13 +7,16 @@ const rp = require('request-promise');//request-promise包
 // 云函数入口函数
 exports.main = async (event, context) => {
   const Token = event.Token;
-  const UserId = event.UserId;
-  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/getAttentionList'
+  const SkipNum = event.SkipNum;
+  const SizeNum = event.SizeNum;
+
+  const URL = 'http://w3ituu.natappfree.cc/ProjectMgeSvr.assx/getAttentionList'
   let options = {
     uri: URL,
     qs: {
       Token,
-      UserId
+      SkipNum,
+      SizeNum
     },
     // json: true 
   };

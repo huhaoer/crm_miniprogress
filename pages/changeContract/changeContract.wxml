@@ -1,56 +1,23 @@
 <view class="container">
-
     <!-- 项目表单填写 -->
     <view class="wrapper">
         <van-cell-group>
             <!-- 合同名 -->
             <van-field 
                 value="{{ ContractName }}"  
-                clearable label="合同名：" 
+                clearable label="合同名称:" 
                 border="{{ true }}" 
                 bind:input="onNameInp"
-            />
-            <!-- 原合同编号 -->
-            <van-field 
-                value="{{ ContractCode }}"  
-                clearable label="原合同编号：" 
-                border="{{ true }}"
-                disabled
-            />
-            <!-- 新合同编号 -->
-            <!-- <van-field 
-                value="{{ ContractNewCode }}"
-                clearable label="新合同编号：" 
-                border="{{ true }}" 
-                bind:input="onNewContractIdInp"
-            /> -->
-            <!-- 合同备注 -->
-            <van-field 
-                value="{{ ContractRemark }}" 
-                label="合同备注：" 
-                clearable  
-                border="{{ true }}"
-                bind:input="onRemarkInp"
-            />
-            <!-- 合同分类 -->
-            <van-cell 
-                title="合同分类" 
-                is-link 
-                bind:click="showTypeMenu" 
-                value="{{ ContractTypeMap }}" 
-            />
-            <van-action-sheet 
-                show="{{ is_show_type }}" 
-                actions="{{ contract_kind_arr }}" 
-                bind:close="closeTypeMenu" 
-                bind:select="selectTypeMenu"
-                overlay="{{true}}"
-                close-on-click-overlay="{{false}}"
-                safe-area-inset-bottom="{{false}}"
-                title="选择合同分类"
+                required
             />
             <!-- 所属项目 -->
-            <van-cell title="所属项目：" is-link bind:click="showItemMenu" value="{{ ProjectCodeMap }}" />
+            <van-cell 
+                title="所属项目:" 
+                is-link 
+                bind:click="showItemMenu" 
+                value="{{ ProjectCodeMap }}"
+                title-class="set_required" 
+            />
             <van-picker
                 show-toolbar
                 title="选择项目"
@@ -60,19 +27,13 @@
                 wx:if="{{ is_show_item }}"
                 loading="{{ loading }}"
             />
-             <!-- 甲方 -->
+            <!-- 甲方 -->
              <van-field 
-                value="{{ PartyA }}"  
-                clearable label="甲方：" 
+                value="{{ PartyA }}" 
+                label="甲方:" 
                 border="{{ true }}" 
-                bind:input="onJIAInp"
-            />
-            <!-- 已方 -->
-             <van-field 
-                value="{{ PartyB }}"  
-                clearable label="已方：" 
-                border="{{ true }}" 
-                bind:input="onYIInp"
+                disabled
+                required
             />
             <!-- 丙方 -->
              <van-field 
@@ -81,32 +42,98 @@
                 border="{{ true }}" 
                 bind:input="onBINGInp"
             />
+            <!-- 原合同编号 -->
+            <van-field 
+                value="{{ ContractCode }}"  
+                clearable label="合同编号:" 
+                border="{{ true }}"
+                disabled
+                required
+            />
+            <!-- 补充合同： -->
+            <van-cell 
+                title="补充合同:" 
+                is-link 
+                bind:click="showParentMenu" 
+                value="{{ contract_parent_val }}" 
+            />
+            <van-picker 
+                show-toolbar 
+                title="选择补充合同" 
+                columns="{{ columns2 }}" 
+                bind:cancel="cancelParentMenu" 
+                bind:confirm="confirmParentMenu" 
+                wx:if="{{ is_show_parent }}" 
+                loading="{{ loading2 }}" 
+            />
+            <!-- 合同类型 -->
+            <van-cell 
+                title="合同类型:" 
+                is-link 
+                bind:click="showTypeMenu" 
+                value="{{ ContractTypeMap }}" 
+                title-class="set_required"
+            />
+            <van-action-sheet 
+                show="{{ is_show_type }}" 
+                actions="{{ contract_kind_arr }}" 
+                bind:close="closeTypeMenu" 
+                bind:select="selectTypeMenu"
+                overlay="{{true}}"
+                close-on-click-overlay="{{false}}"
+                safe-area-inset-bottom="{{false}}"
+                title="选择合同类型"
+            />
             <!-- 合同总金额 -->
              <van-field 
                 value="{{ ContractAmount }}"
-                clearable label="总金额：" 
+                clearable label="合同金额(元):" 
                 border="{{ true }}" 
+                type="digit"
                 bind:input="onTotalInp"
+                required
             />
             <!-- 开始时间 -->
-            <van-cell title="开始时间" is-link bind:click="showStartMenu" value="{{ ContractSignTime }}" />
+            <van-cell 
+                title="签订时间:" 
+                is-link 
+                bind:click="showStartMenu" 
+                value="{{ ContractSignTime }}" 
+                title-class="set_required"
+            />
             <van-datetime-picker
                 type="date"
                 bind:confirm="confirmStart"
                 bind:cancel="cancelStart"
-                min-date="{{ minDate }}"
                 formatter="{{ formatter }}"
+                value="{{ currentDate }}"
                 wx:if="{{ is_show_start }}"
             />
             <!-- 结束时间 -->
-            <van-cell title="结束时间" is-link bind:click="showstopMenu" value="{{ ContractEndTime }}" />
+            <van-cell 
+                title="到期时间:" 
+                is-link 
+                bind:click="showstopMenu" 
+                value="{{ ContractEndTime }}"
+                title-class="set_required" 
+            />
             <van-datetime-picker
                 type="date"
                 bind:confirm="confirmStop"
                 bind:cancel="cancelStop"
-                min-date="{{ minDate }}"
+                value="{{ currentDate }}"
                 formatter="{{ formatter }}"
                 wx:if="{{ is_show_stop }}"
+            />
+            <!-- 合同备注 -->
+            <van-field 
+                value="{{ ContractRemark }}" 
+                label="合同备注:" 
+                type="textarea"
+                autosize
+                clearable  
+                border="{{ true }}"
+                bind:input="onRemarkInp"
             />
         </van-cell-group>
     </view>

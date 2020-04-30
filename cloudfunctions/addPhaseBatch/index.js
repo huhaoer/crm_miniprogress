@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
   const ContractCode = event.ContractCode;
   const PhaseStr = event.PhaseStr;
 
-  const URL = 'http://d3zgyg.natappfree.cc/ContractMgeSvr.assx/addPhaseBatch'
+  const URL = 'http://w3ituu.natappfree.cc/ContractMgeSvr.assx/addPhaseBatch'
   let options = {
     uri: URL,
     qs: {

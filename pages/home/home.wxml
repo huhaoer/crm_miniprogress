@@ -48,27 +48,46 @@
 
   <!-- 快捷入口 -->
   <view class="recent_enter">
+  <!-- 添加项目入口 -->
+    <view class="do_additem">
+      <van-button 
+        type="info"
+        hairline 
+        custom-style="border-radius:5rpx;color:#000;background:#F5FFFA;"
+        icon="todo-list-o"
+        bind:click="quickToAddItem"
+      >添加项目</van-button>
+    </view>
+    <!-- 添加合同入口 -->
+    <view class="do_addcontract">
+      <van-button 
+        type="info"
+        hairline 
+        custom-style="border-radius:5rpx;color:#000;background:#F5FFFA;"
+        icon="balance-list-o"
+        bind:click="quickToAddContract"
+      >添加合同</van-button>
+    </view>
+    <!-- 修改合同入口 -->
+    <view class="do_changecontract">
+      <van-button 
+        type="info"
+        hairline
+        custom-style="border-radius:5rpx;color:#000;background:#F5FFFA;"
+        icon="orders-o"
+        bind:click="quickToChangeContract"
+      >修改合同</van-button>
+    </view>
     <!-- 开票按钮 -->
     <view class="do_ticket">
       <van-button 
         type="info"
         hairline 
         plain
-        custom-style="border-radius:5rpx"
-        icon="balance-list-o"
+        custom-style="border-radius:5rpx;color:#000;background:#F5FFFA;"
+        icon="balance-pay"
+        bind:click="quickToTocket"
       >开票</van-button>
-    </view>
-
-    <!-- 修改合同入口 -->
-    <view class="do_contract">
-      <van-button 
-        type="info"
-        hairline
-        plain
-        custom-style="border-radius:5rpx"
-        icon="todo-list-o"
-        bind:click="quickToContract"
-      >修改合同</van-button>
     </view>
   </view>
 
@@ -99,17 +118,17 @@
       <view class="recent_item" wx:for="{{ recent_visit }}" wx:key="index" bind:tap="handleToVisit" data-proid="{{item.ProjectCode}}" data-proname="{{ item.ProjectName }}" data-protime="{{ item.VisitPlanTime }}" data-procontact="{{ item.ContactName }}" data-protel="{{ item.ContactTel }}" data-visitid="{{ item.VisitId }}">
         <view class="item_top">
           <view class="left_wrap">
-            <view class="name">项目:{{ item.ProjectName }}</view>
-            <view class="danwei">客户:{{ item.CustomerName }}</view>
+            <view class="name">{{ item.ProjectName }}</view>
+            <view class="danwei">{{ item.CustomerName }}</view>
           </view>
           <view class="time">{{ item.VisitPlanTime }}</view>
         </view>
         <view class="item_bot">
           <view class="left_wrap">
             <view class="connect">联系人:{{ item.ContactName }}</view>
-            <view class="phone">联系电话:{{ item.ContactTel }}</view>
+            <view class="phone">{{ item.ContactTel }}</view>
           </view>
-          <view class="xs">销售:{{ item.Name }}</view>
+          <!-- <view class="xs">销售:{{ item.Name }}</view> -->
         </view>
       </view>
     </block>
@@ -161,11 +180,11 @@
           <view class="show_project_detail">
             <view class="front_show">
               <view class="pro_first">总金额:</view>
-              <view class="pro_second">{{ item.projectAllContractTotal }}￥</view>
+              <view class="pro_second">{{ item.projectAllContractTotal === 0 ? '-' :  '￥' + item.projectAllContractTotal }}</view>
             </view>
             <view class="back_show">
               <view class="pro_first">已收金额:</view>
-              <view class="pro_second">{{ item.projectReceiveTotal }}￥</view>
+              <view class="pro_second">{{ item.receiveTotal === 0 ? '-' :  '￥' + item.receiveTotal }}</view>
             </view>
           </view>
           <!-- 项目状态-创建时间 -->
@@ -175,30 +194,30 @@
               <view class="pro_second">{{ item.ProjectStatus }}</view>
             </view>
             <view class="back_show">
-              <view class="pro_first">项目等级:</view>
-              <view class="pro_second">{{ item.ProjectPLevel }}</view>
+              <view class="pro_first">联系人:</view>
+              <view class="pro_second">{{ item.ContactName }}</view>
             </view>
           </view>
           <!-- 联系人-联系电话 -->
           <view class="show_project_detail">
             <view class="front_show">
-              <view class="pro_first">联系人:</view>
-              <view class="pro_second">{{ item.ContactName }}</view>
+              <view class="pro_first">手机号:</view>
+              <view class="pro_second">{{ item.ContactTel }}</view>
             </view>
             <view class="back_show">
-              <view class="pro_first">联系电话:</view>
-              <view class="pro_second">{{ item.ContactTel }}</view>
+              <view class="pro_first">职位:</view>
+              <view class="pro_second">{{ item.ContactDuty }}</view>
             </view>
           </view>
           <!-- 备注和描述 -->
           <view class="show_project_detailmore">
-            <view class="pro_first">项目备注:</view>
-            <view class="pro_second">{{ item.receiveTotal }}￥</view>
-          </view>
-          <view class="show_project_detailmore">
             <view class="pro_first">项目描述:</view>
-            <view class="pro_second">{{ item.receiveTotal }}￥</view>
+            <view class="pro_second">{{ item.ProjectDescribe }}</view>
           </view>
+          <!-- <view class="show_project_detailmore">
+            <view class="pro_first">项目备注:</view>
+            <view class="pro_second">{{ item.ProjectRemark }}</view>
+          </view> -->
         </view>
       </view>
     </view>

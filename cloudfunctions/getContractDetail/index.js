@@ -11,7 +11,7 @@ exports.main = async (event, context) => {
   const ContractCode = event.ContractCode;
   const Option = event.Option;
 
-  const URL = 'http://d3zgyg.natappfree.cc/ContractMgeSvr.assx/getContractDetail'
+  const URL = 'http://w3ituu.natappfree.cc/ContractMgeSvr.assx/getContractDetail'
   let options = {
     uri: URL,
     qs: {

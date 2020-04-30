@@ -1,6 +1,7 @@
 const cloudFunc = require("../../api/index");
 const regeneratorRuntime = require("../../utils/runtime"); //ES7 环境
 import { getToken, getUserId } from "../../utils/storage";
+const { _projectStatus, _projectLevel, _projectLevel2Number } = require('../../utils/project')
 Page({
 
   /**
@@ -9,26 +10,7 @@ Page({
   data: {
     project_name_val:'',//项目名称  需要校验
     project_desc_val:'',//项目描述  需要校验
-    project_kind_val:'',//项目分类值  
-    project_kind_id: '',//项目分类值对应的id
-    project_kind_arr: [
-      {
-        name: '种类一',
-        type: 1
-      },
-      {
-        name: '种类二',
-        type: 2
-      },
-      {
-        name: '种类三',
-        type: 3
-      },
-      {
-        name: '种类四',
-        type: 4
-      },
-    ],//动态获取的项目类型数组列表  
+
     project_remark_val:'',//项目备注  需要校验
     project_customer_val: '',//客户名称 需要校验
     project_customer_id: '',//客户id
@@ -37,6 +19,17 @@ Page({
     project_contel_val: '',//联系人电话
     project_conduty_val: '',//联系人职务
 
+    ProjectPLevel: '',//项目P等级  显示的名称
+    ProjectPLevelId: '',//p等级 对应的id值
+    is_show_pLevel: false,//是否显示选择p等级 菜单
+
+    ProjectPLevelShowArr: [],//显示出来的P等级
+
+    ProjectStatus: '',//项目状态 显示的名称
+    ProjectStatusId: '',//项目的状态对应的 id值
+    is_show_status: false,//是否显示 展开状态选择栏
+    ProjectStatusShowArr: [],//显示出来的状态 列表
+
     show_kind_item: false,//'是否展示项目分类选项'
     show_user_item: false,//'是否展示客户分类选项'
     
@@ -44,27 +37,6 @@ Page({
     columns:[],
     loading: true,//是否加载中
 
-  },
-
-  // 1.点击选择弹出项目分类菜单
-  showKindMenu() {
-    this.setData({
-      show_kind_item: true
-    })
-  },
-  // 2.点击关闭项目等级选择
-  closeKindMenu(e) {
-    this.setData({
-      show_kind_item: false
-    })
-  },
-  // 3.点击选中某一个项目等级
-  selectKindMenu(e) {
-    const typeId = e.detail.type;//点击的项目类型id
-    this.setData({
-      project_kind_val: e.detail.name,
-      project_kind_id: typeId
-    })
   },
   // 4.点击选择弹出客户分类菜单
   async showUserMenu() {
@@ -76,10 +48,8 @@ Page({
 
     // 调用接口获取客户列表
     let res = await this.getCustomerList()
-    console.log(res,'获取的客户、、、、、、、、、、、、、、、、、、、、')
     let newRes = res.result && JSON.parse(res.result);
     newRes && newRes.forEach(item => item.name = item.CustName);
-    console.log(newRes,'新的数据')
     const data = newRes && newRes.map(item => item.CustName)
     this.setData({
       columns: data || [],
@@ -105,6 +75,54 @@ Page({
       show_user_item: false
     })
   },
+
+  // ===========================p等级的选择==============================
+  onPLevel() {
+    const ProjectPLevelShowArr = _projectLevel.map(item => item.name)
+    this.setData({
+      is_show_pLevel: true,
+      ProjectPLevelShowArr
+    })
+  },
+  cancelPLevel() {
+    this.setData({
+      is_show_pLevel: false
+    })
+  },
+  confirmPLevel(e) {
+    const { value, index } = e.detail;
+    const ProjectPLevelId = _projectLevel[index].id;
+    this.setData({
+      ProjectPLevel: value,
+      ProjectPLevelId,
+      is_show_pLevel: false
+    })
+  },
+  // ==============================项目状态选择===============================
+  onStatus() {
+    const ProjectStatusShowArr = _projectStatus.map(item => item.name);
+    this.setData({
+      ProjectStatusShowArr,
+      is_show_status: true
+    })
+  },
+  cancelStatus() {
+    this.setData({
+      is_show_status: false
+    })
+  },
+  confirmStatus(e) {
+    const { value, index } = e.detail;
+    const ProjectStatusId = _projectStatus[index].id;
+    this.setData({
+      ProjectStatus: value,
+      ProjectStatusId,
+      is_show_status: false
+    })
+    console.log(value,ProjectStatusId)
+  },
+
+
   // 项目名称监听输入事件
   projectNameInp(e) {
     this.setData({
@@ -147,7 +165,7 @@ Page({
     // 校验 项目名称必填
     if(!this.data.project_name_val) {
       wx.showToast({
-        title: '项目名不能为空',
+        title: '项目名称不能为空',
         icon: 'none',
         duration: 1000,
         mask: true
@@ -164,20 +182,30 @@ Page({
       });
       return
     }
-    // 校验 项目备注必填
-    if(!this.data.project_remark_val) {
+    // 校验 客户名称必填
+    if(!this.data.project_customer_val) {
       wx.showToast({
-        title: '项目备注不能为空',
+        title: '客户名称不能为空',
         icon: 'none',
         duration: 1000,
         mask: true
       });
       return
     }
-    // 校验 客户名称必填
-    if(!this.data.project_customer_val) {
+    // 校验 项目等级必填
+    if(!this.data.ProjectPLevel) {
       wx.showToast({
-        title: '客户名称不能为空',
+        title: '项目等级不能为空',
+        icon: 'none',
+        duration: 1000,
+        mask: true
+      });
+      return
+    }
+    // 校验 项目状态必填
+    if(!this.data.ProjectStatus) {
+      wx.showToast({
+        title: '项目状态不能为空',
         icon: 'none',
         duration: 1000,
         mask: true
@@ -192,7 +220,10 @@ Page({
       ProjectRemark: this.data.project_remark_val,
       ContactName: this.data.project_conname_val,
       ContactTel: this.data.project_contel_val,
-      ContactDuty: this.data.project_conduty_val
+      ContactDuty: this.data.project_conduty_val,
+      CustId: this.data.project_customer_id, //读取客户的id
+      ProjectPLevel: this.data.ProjectPLevelId,//项目等级
+      ProjectStatus: this.data.ProjectStatusId,//项目状态
     }
     this.addProject(sendData)
 
@@ -203,19 +234,27 @@ Page({
       const that = this;
       const Token = getToken();//获取Token
       const UserId = getUserId(); //缓存中读取用户id
-      const CustId = +this.data.project_customer_id; //读取客户的id
-      const ProjectType = +this.data.project_kind_id; //读取项目类型对应的id
       let res = await cloudFunc("addProject", {
         Token,
         UserId,
-        CustId,
-        ProjectType,
         ...data
       });
-      // console.log(res,'添加项目的结构？？？？？？？？？？？')
-      if(res.result.toString().length > 0) {
+      console.log(res,'添加项目的结构？？？？？？？？？？？')
+      const result = res.result && JSON.parse(res.result);//转换为JSON
+      if(Array.isArray(result) && result[0].error_respone.errCode === 403) {//是数组
         wx.showToast({
-          title: '添加成功',
+          title: result[0].error_respone.errMsg,
+          icon: 'none',
+          duration: 1000,
+          mask: true
+        });
+        // 返回上一页
+        setTimeout(_ => {
+          wx.navigateBack();
+        },1000)
+      }else {
+        wx.showToast({
+          title: "添加成功",
           icon: 'success',
           duration: 1000,
           mask: true
@@ -244,7 +283,9 @@ Page({
       const Option = 1; //
       let res = await cloudFunc("getCustomerList", {
         token,
-        Option
+        Option,
+        skipNum: 0,
+        sizeNum: -1
       });
       return res
     } catch (error) {

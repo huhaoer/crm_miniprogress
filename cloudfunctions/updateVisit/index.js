@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
   const VisitRemark = event.VisitRemark;
 
 
-  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/updateVisit'
+  const URL = 'http://w3ituu.natappfree.cc/ProjectMgeSvr.assx/updateVisit'
   let options = {
     uri: URL,
     qs: {

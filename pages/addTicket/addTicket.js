@@ -47,6 +47,13 @@ Page({
     })
   },
 
+  // ==========================开票金额输入=================
+  onMoneyInp(e) {
+    const ticket_money = e.detail;//输入的金额
+    this.setData({
+      ticket_money
+    })
+  },
   // =======================开票按钮=====================
   handleSubmit() {
     if(!this.data.ticket_parse_show) {

@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
   const PhaseId = event.PhaseId;
   const InvoiceApplyAmount = event.InvoiceApplyAmount;
 
-  const URL = 'http://d3zgyg.natappfree.cc/ContractMgeSvr.assx/addInvoiceApply'
+  const URL = 'http://w3ituu.natappfree.cc/ContractMgeSvr.assx/addInvoiceApply'
   let options = {
     uri: URL,
     qs: {

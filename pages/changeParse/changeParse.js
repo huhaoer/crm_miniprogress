@@ -165,7 +165,7 @@ Page({
     // 输入校验
     if(!this.data.desc) {
       wx.showToast({
-        title: '阶段描述错误',
+        title: '阶段名称不能为空',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -174,7 +174,7 @@ Page({
     }
     if(!this.data.total) {
       wx.showToast({
-        title: '总金额错误',
+        title: '阶段金额不能为空',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -183,7 +183,7 @@ Page({
     }
     if(!this.data.type_id) {
       wx.showToast({
-        title: '阶段类型错误',
+        title: '阶段类型不能为空',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -192,7 +192,7 @@ Page({
     }
     if(!this.data.time) {
       wx.showToast({
-        title: '计划时间错误',
+        title: '阶段时间不能为空',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -207,26 +207,24 @@ Page({
   async changeParseInfo() {
     const that = this;
     try {
-      // const token = getToken();//获取Token
-      const token = "HYSJnpMfcfLcNA3D3D";//获取Token
+      const token = getToken();//获取Token
       const ContractCode = this.data.code;//合同code 
       const PhaseDescribe = this.data.desc; //阶段描述
       let PhasePlanTime = this.data.time; //计划时间
       PhasePlanTime = PhasePlanTime.replace(/\./g,'-') + ' 00:00:00';
       const PhaseType = parseInt(this.data.type_id); //类型id
-      let PhaseAmount = this.data.total.replace(/\,/g,'').replace(/\￥/g,''); 
-      PhaseAmount = parseInt(PhaseAmount);//转为数字
+      let PhaseAmount = parseInt(this.data.total);//转为数字
       const PhaseId = this.data.id; //阶段id
       let PhaseFactTime = this.data.factTime; //实际时间
       PhaseFactTime = PhaseFactTime && PhaseFactTime.replace(/\./g,'-')+ ' 00:00:00';
-      // console.log(token,'token')
-      // console.log(ContractCode,'ContractCode')
-      // console.log(PhaseDescribe,'PhaseDescribe')
-      // console.log(PhasePlanTime,'PhasePlanTime')
-      // console.log(PhaseType,'PhaseType')
-      // console.log(PhaseAmount,'PhaseAmount')
-      // console.log(PhaseId,'PhaseId')
-      // console.log(PhaseFactTime,'PhaseFactTime')
+      console.log(token,'token')
+      console.log(ContractCode,'ContractCode')
+      console.log(PhaseDescribe,'PhaseDescribe')
+      console.log(PhasePlanTime,'PhasePlanTime')
+      console.log(PhaseType,'PhaseType')
+      console.log(PhaseAmount,'PhaseAmount')
+      console.log(PhaseId,'PhaseId')
+      console.log(PhaseFactTime,'PhaseFactTime')
       let res = await cloudFunc("addPhase", {
         token,
         ContractCode,
@@ -249,6 +247,7 @@ Page({
         wx.navigateBack();
       },1000)
     } catch (error) {
+      console.log(error,'修改错误')
       wx.showToast({
         title: '修改失败',
         icon: 'none',
@@ -262,16 +261,16 @@ Page({
    */
   onLoad: function (options) {
     const { code, desc, time, type, total, id } = options;
-    console.log(type,'type')
+    console.log(options,'options')
+    const newTotal =  total.replace(/\,/g,'').replace(/\￥/g,'');//处理金额
     const newType = this._transformType(type);
-    console.log(newType,'newType')
     this.setData({
       code,
       desc,
       time,
       type: newType,//类型名称
       type_id: type,//类型id
-      total,
+      total:newTotal,
       id
     })
   },

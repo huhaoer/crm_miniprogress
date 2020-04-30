@@ -1,6 +1,13 @@
 const cloudFunc = require("../../api/index");
 const regeneratorRuntime = require("../../utils/runtime"); //ES7 环境
 import { getToken, getUserId } from "../../utils/storage";
+const { _projectStatus2Word, _projectLevel2Word } = require('../../utils/project')
+// 千分位转换
+function getLocaleString(num) {
+  return num.toString().split('').reverse().reduce((total, value, index, array) => {
+      return ((index % 3) ? value : value + ',') + total
+  })
+}
 Page({
 
   /**
@@ -16,6 +23,9 @@ Page({
     projectDetail: {},//项目  ==> 详情信息
     visitListPlan: [],//项目  ==>  拜访计划
     lastVisitPlan: {},//显示的查询的一条计划
+    theOnecontractList: false,//是否有第一条合同列表显示
+    theOnealoneVisit: false,//是否有第一条拜访记录显示
+    theOnevisitListPlan: false,//是否有第一条拜访计划显示
 
     activeNames: []
   },
@@ -43,7 +53,8 @@ Page({
       result.visitListPlan && result.visitListPlan.length > 0 && result.visitListPlan.forEach((item,index) => {
         item.VisitPlanTime = item.VisitPlanTime ? item.VisitPlanTime.split("T")[0].replace(/\-/g, ".") : "暂无"
         that.setData({
-          lastVisitPlan: {...result.visitListPlan[0]}
+          lastVisitPlan: {...result.visitListPlan[0]},
+          theOnevisitListPlan: true,//设置已经有第一条计划了
         })
       });
       // 2.已经拜访列表  处理时间戳 转换为正常时间
@@ -51,7 +62,8 @@ Page({
         item.VisitFactTime = item.VisitFactTime ? item.VisitFactTime.split("T")[0].replace(/\-/g, ".") : "暂无"
         item.VisitPlanTime = item.VisitPlanTime ? item.VisitPlanTime.split("T")[0].replace(/\-/g, ".") : "暂无" //时间处理
         that.setData({
-          lastAloneVisit: {...result.aloneVisit[0]}
+          lastAloneVisit: {...result.aloneVisit[0]},
+          theOnealoneVisit: true,//设置已经有第一条记录了
         })
       });
       // 3.合同列表时间处理  处理合同总额
@@ -59,28 +71,31 @@ Page({
         item.ContractCreateTime = item.ContractCreateTime ? item.ContractCreateTime.split("T")[0].replace(/\-/g, ".") : "暂无"
         item.ContractEndTime = item.ContractEndTime ? item.ContractEndTime.split("T")[0].replace(/\-/g, ".") : "暂无" //时间处理
         item.ContractSignTime = item.ContractSignTime ? item.ContractSignTime.split("T")[0].replace(/\-/g, ".") : "暂无" //时间处理
-        item.ContractAlreadyRec = item.ContractAlreadyRec ? item.ContractAlreadyRec.toLocaleString() : "0" //金额处理
-        item.ContractAmount = item.ContractAmount ? item.ContractAmount.toLocaleString() : "0" //金额处理
+        item.ContractAlreadyRec = item.ContractAlreadyRec ? getLocaleString(item.ContractAlreadyRec) : 0 //金额处理
+        item.ContractAmount = item.ContractAmount ? getLocaleString(item.ContractAmount) : 0 //金额处理
         that.setData({
-          lastContractList: {...result.contractList[0]}
+          lastContractList: {...result.contractList[0]},
+          theOnecontractList: true,//设置有第一条合同显示了
         })
       });
       // 4.详情信息处理
       let proDetail = result.projectDetail;
-      proDetail && (proDetail.ProjectCreateTime = proDetail.ProjectCreateTime ? proDetail.ProjectCreateTime.split("T")[0].replace(/\-/g, ".") : "暂无")
+      // 处理总金额
+      proDetail && (proDetail.ContractTotal = proDetail.ContractTotal === 0 ? 0 : getLocaleString(proDetail.ContractTotal))
+      // 处理已收金额
+      proDetail && (proDetail.ReceiveTotal = proDetail.ReceiveTotal === 0 ? 0 : getLocaleString(proDetail.ReceiveTotal))
+      // 处理状态
+      proDetail && (proDetail.ProjectStatus = _projectStatus2Word(proDetail.ProjectStatus))
+      // 处理等级
+      proDetail && (proDetail.ProjectPLevel = _projectLevel2Word(proDetail.ProjectPLevel))
       // 重新赋值渲染的数据
-      console.log(
-        result,
-        "处理过后的数据  数据数据数据数据数据数据数据数据数据数据数据数据时间",
-      );
-      console.log(this.data,'this.dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       that.setData({
-        contractList: result.contractList,//项目 ==> 合同列表
-        aloneVisit: result.aloneVisit,
+        contractList: result.contractList.slice(1),//项目 ==> 合同列表
+        aloneVisit: result.aloneVisit.slice(1),
         projectDetail: result.projectDetail,//项目  ==> 详情信息
-        visitListPlan: result.visitListPlan,//项目  ==>  拜访计划
+        visitListPlan: result.visitListPlan.slice(1),//项目  ==>  拜访计划
       });
-      console.log(that.data)
+      console.log(result,'处理后的数据 展示showshowshowshow')
     } catch (error) {
       console.log(error, "错误");
       wx.showToast({

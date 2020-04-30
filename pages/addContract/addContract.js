@@ -2,6 +2,7 @@ const cloudFunc = require("../../api/index");
 import parseTime from '../../utils/parseTime';
 const regeneratorRuntime = require("../../utils/runtime"); //ES7 环境
 import { getToken, getUserId } from "../../utils/storage";
+const { _contractType  } = require('../../utils/contract')
 Page({
 
   /**
@@ -23,33 +24,23 @@ Page({
     contract_item_val:'',//所属项目  需要校验
     contract_item_id:'',//项目对应的id
     contract_item_arr: [],//要展示的选择项目的列表
+
+    customer_name_val: '',//选择项目后展示的甲方名称
+    customer_name_id: '',//选择项目后甲方的id
+
+    bing_val: '',//丙方值
     contract_id_val:'',//合同编号   
-    contract_parent_val:'',//父合同编号名称   
-    contract_parent_id:'',//父合同编号code   
-    contract_parent_arr:'',//父合同列表选择数据  
+    contract_parent_val:'',//补充同编号名称   
+    contract_parent_id:'',//补充同编号code   
+    contract_parent_arr:'',//补充同列表选择数据  
     contract_kind_val: '',//合同类型
     contract_kind_id: '',//合同类型对应的字段id
-    contract_kind_arr: [//动态获取的项目类型数组列表 
-      {
-        name: '种类一',
-        type: 1
-      },
-      {
-        name: '种类二',
-        type: 2
-      },
-      {
-        name: '种类三',
-        type: 3
-      },
-      {
-        name: '种类四',
-        type: 4
-      },
-    ], 
+    contract_kind_arr: _contractType, 
     contract_price_val: '',//合同金额
     contract_start_val: '',//合同开始时间
     contract_stop_val: '',//合同结束时间
+    start_number: null,//开始的时间戳,
+    stop_number: null,//结束时间时间戳
     contract_remark_val: '',//合同备注
 
     is_show_item: false,//是否展示弹出选择项目
@@ -57,11 +48,11 @@ Page({
     is_show_start: false,//是否展示选择开始时间
     is_show_stop: false,//是否展示选择结束时间
     is_show_parent: false,//是否展示选择父合同
+    columns2: [],//父合同列表
 
     columns: [],//选择的显示的项目列表  
     loading: true,//是否为加载状态
 
-    columns2: [],//父合同列表
     loading2: true,
 
 
@@ -74,16 +65,6 @@ Page({
       now_showType_index: '',//当前点击的类型阶段显示哪一个
       now_showTime_index: '',//当前点击的时间显示哪一个
     }],//阶段信息的列表
-    /**
-     * {
-      parse_desc: '',//阶段描述
-      parse_type: null,//阶段类型
-      parse_total: null,//阶段总金额
-      parse_time: '',//阶段计划时间
-      now_showType_index: '',//当前点击的类型阶段显示哪一个
-      now_showTime_index: '',//当前点击的时间显示哪一个
-    }
-     */
 
     parse_type_arr: [{
       name: '类型一',
@@ -104,7 +85,7 @@ Page({
   },
 
 /*************************点击弹出菜单**********************/
-  // 1.点击选择弹出项目分类菜单
+  // 1.点击选择弹出项目菜单
   async showItemMenu() {
     this.setData({
       is_show_item: true,
@@ -113,12 +94,16 @@ Page({
 
     let res = await this.getItemsList();//获取要选择的项目
     let result = res.result && JSON.parse(res.result);
+    console.log(result,'选择项目')
     // 处理数据
     result.length > 0 && result.forEach(item => {
       item.name = item.ProjectName;
-      item.code = item.ProjectCode
+      item.code = item.ProjectCode;
+      item.cname = item.CustomerName;
+      item.cid = item.CustId;
     })
     const columnsData = result.map(item => item.name)
+    console.log(result,'处理后的客户列表数据  原始')
     this.setData({
       columns: columnsData,
       contract_item_arr: result,//设置该值 便于下面选择根据索引查询用户id
@@ -136,10 +121,14 @@ Page({
     console.log(e,'当前选择的项目')
     const proName = e.detail.value;//点击的项目名字
     const index = e.detail.index;//点击项目的索引值
-    const proId = this.data.contract_item_arr[index].ProjectCode;//根据索引获取项目id
+    const proId = this.data.contract_item_arr[index].code;//根据索引获取项目id
+    const customer_name_val = this.data.contract_item_arr[index].cname;//根据索引获取选择项目对应的客户名称
+    const customer_name_id = this.data.contract_item_arr[index].cid;//根据索引获取选择项目对应的客户id
     this.setData({
       contract_item_val: proName,
       contract_item_id: proId,
+      customer_name_val,
+      customer_name_id,
       is_show_item: false
     })
   },
@@ -158,11 +147,12 @@ Page({
   // 6.点击选中某一个合同分类
   selectTypeMenu(e) {
     const name = e.detail.name;
-    const type = e.detail.type;
+    const type = e.detail.id;
     this.setData({
       contract_kind_val: name,//选择的合同类型
       contract_kind_id: type//选择的合同类型对应的字段id
     })
+    console.log(name,type)
   },
 
   // 7.点击弹出选择开始时间
@@ -178,6 +168,7 @@ Page({
     // const newTime = `${t} 00:00:00`;
     this.setData({
       contract_start_val: t,
+      start_number: e.detail,//当前时间的时间戳
       is_show_start: false
     })
   },
@@ -187,7 +178,7 @@ Page({
       is_show_start: false
     })
   },
-  // 10.点击弹出选择开始时间
+  // 10.点击弹出选择结束时间
   showStopMenu() {
     this.setData({
       is_show_stop: true
@@ -197,7 +188,15 @@ Page({
   confirmStop(e) {
     // 处理为Date 格式
     const t = parseTime(e.detail/1000);
-    // const newTime = `${t} 00:00:00`;
+    if(e.detail < this.data.start_number) {
+      wx.showToast({
+        title: '时间选择错误',
+        icon: 'none',
+        duration: 1000,
+        mask: true,
+      });
+      return
+    }
     this.setData({
       contract_stop_val: t,
       is_show_stop: false
@@ -251,6 +250,13 @@ Page({
     })
   },
 
+  // 16.丙方输入
+  onBINGInp(e) {
+    const bing_val = e.detail;
+    this.setData({
+      bing_val
+    })
+  },
   /******************输入事件监听****************/
   // 合同名称监听输入事件
   contractNameInp(e) {
@@ -468,7 +474,7 @@ Page({
     // 校验 合同名不能为空
     if(!this.data.contract_name_val) {
       wx.showToast({
-        title: '合同名不能为空',
+        title: '合同名称不能为空',
         icon: 'none',
         duration: 1000,
         mask: true
@@ -478,7 +484,7 @@ Page({
     // 校验 项目不能为空
     if(!this.data.contract_item_val) {
       wx.showToast({
-        title: '项目不能为空',
+        title: '所属项目不能为空',
         icon: 'none',
         duration: 1000,
         mask: true
@@ -498,7 +504,7 @@ Page({
     // 校验 合同分类不能为空
     if(!this.data.contract_kind_id) {
       wx.showToast({
-        title: '合同分类不能为空',
+        title: '合同类型不能为空',
         icon: 'none',
         duration: 1000,
         mask: true
@@ -539,12 +545,39 @@ Page({
     if(this.data.parseList.length > 0) {
       for (const parse of this.data.parseList) {
         console.log(parse,'parse===================')
-        if(!parse.parse_total || !parse.parse_desc || !parse.parse_type || !parse.parse_time) {
+        if(!parse.parse_desc) {
           wx.showToast({
-            title: '阶段信息错误',
+            title: '阶段名称不能为空',
+            icon: 'none',
+            duration: 1000,
+            mask: true,
+          });
+          return
+        }
+        if(!parse.parse_type) {
+          wx.showToast({
+            title: '阶段类型不能为空',
+            icon: 'none',
+            duration: 1000,
+            mask: true,
+          });
+          return
+        }
+        if(!parse.parse_total) {
+          wx.showToast({
+            title: '阶段金额不能为空',
             icon: 'none',
             duration: 1000,
             mask: true
+          });
+          return
+        }
+        if(!parse.parse_time) {
+          wx.showToast({
+            title: '阶段时间不能为空',
+            icon: 'none',
+            duration: 1000,
+            mask: true,
           });
           return
         }
@@ -562,6 +595,8 @@ Page({
       ContractEndTime: `${this.data.contract_stop_val} 00:00:00`,
       ContractRemark: this.data.contract_remark_val,
       ContractParentCode: this.data.contract_parent_id,//父合同的id
+      PartyA: this.data.customer_name_val,
+      PartyC: this.data.bing_val,
     }
     // 添加合同接口
     this.addContract(sendData);
@@ -572,7 +607,6 @@ Page({
   // 点击按钮 - 添加合同
   async addContract(data) {
     try {
-      const that = this;
       const token = getToken();//获取Token
       let res = await cloudFunc("addContract", {
         token,

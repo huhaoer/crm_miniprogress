@@ -2,6 +2,13 @@ let conid = '';//保存传递的合同id
 const cloudFunc = require("../../api/index");
 const regeneratorRuntime = require("../../utils/runtime"); //ES7 环境
 import { getToken, getUserId } from "../../utils/storage";
+const { _contractType2Word } = require('../../utils/contract')
+// 转换为千分位金额
+function getLocaleString(num) {
+  return num.toString().split('').reverse().reduce((total, value, index, array) => {
+      return ((index % 3) ? value : value + ',') + total
+  })
+}
 Page({
 
   /**
@@ -19,6 +26,9 @@ Page({
     InvoiceList: [],//发票列表
     ReceivableList: [],//收款列表
     PhaseList: [],//阶段列表
+    theOneInvoiceList: false,//是否有第一条发票列表数据
+    theOneReceivableList: false,//是否有第一条收款列表数据
+    theOnePhaseList: false,//是否有第一条阶段列表数据
   },
 
   onChange(event) {
@@ -30,6 +40,7 @@ Page({
 
   // 点击按钮修改合同信息
   handleUpdateContract() {
+    console.log(this.data.contractData,'contractDatacontractData')
     wx.navigateTo({
       url: '/pages/changeContract/changeContract?contractData=' + JSON.stringify(this.data.contractData)//跳转到修改合同页面  将详情页面获取的当前项目的数据传递过去
     });
@@ -37,9 +48,19 @@ Page({
 
   // 点击每一个阶段详情  修改阶段信息
   changeParseInfo(e) {
+    if(e.currentTarget.dataset.fact) {
+      // 传递的实际时间有的话 就不能开票和修改阶段信息
+      wx.showToast({
+        title: '该阶段已完成',
+        icon: 'none',
+        duration: 1000,
+        mask: true,
+      });
+      return
+    }
     const { code, desc, id, time, total, type } = e.currentTarget.dataset
     wx.navigateTo({
-      url: `/pages/changeParse/changeParse?code=${code}&desc=${desc}&id=${id}&time=${time}&total=${total}&type=${type}`,
+      url: `/pages/changeParse/changeParse?code=${code}&id=${id}&time=${time}&total=${total}&type=${type}&desc=${desc}`,
     });
   },
 
@@ -56,7 +77,7 @@ Page({
     const PhaseList = this.data.contractData.PhaseList;
     if(!(PhaseList._Items && PhaseList._Items.length > 0)) {
       wx.showToast({
-        title: '暂无阶段信息',
+        title: '暂无开票阶段',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -78,10 +99,7 @@ Page({
       // 2020-03-05T01:53:00
       return time ? time.split("T")[0].replace(/\-/g, ".") : "暂无";
     }
-    // 处理价格
-    function _transformPrice (price) {
-      return price ? price.toLocaleString() + "￥" : "暂无";
-    }
+
     const that = this;
     try {
       const token = getToken();
@@ -94,23 +112,25 @@ Page({
       });
       console.log(res,'合同详情结果OOOOOOOOOOOOOOOOOOOOOOO')
       let result = res.result && JSON.parse(res.result); //转换为JSON
-      // 处理详情数据
-      result.ContractAlreadyRec = _transformPrice(result.ContractAlreadyRec);//已收金额
-      result.ContractAmount = _transformPrice(result.ContractAmount);//总金额
-      result.ContractCreateTime = _transformTime(result.ContractCreateTime);//创建时间
-      result.ContractEndTime = _transformTime(result.ContractEndTime);//结束时间
-      result.ContractSignTime = _transformTime(result.ContractEndTime);//ContractSignTime
+      console.log(result,'JSON  合同详情')
+      // // 处理详情数据
+      result.ContractAlreadyRec = result.ContractAlreadyRec && getLocaleString(result.ContractAlreadyRec);//已收金额
+      result.ContractAmount =  result.ContractAmount && getLocaleString(result.ContractAmount);//总金额
+      result.ContractSignTime = result.ContractSignTime && _transformTime(result.ContractSignTime);//创建时间
+      result.ContractEndTime = result.ContractEndTime &&_transformTime(result.ContractEndTime);//结束时间 
+      result.ContractType = result.ContractType && _contractType2Word(parseInt(result.ContractType));//合同类型 
 
-      // 处理发票数据
-      result.InvoiceList = result.InvoiceList ? result.InvoiceList : [];
+      // 处理发票记录数据
+      result.InvoiceApplyList = result.InvoiceApplyList ? result.InvoiceApplyList : [];
       // // 发票里面的数据
-      result.InvoiceList._Items && result.InvoiceList._Items.length > 0 && result.InvoiceList._Items.forEach(item => {
-        item.InvoiceAmount = _transformPrice(item.InvoiceAmount)
-        item.InvoiceTime = _transformTime(item.InvoiceTime)
+      result.InvoiceApplyList._Items && result.InvoiceApplyList._Items.length > 0 && result.InvoiceApplyList._Items.forEach(item => {
+        item.InvoiceApplyAmount = getLocaleString(item.InvoiceApplyAmount)
+        item.InvoiceApplyTime = _transformTime(item.InvoiceApplyTime)
         // 设置第一条发票数据
         that.setData({
-          lastInvoiceList: {...result.InvoiceList._Items[result.InvoiceList._Items.length - 1]},
-          InvoiceList: result.InvoiceList._Items,//设置发票列表
+          // lastInvoiceList: {...result.InvoiceList._Items[result.InvoiceList._Items.length - 1]},
+          lastInvoiceList: {...result.InvoiceApplyList._Items[0]},
+          theOneInvoiceList: true,
         })
       })
 
@@ -118,12 +138,13 @@ Page({
       result.ReceivableList = result.ReceivableList ? result.ReceivableList : [];
       // 已收里面的数据
       result.ReceivableList._Items && result.ReceivableList._Items.length > 0 && result.ReceivableList._Items.forEach(item => {
-        item.RecAmount = _transformPrice(item.RecAmount)
+        item.RecAmount = getLocaleString(item.RecAmount)
         item.RecTime = _transformTime(item.RecTime)
         // 设置第一条收款数据
         that.setData({
-          lastReceivableList: {...result.ReceivableList._Items[result.ReceivableList._Items.length - 1]},
-          ReceivableList: result.ReceivableList._Items,//收款列表
+          // lastReceivableList: {...result.ReceivableList._Items[result.ReceivableList._Items.length - 1]},
+          lastReceivableList: {...result.ReceivableList._Items[0]},
+          theOneReceivableList: true,
         })
       })
 
@@ -131,19 +152,23 @@ Page({
       result.PhaseList = result.PhaseList ? result.PhaseList : [];
       // 已收里面的数据
       result.PhaseList._Items && result.PhaseList._Items.length > 0 && result.PhaseList._Items.forEach(item => {
-        item.PhaseAmount = _transformPrice(item.PhaseAmount)
+        item.PhaseAmount = getLocaleString(item.PhaseAmount)
         item.PlanTime = _transformTime(item.PlanTime)
         // 设置第一条阶段数据
         that.setData({
-          lastPhaseList: {...result.PhaseList._Items[result.PhaseList._Items.length - 1]},
-          PhaseList: result.PhaseList._Items,//阶段列表
+          // lastPhaseList: {...result.PhaseList._Items[result.PhaseList._Items.length - 1]},
+          lastPhaseList: {...result.PhaseList._Items[0]},
+          theOnePhaseList: true,
         })
       })
-      console.log(result,'handle with data 11111111111111')
-      console.log(this.data,'this dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+      console.log(result,'resultresultresult')
       that.setData({
-        contractData: result
+        contractData: result,
+        InvoiceList: result.InvoiceApplyList._Items && result.InvoiceApplyList._Items.slice(1),//设置发票列表,除去第一条
+        ReceivableList: result.ReceivableList._Items && result.ReceivableList._Items.slice(1),//设置收款列表,除去第一条
+        PhaseList: result.PhaseList._Items && result.PhaseList._Items.slice(1),//设置阶段列表,除去第一条
       });
+      console.log(this.data,'this.datadatadata')
     } catch (error) {
       console.log(error, "错误");
       wx.showToast({

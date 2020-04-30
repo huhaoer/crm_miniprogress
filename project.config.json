@@ -112,6 +112,13 @@
 					"id": -1,
 					"name": "sheets",
 					"pathName": "pages/sheets/sheets",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/test/test",
 					"scene": null
 				}
 			]

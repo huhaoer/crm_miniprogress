@@ -110,8 +110,6 @@ Page({
       show_parse_type: false
     })
 
-    console.log(this.data.type,'类型name')
-    console.log(this.data.type_id,'类型id')
   },
 
   // ========================阶段计划时间===================
@@ -136,16 +134,10 @@ Page({
 
   // ========================点击按钮提交表单==========================
   handleSubmit() {
-    // console.log(this.data.desc,'阶段描述')
-    // console.log(this.data.total,'总金额')
-    // console.log(this.data.type,'类型名称')
-    // console.log(this.data.type_id,'类型id')
-    // console.log(this.data.time,'计划时间')
-    // console.log(this.data.factTime,'实际时间')
     // 输入校验
     if(!this.data.desc) {
       wx.showToast({
-        title: '阶段描述错误',
+        title: '阶段名称不能为空',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -154,7 +146,7 @@ Page({
     }
     if(!this.data.total) {
       wx.showToast({
-        title: '总金额错误',
+        title: '阶段金额不能为空',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -163,7 +155,7 @@ Page({
     }
     if(!this.data.type_id) {
       wx.showToast({
-        title: '阶段类型错误',
+        title: '阶段类型不能为空',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -172,7 +164,7 @@ Page({
     }
     if(!this.data.time) {
       wx.showToast({
-        title: '计划时间错误',
+        title: '阶段时间不能为空',
         icon: 'none',
         duration: 1000,
         mask: true,
@@ -204,17 +196,32 @@ Page({
         PhaseType,
         PhaseAmount
       });
-      wx.showToast({
-        title: '添加成功',
-        icon: 'success',
-        duration: 1000,
-        mask: true,
-      });
-      // 返回上一页
-      setTimeout(_ => {
-        wx.navigateBack();
-      },1000)
+      console.log(res,'添加阶段结果')
+      const result = res.result && JSON.parse(res.result);
+      // 超出了合同金额
+      if(Array.isArray(result) && result[0].error_respone.errCode === 902) {
+        wx.showToast({
+          title: '不能超出合同金额',
+          icon: 'none',
+          duration: 1000,
+          mask: true,
+        });
+      }else {
+        wx.showToast({
+          title: '添加成功',
+          icon: 'success',
+          duration: 1000,
+          mask: true,
+        });
+        // 返回上一页
+        setTimeout(_ => {
+          wx.navigateBack();
+        },1000)
+      }
     } catch (error) {
+      console.log(error)
+      console.log(error.errCode)
+      console.log(error.errMsg)
       wx.showToast({
         title: '添加失败',
         icon: 'none',

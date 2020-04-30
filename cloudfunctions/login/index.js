@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   // 通过event传递参数
   const loginId = event.loginId
   const password = event.password
-  const URL = 'http://d3zgyg.natappfree.cc/Authorize.assx/Login'
+  const URL = 'http://w3ituu.natappfree.cc/Authorize.assx/Login'
 
   let options = {
     uri: URL,

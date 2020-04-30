@@ -12,7 +12,7 @@ exports.main = async (event, context) => {
   const Skip = event.Skip;
   const Size = event.Size;
   const Option = event.Option;
-  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/getProjectByLike'
+  const URL = 'http://w3ituu.natappfree.cc/ProjectMgeSvr.assx/getProjectByLike'
   let options = {
     uri: URL,
     qs: {

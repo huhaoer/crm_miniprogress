@@ -6,6 +6,7 @@
             is-link 
             bind:click="onTicket" 
             value="{{ ticket_parse_show }}"
+            title-class="set_required"
         />
         <van-picker 
             show-toolbar 
@@ -21,7 +22,9 @@
             clearable 
             label="开票金额" 
             border="{{ true }}"
-            disabled
+            type="digit"
+            bind:input="onMoneyInp"
+            required
         />
     </van-cell-group>
     <view class="submit_btn">

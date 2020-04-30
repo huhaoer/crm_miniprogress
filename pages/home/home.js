@@ -1,9 +1,15 @@
-const AppID = "wx3186c10ca59e1b79";
-const AppSecret = "8f78943af083115f3153f5fa160a6da2";
 const cloudFunc = require("../../api/index");
 const regeneratorRuntime = require("../../utils/runtime"); //ES7 环境
 import { getToken, getUserId } from "../../utils/storage";
 import parseTime from '../../utils/parseTime'
+const { _projectStatus, _projectStatus2Word} = require('../../utils/project')
+
+// 千分位转换
+function getLocaleString(num) {
+  return num.toString().split('').reverse().reduce((total, value, index, array) => {
+      return ((index % 3) ? value : value + ',') + total
+  })
+}
 Page({
   /**
    * 页面的初始数据
@@ -14,7 +20,6 @@ Page({
     show_header: {}, //首页头部数据渲染
     recent_visit: [], //近期拜访的数据列表
     recent_project: [], //近期展示的项目
-
     show_percent: '',//根据总金额和收款金额计算百分比
   },
 
@@ -33,8 +38,26 @@ Page({
     }
   },
 
+  // 点击快捷入口按钮进入添加项目页面
+  quickToAddItem() {
+    wx.navigateTo({
+      url: '/pages/addItem/addItem'
+    });
+  },
+  // 点击快捷入口按钮进入添加合同页面
+  quickToAddContract() {
+    wx.navigateTo({
+      url: '/pages/addContract/addContract'
+    });
+  },
   // 点击快捷入口按钮进入修改合同页面
-  quickToContract() {
+  quickToChangeContract() {
+    wx.navigateTo({
+      url: '/pages/totalMoney/totalMoney?name=contract',
+    });
+  },
+  // 点击快捷入口按钮进入修改合同页面
+  quickToTocket() {
     wx.navigateTo({
       url: '/pages/totalMoney/totalMoney?name=contract',
     });
@@ -128,19 +151,29 @@ Page({
     const that = this;
     try {
       const Token = getToken();
-      const UserId = getUserId();
+      const SkipNum = 0;
+      const SizeNum = -1;
       let res = await cloudFunc("getAttentionList", {
         Token,
-        UserId,
+        SkipNum,
+        SizeNum
       });
-      console.log(res,'关注结果')
-      let result = JSON.parse(res.result); //转换为JSON
+      let result = res.result && JSON.parse(res.result); //转换为JSON
+      console.log(result,'我的收藏项目000000000000000000000')
       // 处理项目创建时间
-      result.forEach(item => {
+      result && result.length > 0 && result.forEach(item => {
+        // 创建时间
         item.ProjectCreateTime = item.ProjectCreateTime && parseTime(item.ProjectCreateTime / 1000);
+        // 百分比
         item.Percentage = item.projectReceiveTotal === 0 ? 0 : item.projectReceiveTotal / item.projectAllContractTotal * 100;
+        // 处理总金额
+        item.projectAllContractTotal = item.projectAllContractTotal === 0 ? 0 : getLocaleString(item.projectAllContractTotal)
+        // 处理已收金额
+        item.receiveTotal = item.receiveTotal === 0 ? 0 : getLocaleString(item.receiveTotal)
+        // 处理状态
+        item.ProjectStatus = _projectStatus2Word(item.ProjectStatus)
+        
       })
-      console.log(result,'<<<<<<<<<<<<<<<<')
       that.setData({
         recent_project: result, //将获取的数据赋值渲染
       });
@@ -220,12 +253,20 @@ Page({
   filterMoney(money = {}) {
     let obj = {};
     for (const key in money) {
+      console.log(key,'key')
+      console.log(money[key],'money[key]')
       let item = money[key];//每一项数据
       if(key === "contractTotal" || key === "projectNumber") {//合同数量属性 项目数量属性 跳过
         obj[key] = item
         continue
+      }else {
+        // 小于10000元
+        if(item < 10000) {
+          obj[key] = item + '元'
+        }else {
+          obj[key] = (parseInt(item) / 10000).toFixed(1) + '万'
+        }
       }
-      obj[key] = Math.round((parseInt(item) / 10000)) + '万'
     }
     return obj
   },

@@ -1,3 +1,7 @@
+        <van-dropdown-menu>
+            <van-dropdown-item value="{{ value1 }}" options="{{ option1 }}" />
+            <!-- <van-dropdown-item value="{{ value2 }}" options="{{ option2 }}" /> -->
+        </van-dropdown-menu>
         <!-- 第一部分 项目总金额 -->
         <van-tab title="项目总金额" name="total">
             <!-- 显示项目总金额 -->

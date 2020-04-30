@@ -1,6 +1,6 @@
-let obj = {
-    base_url: 'http://trepdr.natappfree.cc',//映射基础路径
-    getRecentVisitList: '/ProjectMgeSvr.assx/getRecentVisitList',//首页拜访列表
-    addVisit: '/ProjectMgeSvr.assx/addVisit',//添加拜访
+let URL = {
+    base_url: 'http://192.168.6.74:8080',//基础路径
+
+    login: '/Authorize.assx/Login',//登录接口
 }
-module.exports =  obj;
+module.exports =  URL;

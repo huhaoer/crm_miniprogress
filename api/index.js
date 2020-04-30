@@ -38,7 +38,6 @@ function tryHideFullScreenLoading() {
 
 // 导出的用于请求的方法
 let cloudFunc = (name, data) => {
-  wx.showNavigationBarLoading();
   showFullScreenLoading();
   return new Promise((resolve, reject) => {
     wx.cloud.callFunction({
@@ -46,13 +45,12 @@ let cloudFunc = (name, data) => {
       data,
       success(res) {
         resolve(res);
-        tryHideFullScreenLoading();
-        wx.hideNavigationBarLoading();
       },
       fail(err) {
         reject(err);
+      },
+      complete() {
         tryHideFullScreenLoading();
-        wx.hideNavigationBarLoading();
       }
     });
   });

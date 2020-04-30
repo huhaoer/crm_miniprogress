@@ -13,50 +13,74 @@
             <view>项目详情</view>
         </view>
         <view class="detail_header_show">
+            <view class="detail_header_solo">
+                <view>项目名称:</view>
+                <view>{{ projectDetail.ProjectName }}</view>
+            </view>
+            <view class="detail_header_solo">
+                <view>客户名称:</view>
+                <view>{{ projectDetail.CustomerName }}</view>
+            </view>
             <view class="detail_header_every">
+                <view class="detail_template">
+                    <view>总金额:</view>
+                    <view>{{ projectDetail.ContractTotal === 0 ? '-' :  '￥' + projectDetail.ContractTotal }}</view>
+                </view>
+                <view class="detail_template">
+                    <view>已收金额:</view>
+                    <view>{{ projectDetail.ReceiveTotal === 0 ? '-' :  '￥' + projectDetail.ReceiveTotal }}</view>
+                </view>
+            </view>
+            <!-- <view class="detail_header_every">
                 <view class="detail_template">
                     <view>项目名称:</view>
                     <view>{{ projectDetail.ProjectName }}</view>
                 </view>
                 <view class="detail_template">
+                    <view>客户名称:</view>
+                    <view>{{ projectDetail.CustomerName }}</view>
+                </view>
+            </view> -->
+            <view class="detail_header_every">
+                <view class="detail_template">
+                    <view>项目状态:</view>
+                    <view>{{ projectDetail.ProjectStatus }}</view>
+                </view>
+                <view class="detail_template">
                     <view>项目等级:</view>
-                    <view>P{{ projectDetail.ProjectPLevel }}</view>
+                    <view>{{ projectDetail.ProjectPLevel }}</view>
                 </view>
             </view>
             <view class="detail_header_every">
                 <view class="detail_template">
-                    <view>联系人姓名:</view>
+                    <view>联系人:</view>
                     <view>{{ projectDetail.ContactName }}</view>
                 </view>
                 <view class="detail_template">
-                    <view>联系人职位:</view>
-                    <view>{{ projectDetail.ContactDuty }}</view>
-                </view>
-                <!-- <view class="detail_template">
-                    <view>创建时间:</view>
-                    <view>{{ projectDetail.ProjectCreateTime }}</view>
-                </view> -->
-            </view>
-            <view class="detail_header_every">
-                <view class="detail_template">
-                    <view>联系人电话:</view>
+                    <view>手机号:</view>
                     <view>{{ projectDetail.ContactTel }}</view>
                 </view>
             </view>
-            <view class="detail_header_solo">
-                <view>项目备注:</view>
-                <view>{{ projectDetail.ProjectRemark }}</view>
+            <view class="detail_header_every">
+                <view class="detail_template">
+                    <view>职位:</view>
+                    <view>{{ projectDetail.ContactDuty }}</view>
+                </view>
             </view>
             <view class="detail_header_solo">
                 <view>项目描述:</view>
                 <view>{{ projectDetail.ProjectDescribe }}</view>
+            </view>
+            <view class="detail_header_solo">
+                <view>项目备注:</view>
+                <view>{{ projectDetail.ProjectRemark }}</view>
             </view>
         </view>
     </view>
     <!-- 合同列表 -->
     <view class="detail_contract">
         <view class="detail_contract_title">合同列表</view>
-        <block wx:if="{{ contractList.length > 0}}">
+        <block wx:if="{{ theOnecontractList }}">
             <view class="detail_contract_show">
                 <view class="detail_contract_every">
                     <view class="detail_template">
@@ -70,7 +94,7 @@
                 </view>
                 <view class="detail_contract_every">
                     <view class="detail_template">
-                        <view>合同类别:</view>
+                        <view>合同类型:</view>
                         <view>{{ lastContractList.ContractType }}</view>
                     </view>
                     <view class="detail_template">
@@ -80,73 +104,70 @@
                 </view>
                 <view class="detail_contract_every">
                     <view class="detail_template">
-                        <view>创建时间:</view>
+                        <view>签订时间:</view>
                         <view>{{ lastContractList.ContractCreateTime }}</view>
                     </view>
                     <view class="detail_template">
-                        <view>结束时间:</view>
+                        <view>到期时间:</view>
                         <view>{{ lastContractList.ContractEndTime }}</view>
                     </view>
                 </view>
                 <view class="detail_contract_every">
                     <view class="detail_template">
                         <view>合同总额:</view>
-                        <view>{{ lastContractList.ContractAmount }}￥</view>
+                        <view>{{ lastContractList.ContractAmount === 0 ? '-' :  '￥' + lastContractList.ContractAmount }}</view>
                     </view>
                     <view class="detail_template">
                         <view>已收总额:</view>
-                        <view>{{ lastContractList.ContractAlreadyRec }}￥</view>
+                        <view>{{ lastContractList.ContractAlreadyRec === 0 ? '-' :  '￥' + lastContractList.ContractAlreadyRec }}</view>
                     </view>
                 </view>
             </view>
             <!-- 显示合同列表折叠 -->
-            <van-collapse value="{{ activeNames }}" bind:change="onChange">
+            <van-collapse value="{{ activeNames }}" bind:change="onChange" wx:if="{{ contractList.length > 0 }}">
                 <van-collapse-item title="查看更多" name="0">
-                    <block wx:if="{{ contractList.length > 0 }}">
-                        <view class="detail_contract_show"  wx:for="{{ contractList }}" wx:key="index">
-                            <view class="detail_contract_every">
-                                <view class="detail_template">
-                                    <view>合同名称:</view>
-                                    <view>{{ item.ContractName }}</view>
-                                </view>
-                                <view class="detail_template">
-                                    <view>合同状态:</view>
-                                    <view>{{ item.ContractStatus }}</view>
-                                </view>
+                    <view class="detail_contract_show" wx:for="{{ contractList }}" wx:key="index">
+                        <view class="detail_contract_every">
+                            <view class="detail_template">
+                                <view>合同名称:</view>
+                                <view>{{ item.ContractName }}</view>
                             </view>
-                            <view class="detail_contract_every">
-                                <view class="detail_template">
-                                    <view>合同类别:</view>
-                                    <view>{{ item.ContractType }}</view>
-                                </view>
-                                <view class="detail_template">
-                                    <view>合同备注:</view>
-                                    <view>{{ item.ContractRemark }}</view>
-                                </view>
-                            </view>
-                            <view class="detail_contract_every">
-                                <view class="detail_template">
-                                    <view>创建时间:</view>
-                                    <view>{{ item.ContractCreateTime }}</view>
-                                </view>
-                                <view class="detail_template">
-                                    <view>结束时间:</view>
-                                    <view>{{ item.ContractEndTime }}</view>
-                                </view>
-                            </view>
-                            <view class="detail_contract_every">
-                                <view class="detail_template">
-                                    <view>合同总额:</view>
-                                    <view>{{ item.ContractAmount }}￥</view>
-                                </view>
-                                <view class="detail_template">
-                                    <view>已收总额:</view>
-                                    <view>{{ item.ContractAlreadyRec }}￥</view>
-                                </view>
+                            <view class="detail_template">
+                                <view>合同状态:</view>
+                                <view>{{ item.ContractStatus }}</view>
                             </view>
                         </view>
-                    </block>
-                    <view wx:else class="detail_plan_no">没有更多合同了</view>
+                        <view class="detail_contract_every">
+                            <view class="detail_template">
+                                <view>合同类型:</view>
+                                <view>{{ item.ContractType }}</view>
+                            </view>
+                            <view class="detail_template">
+                                <view>合同备注:</view>
+                                <view>{{ item.ContractRemark }}</view>
+                            </view>
+                        </view>
+                        <view class="detail_contract_every">
+                            <view class="detail_template">
+                                <view>创建时间:</view>
+                                <view>{{ item.ContractCreateTime }}</view>
+                            </view>
+                            <view class="detail_template">
+                                <view>结束时间:</view>
+                                <view>{{ item.ContractEndTime }}</view>
+                            </view>
+                        </view>
+                        <view class="detail_contract_every">
+                            <view class="detail_template">
+                                <view>合同总额:</view>
+                                <view>{{ item.ContractAmount === 0 ? '-' :  '￥' + item.ContractAmount }}</view>
+                            </view>
+                            <view class="detail_template">
+                                <view>已收总额:</view>
+                                <view>{{ item.ContractAlreadyRec === 0 ? '-' :  '￥' + item.ContractAlreadyRec }}</view>
+                            </view>
+                        </view>
+                    </view>
                 </van-collapse-item>
             </van-collapse>
         </block>
@@ -155,15 +176,8 @@
     <!-- 拜访计划 -->
     <view class="detail_plan">
         <view class="detail_plan_title">拜访计划</view>
-        <block wx:if="{{ visitListPlan.length > 0 }}">
-            <view 
-                class="detail_plan_show"
-                bind:tap="goToChangePlan"
-                data-time="{{ lastVisitPlan.VisitPlanTime }}"
-                data-content="{{ lastVisitPlan.VisitPlanContent }}"
-                data-remark="{{ lastVisitPlan.VisitRemark }}"
-                data-id="{{ lastVisitPlan.VisitId }}"
-            >
+        <block wx:if="{{ theOnevisitListPlan }}">
+            <view class="detail_plan_show" bind:tap="goToChangePlan" data-time="{{ lastVisitPlan.VisitPlanTime }}" data-content="{{ lastVisitPlan.VisitPlanContent }}" data-remark="{{ lastVisitPlan.VisitRemark }}" data-id="{{ lastVisitPlan.VisitId }}">
                 <view class="detail_plan_every">
                     <view>计划时间:</view>
                     <view>{{ lastVisitPlan.VisitPlanTime }}</view>
@@ -177,34 +191,22 @@
                     <view>{{ lastVisitPlan.VisitRemark }}</view>
                 </view>
             </view>
-            <van-collapse value="{{ activeNames }}" bind:change="onChange">
+            <van-collapse value="{{ activeNames }}" bind:change="onChange" wx:if="{{ visitListPlan.length > 0 }}">
                 <van-collapse-item title="查看更多" name="1">
-                    <block wx:if="{{ visitListPlan.length > 0 }}">
-                        <view 
-                            class="detail_plan_show" 
-                            wx:for="{{ visitListPlan }}" 
-                            wx:key="index"
-                            bind:tap="goToChangePlan"
-                            data-time="{{ item.VisitPlanTime }}"
-                            data-content="{{ item.VisitPlanContent }}"
-                            data-remark="{{ item.VisitRemark }}"
-                            data-id="{{ item.VisitId }}"
-                        >
-                            <view class="detail_plan_every">
-                                <view>计划时间:</view>
-                                <view>{{ item.VisitPlanTime }}</view>
-                            </view>
-                            <view class="detail_plan_every">
-                                <view>计划内容:</view>
-                                <view>{{ item.VisitPlanContent }}</view>
-                            </view>
-                            <view class="detail_plan_every">
-                                <view>计划备注:</view>
-                                <view>{{ item.VisitRemark }}</view>
-                            </view>
+                    <view class="detail_plan_show" wx:for="{{ visitListPlan }}" wx:key="index" bind:tap="goToChangePlan" data-time="{{ item.VisitPlanTime }}" data-content="{{ item.VisitPlanContent }}" data-remark="{{ item.VisitRemark }}" data-id="{{ item.VisitId }}">
+                        <view class="detail_plan_every">
+                            <view>计划时间:</view>
+                            <view>{{ item.VisitPlanTime }}</view>
                         </view>
-                    </block>
-                    <view wx:else class="detail_plan_no">没有更多计划了</view>
+                        <view class="detail_plan_every">
+                            <view>计划内容:</view>
+                            <view>{{ item.VisitPlanContent }}</view>
+                        </view>
+                        <view class="detail_plan_every">
+                            <view>计划备注:</view>
+                            <view>{{ item.VisitRemark }}</view>
+                        </view>
+                    </view>
                 </van-collapse-item>
             </van-collapse>
         </block>
@@ -214,31 +216,23 @@
     <view class="detail_record">
         <view class="detail_record_title">
             <view>拜访记录</view>
-            <van-button 
-                round 
-                type="info"
-                size="small"
-                hairline
-                bind:click="handleAddRecoed"
-            >添加记录</van-button>
+            <van-button round type="info" size="small" hairline bind:click="handleAddRecoed">
+                添加记录
+            </van-button>
         </view>
-        <block wx:if="{{ aloneVisit.length > 0 }}">
+        <block wx:if="{{ theOnealoneVisit }}">
             <view class="detail_record_show">
-                <view class="detail_record_every">
-                    <view class="detail_template">
-                        <view>计划内容:</view>
-                        <view>{{ lastAloneVisit.VisitPlanContent || "暂无"}}</view>
-                    </view>
-                    <view class="detail_template">
-                        <view>计划时间:</view>
-                        <view>{{ lastAloneVisit.VisitPlanTime }}</view>
-                    </view>
+                <view class="detail_record_solo">
+                    <view>计划时间:</view>
+                    <view>{{ lastAloneVisit.VisitPlanTime }}</view>
                 </view>
-                <view class="detail_record_every">
-                    <view class="detail_template">
-                        <view>实际时间:</view>
-                        <view>{{ lastAloneVisit.VisitFactTime }}</view>
-                    </view>
+                <view class="detail_record_solo">
+                    <view>计划内容:</view>
+                    <view>{{ lastAloneVisit.VisitPlanContent || "暂无"}}</view>
+                </view>
+                <view class="detail_record_solo">
+                    <view>实际时间:</view>
+                    <view>{{ lastAloneVisit.VisitFactTime }}</view>
                 </view>
                 <view class="detail_record_solo">
                     <view>实际内容:</view>
@@ -249,37 +243,30 @@
                     <view>{{ lastAloneVisit.VisitRemark }}</view>
                 </view>
             </view>
-            <van-collapse value="{{ activeNames }}" bind:change="onChange">
+            <van-collapse value="{{ activeNames }}" bind:change="onChange" wx:if="{{ aloneVisit.length > 0 }}">
                 <van-collapse-item title="查看更多" name="2">
-                    <block wx:if="{{ aloneVisit.length > 0 }}">
-                        <view class="detail_record_show" wx:for="{{ aloneVisit }}" wx:key="index">
-                            <view class="detail_record_every">
-                                <view class="detail_template">
-                                    <view>计划内容:</view>
-                                    <view>{{ item.VisitPlanContent || "暂无"}}</view>
-                                </view>
-                                <view class="detail_template">
-                                    <view>计划时间:</view>
-                                    <view>{{ item.VisitPlanTime }}</view>
-                                </view>
-                            </view>
-                            <view class="detail_record_every">
-                                <view class="detail_template">
-                                    <view>实际时间:</view>
-                                    <view>{{ item.VisitFactTime }}</view>
-                                </view>
-                            </view>
-                            <view class="detail_record_solo">
-                                <view>实际内容:</view>
-                                <view>{{ item.VisitFactContent }}</view>
-                            </view>
-                            <view class="detail_record_solo">
-                                <view>备注:</view>
-                                <view>{{ item.VisitRemark }}</view>
-                            </view>
+                    <view class="detail_record_show" wx:for="{{ aloneVisit }}" wx:key="index">
+                        <view class="detail_record_solo">
+                            <view>计划时间:</view>
+                            <view>{{ item.VisitPlanTime }}</view>
                         </view>
-                    </block>
-                    <view wx:else class="detail_plan_no">没有更多记录了</view>
+                        <view class="detail_record_solo">
+                            <view>计划内容:</view>
+                            <view>{{ item.VisitPlanContent || "暂无"}}</view>
+                        </view>
+                        <view class="detail_record_solo">
+                            <view>实际时间:</view>
+                            <view>{{ item.VisitFactTime }}</view>
+                        </view>
+                        <view class="detail_record_solo">
+                            <view>实际内容:</view>
+                            <view>{{ item.VisitFactContent }}</view>
+                        </view>
+                        <view class="detail_record_solo">
+                            <view>拜访备注:</view>
+                            <view>{{ item.VisitRemark }}</view>
+                        </view>
+                    </view>
                 </van-collapse-item>
             </van-collapse>
         </block>

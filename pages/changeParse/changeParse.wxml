@@ -2,25 +2,28 @@
     <van-cell-group>
         <!-- 阶段描述 -->
         <van-field 
-        value="{{ desc }}"  
-        clearable 
-        label="阶段描述：" 
-        border="{{ true }}" 
-        bind:input="onDescInp"
-        />
+            value="{{ desc }}"  
+            clearable 
+            label="阶段名称:" 
+            border="{{ true }}" 
+            bind:input="onDescInp"
+            required
+            />
         <!-- 阶段总金额 -->
         <van-field 
-        value="{{ total }}"  
-        clearable label="阶段总金额：" 
-        border="{{ true }}" 
-        bind:input="onTotalInp"
+            value="{{ total }}"  
+            clearable label="阶段金额(元):" 
+            border="{{ true }}" 
+            bind:input="onTotalInp"
+            required
         />
         <!-- 阶段类型 -->
         <van-cell 
-            title="阶段类型" 
+            title="阶段类型:" 
             is-link 
             bind:click="onParseType" 
             value="{{ type }}"
+            title-class="set_required"
         />
         <van-picker 
             show-toolbar 
@@ -32,21 +35,22 @@
         />
         <!-- 计划时间 -->
         <van-cell 
-            title="计划时间" 
+            title="阶段时间:" 
             is-link 
             bind:click="onPlanTime" 
             value="{{ time }}" 
+            title-class="set_required"
         />
         <van-datetime-picker
             type="date"
             bind:confirm="confirmPlanTime"
             bind:cancel="cancelPlanTime"
-            min-date="{{ minDate }}"
             formatter="{{ formatter }}"
+            value="{{ currentDate }}"
             wx:if="{{ show_parse_plantime }}"
         />
         <!-- 实际时间 -->
-        <van-cell 
+        <!-- <van-cell 
             title="实际时间" 
             is-link 
             bind:click="onFactTime" 
@@ -56,10 +60,10 @@
             type="date"
             bind:confirm="confirmFactTime"
             bind:cancel="cancelFactTime"
-            min-date="{{ minDate }}"
             formatter="{{ formatter }}"
+            value="{{ currentDate }}"
             wx:if="{{ show_parse_facttime }}"
-        />
+        /> -->
     </van-cell-group>
     <!-- 提交按钮 -->
     <view class="submit_btn">

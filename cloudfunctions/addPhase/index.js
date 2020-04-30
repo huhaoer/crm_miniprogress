@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
   const PhaseId = event.PhaseId
   const PhaseFactTime = event.PhaseFactTime
 
-  const URL = 'http://d3zgyg.natappfree.cc/ContractMgeSvr.assx/addPhase'
+  const URL = 'http://w3ituu.natappfree.cc/ContractMgeSvr.assx/addPhase'
 
   let options = {
     uri: URL,

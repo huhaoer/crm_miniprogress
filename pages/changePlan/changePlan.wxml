@@ -12,6 +12,7 @@
                 label="计划备注：" 
                 border="{{ true }}"
                 bind:input="onVisitRemarkInp" 
+                required
             />
             <!-- 拜访记录内容 -->
             <van-field 
@@ -23,6 +24,7 @@
                 clearable  
                 border="{{ true }}"
                 bind:input="onVisitPlanContentInp" 
+                required
             />
             <!-- 拜访记录时间 -->
             <van-cell 
@@ -30,13 +32,13 @@
                 is-link 
                 bind:click="onChangeShowPicker" 
                 value="{{ VisitPlanTime }}" 
+                title-class="set_required"
             />
             <van-datetime-picker
                 type="date"
                 value="{{ currentDate }}"
                 bind:confirm="onConfirmShowPicker"
                 bind:cancel="onCancelShowPicker"
-                min-date="{{ minDate }}"
                 formatter="{{ formatter }}"
                 wx:if="{{ isShowPicker }}"
             />

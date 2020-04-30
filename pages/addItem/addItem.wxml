@@ -6,49 +6,24 @@
             <!-- 项目名 -->
             <van-field 
                 value="{{ project_name_val }}"  
-                clearable label="项目名：" 
+                clearable label="项目名称:" 
                 border="{{ true }}" 
                 bind:input="projectNameInp"
+                required
             />
             <!-- 项目描述 -->
             <van-field 
                 value="{{ project_desc_val }}" 
-                label="项目描述："  
+                label="项目描述:"  
+                type="textarea"
+                autosize
                 clearable  
                 border="{{ true }}" 
-                error-message="" 
                 bind:input="projectDescInp"
+                required
             />
-            <!-- 项目分类菜单 -->
-            <van-cell 
-                title="项目分类：" 
-                is-link 
-                bind:click="showKindMenu" 
-                value="{{ project_kind_val }}" 
-                bind:input="projectKindInp"
-            />
-            <van-action-sheet 
-                show="{{ show_kind_item }}" 
-                actions="{{ project_kind_arr }}" 
-                bind:close="closeKindMenu" 
-                bind:select="selectKindMenu"
-                overlay="{{true}}"
-                close-on-click-overlay="{{false}}"
-                safe-area-inset-bottom="{{false}}"
-                title="选择项目分类"
-            />
-            <!-- 项目备注 -->
-             <van-field 
-                value="{{ project_remark_val }}" 
-                label="项目备注：" 
-                autosize 
-                clearable  
-                border="{{ true }}" 
-                error-message="" 
-                bind:input="projectRemarkInp"
-             />
             <!-- 客户 -->
-            <van-cell title="客户：" is-link bind:click="showUserMenu" value="{{ project_customer_val }}" />
+            <van-cell title="客户名称：" is-link bind:click="showUserMenu" value="{{ project_customer_val }}" title-class="set_required" />
             <van-picker
                 show-toolbar
                 title="选择客户"
@@ -58,43 +33,73 @@
                 wx:if="{{ show_user_item }}"
                 loading="{{ loading }}"
             />
-            <!-- <van-action-sheet 
-                show="{{ show_user_item }}" 
-                actions="{{ project_customer_arr }}" 
-                bind:close="closeUserMenu" 
-                bind:select="selectUserMenu" 
-                overlay="{{true}}"
-                close-on-click-action="{{true}}"
-                close-on-click-overlay="{{false}}"
-                safe-area-inset-bottom="{{ false }}"
-                title="选择客户"
-            /> -->
+            <!-- p level -->
+            <van-cell 
+                title="项目等级:" 
+                is-link 
+                bind:click="onPLevel" 
+                value="{{ ProjectPLevel }}"
+                title-class="set_required" 
+            />
+            <van-picker 
+                show-toolbar 
+                title="选择项目等级" 
+                columns="{{ ProjectPLevelShowArr }}" 
+                bind:cancel="cancelPLevel" 
+                bind:confirm="confirmPLevel" 
+                wx:if="{{ is_show_pLevel }}"
+            />
+            <!-- 项目状态 -->
+            <van-cell 
+                title="项目状态:" 
+                is-link 
+                bind:click="onStatus" 
+                value="{{ ProjectStatus }}"
+                title-class="set_required"
+            />
+            <van-picker 
+                show-toolbar 
+                title="选择项目状态" 
+                columns="{{ ProjectStatusShowArr }}" 
+                bind:cancel="cancelStatus" 
+                bind:confirm="confirmStatus" 
+                wx:if="{{ is_show_status }}"
+            />
+            <!-- 项目备注 -->
+             <van-field 
+                value="{{ project_remark_val }}" 
+                label="项目备注:"
+                type="textarea"
+                autosize 
+                autosize 
+                clearable  
+                border="{{ true }}"
+                bind:input="projectRemarkInp"
+             />
             <!-- 联系人姓名 -->
             <van-field 
                 value="{{ project_conname_val }}" 
-                label="联系人姓名："  
+                label="联系人:"  
                 clearable  
                 border="{{ true }}" 
-                error-message="" 
                 bind:input="projectConnameInp"
             />
             <!-- 联系人电话 -->
             <van-field 
                 value="{{ project_contel_val }}" 
                 type="number" 
-                label="联系人电话："  
+                label="手机号:"  
                 clearable  
                 border="{{ true }}" 
-                error-message="" 
                 bind:input="projectContelInp"
+                maxlength="{{ 11 }}"
             />
             <!-- 联系人职务 -->
             <van-field 
                 value="{{ project_conduty_val }}" 
-                label="联系人职务：" 
+                label="职位:" 
                 clearable  
-                border="{{ true }}" 
-                error-message="" 
+                border="{{ true }}"
                 bind:input="projectCondutyInp"
             />
         </van-cell-group>

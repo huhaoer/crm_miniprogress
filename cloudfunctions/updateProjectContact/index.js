@@ -38,7 +38,10 @@ exports.main = async (event, context) => {
   const ContactName = event.ContactName
   const ContactTel = event.ContactTel
   const ContactDuty = event.ContactDuty
-  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/updateProject'
+  // 客户
+  const CustId = event.CustId
+  const UserId = event.UserId;//销售id
+  const URL = 'http://w3ituu.natappfree.cc/ProjectMgeSvr.assx/updateProject'
   let options = {
     uri: URL,
     qs: {
@@ -53,6 +56,8 @@ exports.main = async (event, context) => {
       ContactName,
       ContactTel,
       ContactDuty,
+      CustId,
+      UserId
     },
     // json: true 
   };

@@ -66,33 +66,32 @@ Page({
   // 点击提交按钮
   handleSubmit() {
     // 判断备注值是否为空 进行错误信息校验
-    if(this.data.remark_mes === '') {//备注信息为空
-      this.setData({
-        remark_err: "请输入备注信息"
-      })
-      return
-    }else{
-      this.setData({
-        remark_err: ""
-      })
-    }
+    // if(this.data.remark_mes === '') {//备注信息为空
+    //   this.setData({
+    //     remark_err: "请输入备注信息"
+    //   })
+    //   return
+    // }else{
+    //   this.setData({
+    //     remark_err: ""
+    //   })
+    // }
     // 判断内容值是否为空 进行错误信息校验
-    if(this.data.content_mes === '') {//内容信息为空
-      this.setData({
-        content_err: "请输入内容信息"
+    if(!this.data.content_mes.trim()) {//内容信息为空
+      wx.showToast({
+        title: '实际内容不能为空',
+        icon: 'none',
+        duration: 1000,
+        mask: true
       })
       return
-    }else{
-      this.setData({
-        content_err: ""
-      })
     }
     // 判断data-picker是否为空
-    if(this.data.picker_value === "") {
+    if(!this.data.picker_value) {
       wx.showToast({
-        title: '请选择时间',
+        title: '实际时间不能为空',
         icon: 'none',
-        duration: 1500,
+        duration: 1000,
         mask: true
       })
       return
@@ -130,7 +129,8 @@ Page({
         VisitPlanContent: '',
       })
       console.log(res,'这是添加拜访结果00000000000000000000000')
-      if(JSON.parse(res.result).toString() == "[object Object]") {//成功添加记录时 返回当前添加的对象
+      const result = res.result && JSON.parse(res.result);
+      if(result.VisitId === 0) {
         wx.showToast({
           title: '添加成功',
           icon: 'success',
@@ -142,6 +142,13 @@ Page({
         setTimeout(_ => {
           wx.navigateBack();
         },1000)
+      }else if(result[0].error_respone.errCode === 303) {
+        wx.showToast({
+          title: '添加记录时间错误',
+          icon: 'none',
+          duration: 1000,
+          mask: true,
+        });
       }
     } catch (error) {
       console.log(err,'失败原因')

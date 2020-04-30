@@ -33,8 +33,10 @@ exports.main = async (event, context) => {
   const ContractSignTime = event.ContractSignTime;
   const ContractEndTime = event.ContractEndTime;
   const ContractRemark = event.ContractRemark;
+  const PartyA = event.PartyA;
+  const PartyC = event.PartyC;
 
-  const URL = 'http://d3zgyg.natappfree.cc/ContractMgeSvr.assx/addContract'
+  const URL = 'http://w3ituu.natappfree.cc/ContractMgeSvr.assx/addContract'
   let options = {
     uri: URL,
     qs: {
@@ -47,7 +49,9 @@ exports.main = async (event, context) => {
       ContractSignTime,
       ContractEndTime,
       ContractRemark,
-      ContractParentCode
+      ContractParentCode,
+      PartyA,
+      PartyC
     },
     // json: true 
   };

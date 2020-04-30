@@ -10,7 +10,7 @@ exports.main = async (event, context) => {
   const token = event.token
   const SearchCondition = event.SearchCondition
   const Option = event.Option
-  const URL = 'http://d3zgyg.natappfree.cc/ContractMgeSvr.assx/fuzzySearchContract'
+  const URL = 'http://w3ituu.natappfree.cc/ContractMgeSvr.assx/fuzzySearchContract'
   /**
    * (String token,
    * String SearchCondition, 

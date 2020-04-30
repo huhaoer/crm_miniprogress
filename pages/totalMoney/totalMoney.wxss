@@ -152,15 +152,15 @@
 .my_project .every_project .project_wrapper{
   border-radius: 15rpx;
   display: flex;
-  padding-top: 10rpx;
+  /* padding-top: 10rpx; */
 }
 .every_project .solo_tips {
   display: flex;
-  padding: 0rpx 15rpx 10rpx 15rpx;
+  padding: 0rpx 15rpx 0rpx 15rpx;
   box-sizing: border-box;
 }
 .every_project .add_collect {
-  margin-bottom: 10rpx;
+  margin: 20rpx 0 10rpx 0;
   padding: 0 15rpx;
   box-sizing: border-box;
 }
@@ -170,12 +170,16 @@
   flex: 0 1 auto;
   font-size: 26rpx;
   width: 125rpx;
+  text-align-last:justify;
+  text-align:justify;
+  /* 这行必加，兼容ie浏览器 */
+  text-justify:distribute-all-lines; 
 }
 .every_project .solo_tips .right_desc{
   color: #878787;
   flex: 1;
   font-size: 26rpx;
-  padding-left: 8rpx;
+  padding-left: 10rpx;
 }
 .my_project .one_rowinfo,
 .my_project .two_rowinfo
@@ -201,6 +205,10 @@
   flex: 0 1 auto;
   font-size: 26rpx;
   width: 125rpx;
+  text-align-last:justify;
+  text-align:justify;
+  /* 这行必加，兼容ie浏览器 */
+  text-justify:distribute-all-lines; 
 }
 .my_project .one_rowinfo .right_desc,
 .my_project .two_rowinfo .right_desc
@@ -209,7 +217,7 @@
   /* color: #fff; */
   flex: 1;
   font-size: 26rpx;
-  padding-left: 8rpx;
+  padding-left: 10rpx;
 }
 
 /* 返回顶部 */
@@ -237,14 +245,24 @@
 }
 
 /* 搜索框样式 */
-/* .van-search {
-  background-color: red;
+.contract_like {
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.input_left {
+  width: 450rpx;
+}
+/* 选择筛选的文字 */
+.select_right_title {
+  font-size: 26rpx;
+  color: #9c9c9c;
+  margin-right: 75rpx;
+}
+.van-search {
+  /* 清除输入框组件的padding */
   padding: 0!important;
 }
-.search_class {
-  height: 100rpx;
-}
-.input_class {
-  height: 100rpx!important;
-  width: 100%;
-} */
+
+

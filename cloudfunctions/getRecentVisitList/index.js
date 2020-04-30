@@ -9,7 +9,7 @@ exports.main = async (event, context) => {
   // 通过event传递参数
   const Token = event.Token
   const Option = event.Option
-  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/getRecentVisitList'
+  const URL = 'http://w3ituu.natappfree.cc/ProjectMgeSvr.assx/getRecentVisitList'
   let options = {
     uri: URL,
     qs: {

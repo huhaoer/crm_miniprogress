@@ -11,6 +11,8 @@ exports.main = async (event, context) => {
   const ProjectDescribe = event.ProjectDescribe;//项目描述
   const ProjectType = event.ProjectType;//项目类型
   const ProjectRemark = event.ProjectRemark;//项目备注
+  const ProjectPLevel = event.ProjectPLevel;//项目等级
+  const ProjectStatus = event.ProjectStatus;//项目状态
   const CustId = event.CustId;//客户id
   const UserId = event.UserId;//销售id
   const ContactName = event.ContactName;//联系人姓名
@@ -18,7 +20,7 @@ exports.main = async (event, context) => {
   const ContactDuty = event.ContactDuty;//联系人职务
   
 
-  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/addProject'//添加项目
+  const URL = 'http://w3ituu.natappfree.cc/ProjectMgeSvr.assx/addProject'//添加项目
   let options = {
     uri: URL,
     qs: {
@@ -31,7 +33,9 @@ exports.main = async (event, context) => {
       UserId,
       ContactName,
       ContactTel,
-      ContactDuty
+      ContactDuty,
+      ProjectPLevel,
+      ProjectStatus
     },
     // json: true 
   };

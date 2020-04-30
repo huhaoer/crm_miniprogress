@@ -12,7 +12,9 @@
     "van-overlay": "@vant/weapp/overlay",
     "van-loading": "@vant/weapp/loading",
     "van-button": "@vant/weapp/button",
-    "van-search": "@vant/weapp/search"
+    "van-search": "@vant/weapp/search",
+    "van-action-sheet": "@vant/weapp/action-sheet",
+    "van-popup": "@vant/weapp/popup"
   },
   "backgroundTextStyle": "dark",
   "backgroundColor": "#000000",

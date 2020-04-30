@@ -8,15 +8,13 @@ const rp = require('request-promise');//request-promise包
 exports.main = async (event, context) => {
   const Token = event.Token;
   const ProjectCode = event.ProjectCode;
-  const UserId = event.UserId;
 
-  const URL = 'http://d3zgyg.natappfree.cc/ProjectMgeSvr.assx/addAttentionProject'
+  const URL = 'http://w3ituu.natappfree.cc/ProjectMgeSvr.assx/addAttentionProject'
   let options = {
     uri: URL,
     qs: {
       Token,
       ProjectCode,
-      UserId,
     },
     // json: true 
   };

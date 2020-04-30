@@ -1,12 +1,4 @@
 <view class="container">
-    <!-- 加载样式 -->
-    <!-- <van-overlay show="{{ isLoading }}" z-index="9999">
-        <view class="wrapper">
-            <van-loading color="#fff" type="spinner" size="40rpx" vertical text-size="24rpx">
-                加载中...
-            </van-loading>
-        </view>
-    </van-overlay> -->
     <van-tabs active="{{ active }}" bind:change="onChangeTab" z-index="{{999}}" lazy-render="{{true}}" duration="0.3" animated="{{true}}" sticky="{{true}}" swipeable="{{true}}" tab-active-class="active_cls" line-height="4rpx">
         <!-- 第四部分 我的项目 -->
         <van-tab title="我的项目" name="project">
@@ -47,44 +39,38 @@
                         wx:key="index"
                     >
                         <view class="project_showmoney">
-                            <view class="show_margin">项目总金额：{{ item. ContractTotal }}￥</view>
-                            <view>项目已收金额：{{ item. ReceiveTotal }}￥</view>
+                            <view class="show_margin">项目总金额：{{ item. ContractTotal === 0 ? '-' :  '￥' + item.ContractTotal }}</view>
+                            <view>项目已收金额：{{ item. ReceiveTotal === 0 ? '-' :  '￥' + item.ReceiveTotal }}</view>
+                        </view>
+                        <view class="solo_tips">
+                            <view class="left_name">项目名称:</view>
+                            <view class="right_desc" style="color: #1989fa;font-weight: bold">{{ item.ProjectName }}</view>
+                        </view>
+                        <view class="solo_tips">
+                            <view class="left_name">客户名称:</view>
+                            <view class="right_desc">{{ item.CustomerName }}</view>
                         </view>
                         <view class="project_wrapper">
                             <view class="one_rowinfo">
-                                <view class="sure_one">
-                                    <view class="left_name">项目名称:</view>
-                                    <view class="right_desc" style="color: #ee0a24;font-weight: bold">
-                                        {{ item.ProjectName }}
-                                    </view>
-                                </view>
-                                <view class="sure_one">
-                                    <view class="left_name">项目等级:</view>
-                                    <view class="right_desc">P{{ item.ProjectPLevel }}</view>
-                                </view>
-                            </view>
-                            <view class="two_rowinfo">
-                                <!-- <view class="sure_one">
-                                    <view class="left_name">项目时间:</view>
-                                    <view class="right_desc">{{ item.ProjectCreateTime }}</view>
-                                </view> -->
                                 <view class="sure_one">
                                     <view class="left_name">项目状态:</view>
                                     <view class="right_desc">{{ item.ProjectStatus }}</view>
                                 </view>
                                 <view class="sure_one">
-                                    <view class="left_name">项目类型:</view>
-                                    <view class="right_desc">{{ item.ProjectType }}</view>
+                                    <view class="left_name">联系人:</view>
+                                    <view class="right_desc">{{ item.ContactName }}</view>
                                 </view>
                             </view>
-                        </view>
-                        <view class="solo_tips">
-                            <view class="left_name">项目备注:</view>
-                            <view class="right_desc">{{ item.ProjectRemark }}</view>
-                        </view>
-                        <view class="solo_tips">
-                            <view class="left_name">项目描述:</view>
-                            <view class="right_desc">{{ item.ProjectDescribe }}</view>
+                            <view class="two_rowinfo">
+                                <view class="sure_one">
+                                    <view class="left_name">项目等级:</view>
+                                    <view class="right_desc">P{{ item.ProjectPLevel }}</view>
+                                </view>
+                                <view class="sure_one">
+                                    <view class="left_name">手机号:</view>
+                                    <view class="right_desc">{{ item.ContactTel }}</view>
+                                </view>
+                            </view>
                         </view>
                         <view class="add_collect" catchtap="addCollect" data-item="{{ item }}">
                             <van-button icon="like-o" plain block hairline type="info" size="normal" custom-style="{{ item.AttentionId !== 0 ? disableStyle : activeStyle }}"></van-button>
@@ -113,13 +99,48 @@
 
             <!-- 显示搜索框  模糊查询-->
             <van-search 
-                value="{{ searchValContract }}" 
+                value="{{ searchVal }}" 
                 placeholder="请输入搜索关键词" 
                 background="#f5f5f5" 
                 bind:clear="contractSearchClear"
                 bind:change="contractSearchChange"
                 bind:search="contractSearchOn"
             />
+            <!-- <view class="contract_like">
+                <view class="input_left">
+                    <van-search
+                        value="{{ searchValContract }}"
+                        shape="round"
+                        clearable="{{ false }}"
+                        placeholder="请输入搜索关键词"
+                        bind:clear="contractSearchClear"
+                        bind:change="contractSearchChange"
+                        bind:search="contractSearchOn"
+                    />
+                </view>
+                <view class="select_right">
+                    <view 
+                        class="select_right_title"
+                        bind:tap="onChooseRank"
+                    >
+                        <van-icon name="filter-o" />
+                        默认排序
+                    </view>
+                    <van-popup 
+                        show="{{ show_rank }}" 
+                        bind:close="onClose" 
+                        z-index="{{ 9999 }}" 
+                        position="right"
+                    >内容</van-popup>
+                    <van-action-sheet
+                        z-index="{{ 9999 }}"
+                        show="{{ show_rank }}"
+                        actions="{{ actions }}"
+                        bind:close="onClose"
+                        bind:select="onSelect"
+                    />
+                </view>
+            </view> -->
 
             <!-- 显示我的合同列表详情 -->
                 <view class="my_project">
@@ -133,38 +154,38 @@
                         wx:key="index"
                     >
                         <view class="project_showmoney">
-                            <view class="show_margin">合同总金额：{{ item.ContractAmount }}￥</view>
-                            <view>合同已收金额：{{ item.ContractAlreadyRec }}￥</view>
+                            <view class="show_margin">合同总金额：{{ item.ContractAmount === 0 ? '-' :  '￥' + item.ContractAmount }}</view>
+                            <view>合同已收金额：{{ item.ContractAlreadyRec === 0 ? '-' :  '￥' + item.ContractAlreadyRec }}</view>
+                        </view>
+                        <view class="solo_tips">
+                            <view class="left_name">合同名称:</view>
+                            <view class="right_desc" style="color: #1989fa;font-weight: bold">
+                                {{ item.ContractName }}
+                            </view>
+                        </view>
+                        <view class="solo_tips">
+                            <view class="left_name">所属项目:</view>
+                            <view class="right_desc">{{ item.ProjectName }}</view>
                         </view>
                         <view class="project_wrapper">
                             <view class="one_rowinfo">
                                 <view class="sure_one">
-                                    <view class="left_name">合同名称:</view>
-                                    <view class="right_desc" style="color: #ee0a24;font-weight: bold">
-                                        {{ item.ContractName }}
-                                    </view>
+                                    <view class="left_name">签订时间:</view>
+                                    <view class="right_desc">{{ item.ContractSignTime }}</view>
                                 </view>
                                 <view class="sure_one">
                                     <view class="left_name">合同类型:</view>
                                     <view class="right_desc">{{ item.ContractType }}</view>
                                 </view>
-                                <view class="sure_one">
-                                    <view class="left_name">签订时间:</view>
-                                    <view class="right_desc">{{ item.ContractCreateTime }}</view>
-                                </view>
                             </view>
                             <view class="two_rowinfo">
                                 <view class="sure_one">
-                                    <view class="left_name">所属项目:</view>
-                                    <view class="right_desc">{{ item.ProjectName }}</view>
-                                </view>
-                                <view class="sure_one">
-                                    <view class="left_name">合同状态:</view>
-                                    <view class="right_desc">{{ item.ContractStatus }}</view>
-                                </view>
-                                <view class="sure_one">
                                     <view class="left_name">到期时间:</view>
                                     <view class="right_desc">{{ item.ContractEndTime }}</view>
+                                </view>
+                                <view class="sure_one">
+                                    <view class="left_name">甲方:</view>
+                                    <view class="right_desc">{{ item.PartyA }}</view>
                                 </view>
                             </view>
                         </view>

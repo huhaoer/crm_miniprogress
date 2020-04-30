@@ -8,14 +8,18 @@ const rp = require('request-promise');//request-promise包
 exports.main = async (event, context) => {
   // 通过event传递参数
   const token = event.token;
+  const skipNum = event.skipNum;
+  const sizeNum = event.sizeNum;
   const Option = event.Option;
 
-  const URL = 'http://d3zgyg.natappfree.cc/CustomerMgeSvr.assx/getCustumerListByUserId'
+  const URL = 'http://w3ituu.natappfree.cc/CustomerMgeSvr.assx/getCustumerListByUserId'
   let options = {
     uri: URL,
     qs: {
       token,
-      Option
+      Option,
+      skipNum,
+      sizeNum
     },
     // json: true 
   };
